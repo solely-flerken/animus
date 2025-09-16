@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 namespace Input
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(InputManager))]
     public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         [Header("Movement Settings")] public float moveSpeed = 5f;
@@ -14,7 +15,7 @@ namespace Input
         [Header("References")] public Transform cameraTransform;
 
         private CharacterController _controller;
-        private InputSystem_Actions _inputActions;
+        private InputManager _inputManager;
         private InputSystem_Actions.PlayerActions _playerActions;
 
         private Vector2 _moveInput;
@@ -26,24 +27,20 @@ namespace Input
 
         #region Unity Callbacks
 
-        private void Awake()
+        private void Start()
         {
             _controller = GetComponent<CharacterController>();
+            _inputManager = GetComponent<InputManager>();
 
-            _inputActions = new InputSystem_Actions();
-            _playerActions = _inputActions.Player;
+            _playerActions = _inputManager.PlayerActions;
             _playerActions.AddCallbacks(this);
+            _playerActions.Enable();
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
 
-        private void OnEnable()
-        {
-            _playerActions.Enable();
-        }
-
-        private void OnDisable()
+        private void OnDestroy()
         {
             _playerActions.Disable();
         }
@@ -63,10 +60,13 @@ namespace Input
             // Ground check
             _isGrounded = _controller.isGrounded;
             if (_isGrounded && _velocity.y < 0)
-                _velocity.y = -2f; // small downward push to keep grounded
+            {
+                // Small downward push to keep grounded
+                _velocity.y = -2f;
+            }
 
             // Move input
-            Vector3 move = transform.forward * _moveInput.y + transform.right * _moveInput.x;
+            var move = transform.forward * _moveInput.y + transform.right * _moveInput.x;
             _controller.Move(move * (moveSpeed * Time.deltaTime));
 
             // Apply gravity + vertical velocity
