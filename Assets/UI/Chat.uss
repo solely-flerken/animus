@@ -1,0 +1,90 @@
+:root {
+    font-size: 18px;
+    color: white;
+}
+
+.chat-open {
+    background-color: rgba(50, 50, 50, 0.5);
+}
+
+.chat-closed {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#messageInput {
+    background-color: #1E2429;
+    border-color: #4E3F23;
+    border-width: 2px;
+}
+
+#messageInput > #unity-text-input {
+    background-color: #1E2429;
+    color: white;
+    border-width: 0;
+    --unity-cursor-color: #B4B4B4;
+}
+
+.customScrollView Label {
+    white-space: normal;
+}
+
+.customScrollView .unity-scroll-view__content-container {
+    align-items: flex-start;
+    width: 100%;
+}
+
+.customScrollView .unity-scroll-view__vertical-scroller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.customScrollView .unity-scroller__low-button {
+    display: none;
+}
+
+.customScrollView .unity-scroller__high-button {
+    display: none;
+}
+
+.customScrollView .unity-base-slider, .unity-base-slider > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2px; /* Uncomment to make the slider take the whole space of the container including the space for the high- and low-buttons */
+}
+
+.customScrollView .unity-base-slider__drag-container {
+    position: relative;
+    width: 4px;
+    height: 100%;
+}
+
+.customScrollView .unity-base-slider__tracker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(71, 75, 78, 0.39);
+    border-width: 0;
+    border-radius: 4px;
+}
+
+.customScrollView .unity-base-slider__dragger {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #4E3F23;
+    border-radius: 4px;
+}
+
+.customScrollView:disabled {
+    opacity: 1;
+}
+
+.customScrollView:disabled .unity-scroll-view__vertical-scroller {
+    visibility: hidden;
+}

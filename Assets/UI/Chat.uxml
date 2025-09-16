@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Chat.uss?fileID=7433441132597879392&amp;guid=879abe2630e842e4d8d65263fde815d4&amp;type=3#Chat" />
+    <ui:VisualElement name="container" style="flex-grow: 1; width: 25%; justify-content: center;">
+        <ui:VisualElement name="chatBox" style="width: 100%; height: 30%;">
+            <ui:ScrollView name="chatView" horizontal-scroller-visibility="Hidden" class="customScrollView" style="flex-direction: column-reverse; height: 80%; flex-wrap: wrap;" />
+            <ui:TextField name="messageInput" select-all-on-focus="false" style="height: 20%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
