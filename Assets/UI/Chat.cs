@@ -1,4 +1,5 @@
 ﻿using System;
+using Audio;
 using Events;
 using Input;
 using UnityEngine;
@@ -105,6 +106,8 @@ namespace UI
 
             if (string.IsNullOrEmpty(command)) return;
 
+            GlobalAudioManager.Instance.Play("submit-message");
+            
             ExecuteCommand(command);
             _messageInput.value = "";
         }
