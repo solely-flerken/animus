@@ -1,0 +1,10 @@
+{
+  "name": "com.flerken.animus",
+  "version": "1.0.0",
+  "unity": "6000.0",
+  "displayName": "Animus",
+  "author": {
+    "name": "solely-flerken",
+    "url": "https://github.com/solely-flerken"
+  }
+}

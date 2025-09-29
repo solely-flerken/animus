@@ -1,0 +1,18 @@
+﻿using System;
+using Unity.Plastic.Newtonsoft.Json;
+using UnityEngine;
+
+namespace Packages.Animus.Unity.Runtime.Data
+{
+    [Serializable]
+    public class AgentModel
+    {
+        public string name;
+        [JsonProperty("game_key")] public string gameKey;
+        [TextArea(3, 10)] public string description;
+
+        [HideInInspector] public string id;
+        [HideInInspector] public string createdAt;
+        [HideInInspector] public string updatedAt;
+    }
+}
