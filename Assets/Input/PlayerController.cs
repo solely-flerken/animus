@@ -12,7 +12,6 @@ namespace Input
     }
 
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(InputManager))]
     public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         #region Variables
@@ -30,8 +29,7 @@ namespace Input
 
         private CharacterController _controller;
 
-        private InputManager _inputManager;
-        private InputSystem_Actions.PlayerActions _playerActions;
+        private static InputSystem_Actions.PlayerActions PlayerActions => InputManager.PlayerActions;
 
         private Animator _animator;
         private static readonly int Forward = Animator.StringToHash("Forward");
@@ -58,10 +56,8 @@ namespace Input
         {
             _controller = GetComponent<CharacterController>();
 
-            _inputManager = GetComponent<InputManager>();
-            _playerActions = _inputManager.PlayerActions;
-            _playerActions.AddCallbacks(this);
-            _playerActions.Enable();
+            PlayerActions.AddCallbacks(this);
+            PlayerActions.Enable();
 
             _animator = GetComponentInChildren<Animator>();
 
@@ -71,7 +67,7 @@ namespace Input
 
         private void OnDestroy()
         {
-            _playerActions.Disable();
+            PlayerActions.Disable();
         }
 
         private void Update()

@@ -10,9 +10,10 @@ namespace UI
 {
     public class Chat : UserInterfaceBase
     {
-        private InputManager _inputManager;
-        private InputSystem_Actions.UIActions _uiActions;
-        private InputSystem_Actions.PlayerActions _playerActions;
+        private static Chat _instance;
+
+        private static InputSystem_Actions.UIActions UIActions => InputManager.UIActions;
+        private static InputSystem_Actions.PlayerActions PlayerActions => InputManager.PlayerActions;
 
         private VisualElement _chatBox;
         private ScrollView _chatView;
@@ -21,9 +22,14 @@ namespace UI
 
         private void Awake()
         {
-            _inputManager = GetComponentInParent<InputManager>();
-            _uiActions = _inputManager.UIActions;
-            _playerActions = _inputManager.PlayerActions;
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void Start()
@@ -37,16 +43,16 @@ namespace UI
 
             Root.style.display = DisplayStyle.None;
 
-            _uiActions.Enable();
-            _uiActions.Submit.performed += OnToggleChat;
-            _uiActions.ScrollWheel.performed += OnScroll;
+            UIActions.Enable();
+            UIActions.Submit.performed += OnToggleChat;
+            UIActions.ScrollWheel.performed += OnScroll;
         }
 
         private void OnDestroy()
         {
-            _uiActions.Submit.performed -= OnToggleChat;
-            _uiActions.ScrollWheel.performed -= OnScroll;
-            _uiActions.Disable();
+            UIActions.Submit.performed -= OnToggleChat;
+            UIActions.ScrollWheel.performed -= OnScroll;
+            UIActions.Disable();
         }
 
         protected override void Show()
@@ -86,17 +92,17 @@ namespace UI
             if (_isEnabled)
             {
                 Show();
-                _uiActions.Cancel.performed += OnToggleChat;
-                _playerActions.Disable();
+                UIActions.Cancel.performed += OnToggleChat;
+                PlayerActions.Disable();
                 _messageInput.RegisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
             }
             else
             {
                 OnMessageSubmit();
                 Hide();
-                _uiActions.Cancel.performed -= OnToggleChat;
+                UIActions.Cancel.performed -= OnToggleChat;
                 _messageInput.Blur();
-                _playerActions.Enable();
+                PlayerActions.Enable();
             }
         }
 
@@ -107,7 +113,7 @@ namespace UI
             if (string.IsNullOrEmpty(command)) return;
 
             GlobalAudioManager.Instance.Play("submit-message");
-            
+
             ExecuteCommand(command);
             _messageInput.value = "";
         }
