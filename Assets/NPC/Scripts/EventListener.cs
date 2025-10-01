@@ -1,7 +1,7 @@
 ﻿using Events;
 using UnityEngine;
 
-namespace NPC
+namespace NPC.Scripts
 {
     public class EventListener : MonoBehaviour
     {
