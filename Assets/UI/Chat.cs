@@ -18,7 +18,7 @@ namespace UI
         private VisualElement _chatBox;
         private ScrollView _chatView;
         private TextField _messageInput;
-        private bool _isEnabled;
+        private bool _isChatOpen;
 
         private void Awake()
         {
@@ -51,6 +51,7 @@ namespace UI
         private void OnDestroy()
         {
             UIActions.Submit.performed -= OnToggleChat;
+            UIActions.Cancel.performed -= OnToggleChat;
             UIActions.ScrollWheel.performed -= OnScroll;
             UIActions.Disable();
         }
@@ -79,7 +80,7 @@ namespace UI
 
         private void OnScroll(InputAction.CallbackContext context)
         {
-            if (!_isEnabled) return;
+            if (!_isChatOpen) return;
 
             var scrollDelta = context.ReadValue<Vector2>();
             _chatView.scrollOffset += new Vector2(0, -scrollDelta.y * 20f);
@@ -87,23 +88,38 @@ namespace UI
 
         private void OnToggleChat(InputAction.CallbackContext context)
         {
-            _isEnabled = !_isEnabled;
+            _isChatOpen = !_isChatOpen;
 
-            if (_isEnabled)
+            if (_isChatOpen)
             {
-                Show();
-                UIActions.Cancel.performed += OnToggleChat;
-                PlayerActions.Disable();
-                _messageInput.RegisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
+                OpenChat();
             }
             else
             {
-                OnMessageSubmit();
-                Hide();
-                UIActions.Cancel.performed -= OnToggleChat;
-                _messageInput.Blur();
-                PlayerActions.Enable();
+                if (context.action != UIActions.Cancel)
+                {
+                    OnMessageSubmit();
+                }
+
+                CloseChat();
             }
+        }
+
+        private void OpenChat()
+        {
+            Show();
+            UIActions.Cancel.performed += OnToggleChat;
+            PlayerActions.Disable();
+            _messageInput.RegisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
+        }
+
+        private void CloseChat()
+        {
+            Hide();
+            UIActions.Cancel.performed -= OnToggleChat;
+            _messageInput.Blur();
+            _messageInput.value = "";
+            PlayerActions.Enable();
         }
 
         private void OnMessageSubmit()
