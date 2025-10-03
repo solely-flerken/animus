@@ -6,12 +6,12 @@ namespace Packages.Animus.Unity.Runtime.Environment.PointOfInterest
     {
         private void Start()
         {
-            PointOfInterestManager.Instance?.RegisterPoi(this);
+            PointOfInterestRegistry.Instance?.Register(this);
         }
 
         private void OnDisable()
         {
-            PointOfInterestManager.Instance?.UnregisterPoi(this);
+            PointOfInterestRegistry.Instance?.Unregister(this);
         }
     }
 }
