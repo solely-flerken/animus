@@ -227,6 +227,7 @@ MonoBehaviour:
     id: 
     createdAt: 
     updatedAt: 
+  instructionRegistry: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
 --- !u!4 &163025905
 Transform:
   m_ObjectHideFlags: 0
@@ -684,7 +685,10 @@ GameObject:
   m_Component:
   - component: {fileID: 930261045}
   - component: {fileID: 930261044}
+  - component: {fileID: 930261046}
+  - component: {fileID: 930261047}
   - component: {fileID: 930261043}
+  - component: {fileID: 930261048}
   m_Layer: 0
   m_Name: AnimusManager
   m_TagString: Untagged
@@ -732,6 +736,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &930261046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930261042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119868f70f554cc19849ac4700f5fa17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.AnimusEventSystem
+--- !u!114 &930261047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930261042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1260d92310f47c98b074c02b0f6e119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.InstructionHandler
+--- !u!114 &930261048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930261042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd0c17780d7497c907f640c53b0e03f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.AgentRegistry
 --- !u!1 &1139961209
 GameObject:
   m_ObjectHideFlags: 0

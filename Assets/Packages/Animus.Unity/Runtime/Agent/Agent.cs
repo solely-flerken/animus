@@ -12,15 +12,28 @@ namespace Packages.Animus.Unity.Runtime.Agent
     {
         public AgentModel agentModel;
 
+        public InstructionRegistry instructionRegistry;
+
         private NavMeshAgent _navMeshAgent;
         private Vector3 _currentTargetPosition;
 
-        private async void Start()
+        private void Awake()
+        {
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+
+        private void Start()
+        {
+            AgentRegistry.Instance.Register(this);
+            instructionRegistry.Initialize();
+
+            RegisterAsync();
+        }
+
+        private async void RegisterAsync()
         {
             try
             {
-                _navMeshAgent = GetComponent<NavMeshAgent>();
-
                 var service = AnimusServiceManager.Service;
                 agentModel = await service.RegisterAgent(agentModel);
             }
@@ -28,6 +41,11 @@ namespace Packages.Animus.Unity.Runtime.Agent
             {
                 Debug.LogError(e);
             }
+        }
+
+        private void OnDisable()
+        {
+            AgentRegistry.Instance?.Unregister(this);
         }
 
         public void GoToPoi(PointOfInterest poi)
