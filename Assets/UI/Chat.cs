@@ -2,6 +2,8 @@
 using Audio;
 using Events;
 using Input;
+using Packages.Animus.Unity.Runtime.Agent;
+using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -136,14 +138,41 @@ namespace UI
 
         private void ExecuteCommand(string command)
         {
-            var args = command.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            var mainCommand = args[0];
-            var parameter = args.Length > 1 ? args[1] : null;
+            var args = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (args.Length == 0) return;
 
-            switch (mainCommand)
+            var mainCommand = args[0];
+            var parameters = args.Length > 1 ? args[1..] : null;
+
+            switch (mainCommand.ToLower())
             {
                 case "/clear":
                     ClearConsole();
+                    break;
+                // TODO: Refactor. Just for quick testing
+                case "/npc" when args.Length >= 3 && args[1] == "goto" && args[2] == "poi":
+                    var agents = FindObjectsByType<Agent>(FindObjectsSortMode.None);
+                    if (agents.Length == 0) return;
+                    var poi = PointOfInterestRegistry.Instance?.GetRandomPoi();
+                    if (poi == null) return;
+                    LogMessage($"NPC {agents[0].agentModel.name} moving to POI {poi.name}");
+                    agents[0].GoToPoi(poi);
+                    break;
+                case "/mock":
+                    if (parameters == null)
+                    {
+                        return;
+                    }
+
+                    switch (parameters[0])
+                    {
+                        case "response":
+                            var json = parameters[1];
+                            LogMessage($"Mocking a LLM response: {json}");
+                            AnimusEventSystem.InvokeLlmResponse(json);
+                            break;
+                    }
+
                     break;
                 case not null when mainCommand.StartsWith('/'):
                     LogMessage("Unknown command: " + command);
