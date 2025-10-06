@@ -40,5 +40,10 @@ namespace Packages.Animus.Unity.Runtime.Networking
             await WebRequestHandler.Post<ActivateAgentRequest, object>($"{_baseUrl}/agents/{agentId}/activate",
                 payload);
         }
+        
+        public async Task<ActionPayload> PollAction()
+        {
+            return await WebRequestHandler.Get<ActionPayload>($"{_baseUrl}/actions");
+        }
     }
 }

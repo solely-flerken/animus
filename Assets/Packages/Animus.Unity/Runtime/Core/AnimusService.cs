@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Agent;
+using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Data;
 using Packages.Animus.Unity.Runtime.Networking;
 using Packages.Animus.Unity.Runtime.Settings;
@@ -36,6 +37,11 @@ namespace Packages.Animus.Unity.Runtime.Core
         {
             await _animusApi.ActivateAgent(agent.id,
                 AgentRegistry.Instance.FindByGameKey(agent.gameKey).instructionRegistry.GetInstructionKeys());
+        }
+
+        public async Task<ActionPayload> PollAction()
+        {
+            return await _animusApi.PollAction();
         }
     }
 }

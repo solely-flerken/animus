@@ -6,5 +6,6 @@ namespace Packages.Animus.Unity.Runtime.Settings
     public class AnimusSettings : ScriptableObject
     {
         public string apiServiceUrl = "http://127.0.0.1:8000";
+        public float pollingInterval = 5.0f;
     }
 }
