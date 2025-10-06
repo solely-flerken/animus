@@ -6,5 +6,6 @@ namespace Packages.Animus.Unity.Runtime.Core
     public interface IAnimusService
     {
         Task<AgentModel> RegisterAgent(AgentModel agent);
+        Task ActivateAgent(AgentModel agent);
     }
 }

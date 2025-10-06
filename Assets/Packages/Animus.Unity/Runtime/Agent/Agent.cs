@@ -36,6 +36,8 @@ namespace Packages.Animus.Unity.Runtime.Agent
             {
                 var service = AnimusServiceManager.Service;
                 agentModel = await service.RegisterAgent(agentModel);
+
+                await service.ActivateAgent(agentModel);
             }
             catch (Exception e)
             {

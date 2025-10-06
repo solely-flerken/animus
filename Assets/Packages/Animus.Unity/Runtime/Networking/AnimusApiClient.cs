@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Data;
 
 namespace Packages.Animus.Unity.Runtime.Networking
@@ -30,6 +32,13 @@ namespace Packages.Animus.Unity.Runtime.Networking
         {
             var agent = await GetAgentByGameKey(gameKey);
             return agent != null;
+        }
+
+        public async Task ActivateAgent(string agentId, List<string> actionKeys)
+        {
+            var payload = new ActivateAgentRequest { BaseActions = actionKeys };
+            await WebRequestHandler.Post<ActivateAgentRequest, object>($"{_baseUrl}/agents/{agentId}/activate",
+                payload);
         }
     }
 }

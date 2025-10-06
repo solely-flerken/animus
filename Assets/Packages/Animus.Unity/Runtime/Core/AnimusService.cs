@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Data;
 using Packages.Animus.Unity.Runtime.Networking;
 using Packages.Animus.Unity.Runtime.Settings;
@@ -29,6 +30,12 @@ namespace Packages.Animus.Unity.Runtime.Core
             var createdAgent = await _animusApi.CreateAgent(agent);
             Debug.Log("Created Agent: " + createdAgent?.id);
             return createdAgent;
+        }
+
+        public async Task ActivateAgent(AgentModel agent)
+        {
+            await _animusApi.ActivateAgent(agent.id,
+                AgentRegistry.Instance.FindByGameKey(agent.gameKey).instructionRegistry.GetInstructionKeys());
         }
     }
 }

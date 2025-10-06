@@ -33,5 +33,10 @@ namespace Packages.Animus.Unity.Runtime.Agent
             _instructionMap.TryGetValue(key, out var instruction);
             return instruction;
         }
+
+        public List<string> GetInstructionKeys()
+        {
+            return new List<string>(_instructionMap.Keys);
+        }
     }
 }

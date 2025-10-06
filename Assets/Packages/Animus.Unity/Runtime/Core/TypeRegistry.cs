@@ -25,7 +25,7 @@ namespace Packages.Animus.Unity.Runtime.Core
         public static TSelf Instance { get; private set; }
 
         protected readonly List<TItem> allItems = new();
-        protected IReadOnlyList<TItem> AllItems => allItems;
+        public IReadOnlyList<TItem> AllItems => allItems;
 
         protected virtual void Awake()
         {
