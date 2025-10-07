@@ -2,7 +2,7 @@
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent
+namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
     [CreateAssetMenu(fileName = "GoToRandomPoiInstruction", menuName = "NPC/Instructions/GoToRandomPoiInstruction")]
     public class GoToRandomPoiInstruction : NpcInstruction

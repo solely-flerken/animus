@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent
+namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
     [CreateAssetMenu(fileName = "InstructionRegistry", menuName = "NPC/Instructions/InstructionRegistry")]
     public class InstructionRegistry : ScriptableObject

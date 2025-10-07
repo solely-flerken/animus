@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent
+namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
     public class InstructionHandler : MonoBehaviour
     {

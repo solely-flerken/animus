@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent
+namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
     public abstract class NpcInstruction : ScriptableObject
     {
