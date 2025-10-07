@@ -26,5 +26,12 @@ namespace Events
         {
             OnChatMessage?.Invoke(message);
         }
+
+        public static event Action<string> OnDisplayMessageInChat;
+
+        public static void InvokeDisplayMessageInChat(string message)
+        {
+            OnDisplayMessageInChat?.Invoke(message);
+        }
     }
 }

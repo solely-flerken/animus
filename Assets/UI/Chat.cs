@@ -45,11 +45,13 @@ namespace UI
             _chatView = Root.Q<ScrollView>("chatView");
             _messageInput = Root.Q<TextField>("messageInput");
 
-            Root.style.display = DisplayStyle.None;
-
+            CloseChat();
+            
             UIActions.Enable();
             UIActions.Submit.performed += OnToggleChat;
             UIActions.ScrollWheel.performed += OnScroll;
+            
+            EventSystem.OnDisplayMessageInChat += OnMessageSubmit;
         }
 
         private void OnDestroy()
@@ -58,6 +60,8 @@ namespace UI
             UIActions.Cancel.performed -= OnToggleChat;
             UIActions.ScrollWheel.performed -= OnScroll;
             UIActions.Disable();
+
+            EventSystem.OnDisplayMessageInChat -= OnMessageSubmit;
         }
 
         protected override void Show()
@@ -102,7 +106,8 @@ namespace UI
             {
                 if (context.action != UIActions.Cancel)
                 {
-                    OnMessageSubmit();
+                    OnMessageSubmit(_messageInput.value);
+                    _messageInput.value = "";
                 }
 
                 CloseChat();
@@ -126,16 +131,13 @@ namespace UI
             PlayerActions.Enable();
         }
 
-        private void OnMessageSubmit()
+        private void OnMessageSubmit(string message)
         {
-            var command = _messageInput.value;
-
-            if (string.IsNullOrEmpty(command)) return;
+            if (string.IsNullOrEmpty(message)) return;
 
             GlobalAudioManager.Instance.Play("submit-message");
 
-            ExecuteCommand(command);
-            _messageInput.value = "";
+            ExecuteCommand(message);
         }
 
         private void ExecuteCommand(string command)
@@ -189,7 +191,7 @@ namespace UI
                     LogMessage("Unknown command: " + command);
                     break;
                 default:
-                    LogMessage("Player: " + command);
+                    LogMessage(command);
                     EventSystem.InvokeChatMessage(command);
                     break;
             }
