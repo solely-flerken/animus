@@ -51,8 +51,10 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                 try
                 {
                     var action = await _service.PollAction();
-                    Debug.Log(action.action);
-                    AnimusEventSystem.InvokeActionReceived(action);
+                    if (action != null)
+                    {
+                        AnimusEventSystem.InvokeActionReceived(action);
+                    }
 
                     await UniTask.Delay(TimeSpan.FromSeconds(settings.pollingInterval), cancellationToken: token);
                 }

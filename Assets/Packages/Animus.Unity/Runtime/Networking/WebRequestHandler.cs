@@ -63,6 +63,11 @@ namespace Packages.Animus.Unity.Runtime.Networking
             while (!operation.isDone)
                 await Task.Yield();
 
+            if (request.responseCode == 204)
+            {
+                return null;
+            }
+
             if (request.result is not (UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError))
             {
                 return request.downloadHandler.text;
