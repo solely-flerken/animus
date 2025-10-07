@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Unity.Plastic.Newtonsoft.Json.Linq;
+﻿using System.Linq;
+using Packages.Animus.Unity.Runtime.Agent.Actions;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent
@@ -23,58 +23,42 @@ namespace Packages.Animus.Unity.Runtime.Agent
 
         private void Start()
         {
-            AnimusEventSystem.OnLlmResponse += ProcessInstruction;
+            AnimusEventSystem.OnActionReceived += ProcessInstruction;
         }
 
         private void OnDisable()
         {
-            AnimusEventSystem.OnLlmResponse -= ProcessInstruction;
+            AnimusEventSystem.OnActionReceived -= ProcessInstruction;
         }
 
-        private static void ProcessInstruction(string json)
+        private static void ProcessInstruction(ActionPayload actionPayload)
         {
-            var parsedJson = JObject.Parse(json);
-
-            var agentName = parsedJson["targetAgent"]?.Value<string>();
-            if (string.IsNullOrEmpty(agentName))
-            {
-                Debug.LogError("Command failed: 'targetAgent' property missing or empty in JSON.");
-                return;
-            }
-
-            var targetAgent = AgentRegistry.Instance?.FindByGameKey(agentName);
+            var targetAgent = AgentRegistry.Instance?.AllItems.First(a => a.agentModel.id == actionPayload.agentId);
             if (targetAgent == null)
             {
-                Debug.LogError($"Command failed: Agent '{agentName}' not found in the registry.");
+                Debug.LogError($"Command failed: Agent '{actionPayload.agentId}' not found in the registry.");
                 return;
             }
 
             if (targetAgent.instructionRegistry == null)
             {
-                Debug.LogError($"Command failed: Agent '{agentName}' does not have an instruction registry assigned.");
+                Debug.LogError(
+                    $"Command failed: Agent '{targetAgent.agentModel.gameKey}' does not have an instruction registry assigned.");
                 return;
             }
 
-            if (parsedJson["command"]?.First is not JProperty commandProperty)
-            {
-                Debug.LogError("Command failed: Command property not found.");
-                return;
-            }
-
-            var instructionKey = commandProperty.Name;
-            var rawPayload = commandProperty.Value;
+            var instructionKey = actionPayload.action;
 
             var instruction = targetAgent.instructionRegistry.GetInstruction(instructionKey);
             if (instruction != null)
             {
-                var payloadDict = rawPayload.ToObject<Dictionary<string, object>>();
-                Debug.Log($"Agent '{agentName}' is executing command '{instructionKey}'.");
-                instruction.Execute(targetAgent, payloadDict);
+                Debug.Log($"Agent '{targetAgent.agentModel.gameKey}' is executing command '{instructionKey}'.");
+                instruction.Execute(targetAgent, null);
             }
             else
             {
                 Debug.LogWarning(
-                    $"Command ignored: Agent '{agentName}' (Profile: {targetAgent.instructionRegistry.name}) is not capable of performing the action '{instructionKey}'.");
+                    $"Command ignored: Agent '{targetAgent.agentModel.gameKey}' (Profile: {targetAgent.instructionRegistry.name}) is not capable of performing the action '{instructionKey}'.");
             }
         }
     }

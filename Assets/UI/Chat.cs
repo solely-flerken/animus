@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Audio;
 using Events;
 using Input;
 using Packages.Animus.Unity.Runtime.Agent;
+using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -166,10 +168,19 @@ namespace UI
 
                     switch (parameters[0])
                     {
+                        // TODO: Refactor
                         case "response":
-                            var json = parameters[1];
-                            LogMessage($"Mocking a LLM response: {json}");
-                            AnimusEventSystem.InvokeLlmResponse(json);
+                            var actionKey = parameters[1];
+                            LogMessage($"Mocking action received: {actionKey}");
+
+                            var action = new ActionPayload
+                            {
+                                agentId =
+                                    FindObjectsByType<Agent>(FindObjectsSortMode.None).First(a => a).agentModel.id,
+                                action = actionKey,
+                                dialogue = "Oh, hello there!"
+                            };
+                            AnimusEventSystem.InvokeActionReceived(action);
                             break;
                     }
 

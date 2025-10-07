@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
@@ -34,7 +34,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             _service = AnimusServiceManager.Service;
 
             _cts = new CancellationTokenSource();
-            _ = PollForActionsLoop(_cts.Token);
+            PollForActionsLoop().Forget();
         }
 
         private void OnDisable()
@@ -42,16 +42,19 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             _cts.Cancel();
         }
 
-        private async Task PollForActionsLoop(CancellationToken token)
+        private async UniTaskVoid PollForActionsLoop()
         {
+            var token = this.GetCancellationTokenOnDestroy();
+
             while (!token.IsCancellationRequested)
             {
                 try
                 {
                     var action = await _service.PollAction();
                     Debug.Log(action.action);
+                    AnimusEventSystem.InvokeActionReceived(action);
 
-                    await Task.Delay((int)settings.pollingInterval * 1000, token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(settings.pollingInterval), cancellationToken: token);
                 }
                 catch (Exception)
                 {

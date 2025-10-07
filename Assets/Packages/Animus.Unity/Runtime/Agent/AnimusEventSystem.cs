@@ -1,4 +1,5 @@
 ﻿using System;
+using Packages.Animus.Unity.Runtime.Agent.Actions;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent
@@ -20,11 +21,11 @@ namespace Packages.Animus.Unity.Runtime.Agent
             }
         }
 
-        public static event Action<string> OnLlmResponse;
+        public static event Action<ActionPayload> OnActionReceived;
 
-        public static void InvokeLlmResponse(string message)
+        public static void InvokeActionReceived(ActionPayload payload)
         {
-            OnLlmResponse?.Invoke(message);
+            OnActionReceived?.Invoke(payload);
         }
     }
 }
