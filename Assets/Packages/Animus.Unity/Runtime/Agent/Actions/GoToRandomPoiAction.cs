@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
-    [CreateAssetMenu(fileName = "GoToRandomPoiInstruction", menuName = "NPC/Instructions/GoToRandomPoiInstruction")]
-    public class GoToRandomPoiInstruction : NpcInstruction
+    [CreateAssetMenu(fileName = "GoToRandomPoiAction", menuName = "NPC/Actions/GoToRandomPoi")]
+    public class GoToRandomPoiAction : NpcAction
     {
         public override void Execute(Agent agent, Dictionary<string, object> payload)
         {
             var poi = PointOfInterestRegistry.Instance.GetRandomPoi();
-            Debug.Log($"Instruction: {instructionKey} - Going to {poi.name}");
+            Debug.Log($"Action: {actionKey} - Going to {poi.name}");
             agent.GoToPoi(poi);
         }
     }

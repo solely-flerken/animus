@@ -13,7 +13,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
     {
         public AgentModel agentModel;
 
-        public InstructionRegistry instructionRegistry;
+        public ActionRegistry actionRegistry;
 
         private NavMeshAgent _navMeshAgent;
         private Vector3 _currentTargetPosition;
@@ -26,7 +26,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
         private void Start()
         {
             AgentRegistry.Instance.Register(this);
-            instructionRegistry.Initialize();
+            actionRegistry.Initialize();
 
             RegisterAsync();
         }

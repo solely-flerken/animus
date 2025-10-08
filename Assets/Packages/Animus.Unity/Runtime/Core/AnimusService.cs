@@ -36,7 +36,7 @@ namespace Packages.Animus.Unity.Runtime.Core
         public async Task ActivateAgent(AgentModel agent)
         {
             await _animusApi.ActivateAgent(agent.id,
-                AgentRegistry.Instance.FindByGameKey(agent.gameKey).instructionRegistry.GetInstructionKeys());
+                AgentRegistry.Instance.FindByGameKey(agent.gameKey).actionRegistry.GetActionKeys());
         }
 
         public async Task<ActionPayload> PollAction()

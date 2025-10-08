@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace NPC.Scripts
 {
-    [CreateAssetMenu(fileName = "TalkInstruction", menuName = "NPC/Instructions/TalkInstruction")]
-    public class TalkInstruction : NpcInstruction
+    [CreateAssetMenu(fileName = "TalkAction", menuName = "NPC/Action/Talk")]
+    public class TalkAction : NpcAction
     {
         public override void Execute(Agent agent, Dictionary<string, object> payload)
         {

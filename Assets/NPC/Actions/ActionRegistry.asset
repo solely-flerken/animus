@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ab53a621e66429ebef18dcc013a3b29, type: 3}
-  m_Name: InstructionRegistry
-  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.InstructionRegistry
-  instructions:
+  m_Name: ActionRegistry
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Actions.ActionRegistry
+  actions:
   - {fileID: 11400000, guid: 426ab240bbd608149a1ccee0a5891812, type: 2}
   - {fileID: 11400000, guid: ba8c3033726901c47b54bbf48cc5774e, type: 2}

@@ -227,7 +227,7 @@ MonoBehaviour:
     id: 
     createdAt: 
     updatedAt: 
-  instructionRegistry: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
+  actionRegistry: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
 --- !u!4 &163025905
 Transform:
   m_ObjectHideFlags: 0
