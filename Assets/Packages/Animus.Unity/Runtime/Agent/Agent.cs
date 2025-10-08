@@ -1,7 +1,6 @@
 ﻿using System;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core;
-using Packages.Animus.Unity.Runtime.Data;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.AI;

@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
-using Packages.Animus.Unity.Runtime.Data;
-using Packages.Animus.Unity.Runtime.Networking;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 

@@ -2,7 +2,7 @@
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Data
+namespace Packages.Animus.Unity.Runtime.Agent
 {
     [Serializable]
     public class AgentModel
