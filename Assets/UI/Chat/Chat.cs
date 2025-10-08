@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-namespace UI
+namespace UI.Chat
 {
     public class Chat : UserInterfaceBase
     {

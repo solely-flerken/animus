@@ -4,7 +4,7 @@ using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using UnityEngine;
 
-namespace NPC.Actions
+namespace NPC.Scripts
 {
     [CreateAssetMenu(fileName = "TalkInstruction", menuName = "NPC/Instructions/TalkInstruction")]
     public class TalkInstruction : NpcInstruction
