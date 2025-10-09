@@ -217,13 +217,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd0602716f44315bafb540b552d2ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Agent
-  agentModel:
-    name: Borin
+  agentEntity:
+    name: sadsda
     gameKey: npc_borin
-    description: You are Borin, a gruff Dwarven blacksmith. You are obsessed with
-      finding your lost Family axe, 'Glimmerheart'. You are a man of few words and
-      suspicious of strangers but might help them if they can help you find your
-      axe.
+    description: asdsad
+    type: asd
+    details:
+      backstory: asddsa
     id: 
     createdAt: 
     updatedAt: 

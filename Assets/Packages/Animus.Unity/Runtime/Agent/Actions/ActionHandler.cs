@@ -33,7 +33,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 
         private static void ProcessAction(ActionPayload actionPayload)
         {
-            var targetAgent = AgentRegistry.Instance?.AllItems.First(a => a.agentModel.id == actionPayload.agentId);
+            var targetAgent = AgentRegistry.Instance?.AllItems.First(a => a.agentEntity.id == actionPayload.agentId);
             if (targetAgent == null)
             {
                 Debug.LogError($"Command failed: Agent '{actionPayload.agentId}' not found in the registry.");
@@ -43,7 +43,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             if (targetAgent.actionRegistry == null)
             {
                 Debug.LogError(
-                    $"Command failed: Agent '{targetAgent.agentModel.gameKey}' does not have an action registry assigned.");
+                    $"Command failed: Agent '{targetAgent.agentEntity.gameKey}' does not have an action registry assigned.");
                 return;
             }
 
@@ -52,13 +52,13 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             var action = targetAgent.actionRegistry.GetAction(actionKey);
             if (action != null)
             {
-                Debug.Log($"Agent '{targetAgent.agentModel.gameKey}' is executing command '{actionKey}'.");
+                Debug.Log($"Agent '{targetAgent.agentEntity.gameKey}' is executing command '{actionKey}'.");
                 action.Execute(targetAgent, null);
             }
             else
             {
                 Debug.LogWarning(
-                    $"Command ignored: Agent '{targetAgent.agentModel.gameKey}' (Profile: {targetAgent.actionRegistry.name}) is not capable of performing the action '{actionKey}'.");
+                    $"Command ignored: Agent '{targetAgent.agentEntity.gameKey}' (Profile: {targetAgent.actionRegistry.name}) is not capable of performing the action '{actionKey}'.");
             }
         }
     }

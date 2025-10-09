@@ -63,7 +63,7 @@ namespace Packages.Animus.Unity.Runtime.Networking
             while (!operation.isDone)
                 await Task.Yield();
 
-            if (request.responseCode == 204)
+            if (request.responseCode is 204 or 404)
             {
                 return null;
             }

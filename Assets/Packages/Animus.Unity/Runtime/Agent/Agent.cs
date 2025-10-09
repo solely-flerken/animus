@@ -10,7 +10,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
     [RequireComponent(typeof(NavMeshAgent))]
     public class Agent : MonoBehaviour
     {
-        public AgentModel agentModel;
+        public AnimusEntity<AgentDetails> agentEntity;
 
         public ActionRegistry actionRegistry;
 
@@ -35,9 +35,9 @@ namespace Packages.Animus.Unity.Runtime.Agent
             try
             {
                 var service = AnimusServiceManager.Service;
-                agentModel = await service.RegisterAgent(agentModel);
+                agentEntity = await service.RegisterAgent<AgentDetails>(agentEntity);
 
-                await service.ActivateAgent(agentModel);
+                await service.ActivateAgent(agentEntity);
             }
             catch (Exception e)
             {

@@ -17,9 +17,9 @@ namespace Packages.Animus.Unity.Runtime.Core
             _animusApi = new AnimusApiClient(settings.apiServiceUrl);
         }
 
-        public async Task<AgentModel> RegisterAgent(AgentModel agent)
+        public async Task<AnimusEntity<T>> RegisterAgent<T>(AnimusEntity<T> agent)
         {
-            var existingAgent = await _animusApi.GetAgentByGameKey(agent.gameKey);
+            var existingAgent = await _animusApi.GetAgentByGameKey<T>(agent.gameKey);
             if (existingAgent != null)
             {
                 Debug.Log("Found Agent: " + existingAgent.id);
@@ -31,7 +31,7 @@ namespace Packages.Animus.Unity.Runtime.Core
             return createdAgent;
         }
 
-        public async Task ActivateAgent(AgentModel agent)
+        public async Task ActivateAgent<T>(AnimusEntity<T> agent)
         {
             await _animusApi.ActivateAgent(agent.id,
                 AgentRegistry.Instance.FindByGameKey(agent.gameKey).actionRegistry.GetActionKeys());

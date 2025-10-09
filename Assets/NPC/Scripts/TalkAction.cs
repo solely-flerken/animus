@@ -11,7 +11,7 @@ namespace NPC.Scripts
     {
         public override void Execute(Agent agent, Dictionary<string, object> payload)
         {
-            EventSystem.InvokeDisplayMessageInChat($"{agent.agentModel.gameKey}: Hello!");
+            EventSystem.InvokeDisplayMessageInChat($"{agent.agentEntity.gameKey}: Hello!");
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
     {
         public Agent FindByGameKey(string gameKey)
         {
-            return allItems.Find(a => a.agentModel.gameKey == gameKey);
+            return allItems.Find(a => a.agentEntity.gameKey == gameKey);
         }
     }
 }

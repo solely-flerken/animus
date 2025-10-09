@@ -160,7 +160,7 @@ namespace UI.Chat
                     if (agents.Length == 0) return;
                     var poi = PointOfInterestRegistry.Instance?.GetRandomPoi();
                     if (poi == null) return;
-                    LogMessage($"NPC {agents[0].agentModel.name} moving to POI {poi.name}");
+                    LogMessage($"NPC {agents[0].agentEntity.name} moving to POI {poi.name}");
                     agents[0].GoToPoi(poi);
                     break;
                 case "/mock":
@@ -179,7 +179,7 @@ namespace UI.Chat
                             var action = new ActionPayload
                             {
                                 agentId =
-                                    FindObjectsByType<Agent>(FindObjectsSortMode.None).First(a => a).agentModel.id,
+                                    FindObjectsByType<Agent>(FindObjectsSortMode.None).First(a => a).agentEntity.id,
                                 action = actionKey,
                                 dialogue = "Oh, hello there!"
                             };

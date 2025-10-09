@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Networking;
 
@@ -15,23 +14,23 @@ namespace Packages.Animus.Unity.Runtime.Core
             _baseUrl = baseUrl.TrimEnd('/');
         }
 
-        public Task<AgentModel> CreateAgent(AgentModel agent)
+        public Task<AnimusEntity<T>> CreateAgent<T>(AnimusEntity<T> agent)
         {
-            return WebRequestHandler.Post<AgentModel, AgentModel>(
+            return WebRequestHandler.Post<AnimusEntity<T>, AnimusEntity<T>>(
                 $"{_baseUrl}/agents/", agent
             );
         }
 
-        public Task<AgentModel> GetAgentByGameKey(string gameKey)
+        public Task<AnimusEntity<T>> GetAgentByGameKey<T>(string gameKey)
         {
-            return WebRequestHandler.Get<AgentModel>(
+            return WebRequestHandler.Get<AnimusEntity<T>>(
                 $"{_baseUrl}/agents/gameKey/{gameKey}"
             );
         }
 
-        public async Task<bool> AgentExists(string gameKey)
+        public async Task<bool> AgentExists<T>(string gameKey)
         {
-            var agent = await GetAgentByGameKey(gameKey);
+            var agent = await GetAgentByGameKey<T>(gameKey);
             return agent != null;
         }
 
