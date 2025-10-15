@@ -35,7 +35,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
             try
             {
                 var service = AnimusServiceManager.Service;
-                agentEntity = await service.RegisterAgent<AgentDetails>(agentEntity);
+                agentEntity = await service.RegisterAgent(agentEntity);
 
                 await service.ActivateAgent(agentEntity);
             }
