@@ -8,22 +8,17 @@ namespace Packages.Animus.Unity.Runtime.Environment.PointOfInterest
     {
         public PointOfInterest GetRandomPoi()
         {
-            if (AllItems.Count == 0)
-            {
-                return null;
-            }
-
-            return AllItems[Random.Range(0, AllItems.Count)];
+            return allItems.Count == 0 ? null : allItems[Random.Range(0, allItems.Count)];
         }
 
         public PointOfInterest GetNearestPoi(Vector3 position)
         {
-            if (AllItems.Count == 0)
+            if (allItems.Count == 0)
             {
                 return null;
             }
 
-            return AllItems.OrderBy(poi => Vector3.Distance(position, poi.transform.position))
+            return allItems.OrderBy(poi => Vector3.Distance(position, poi.transform.position))
                 .FirstOrDefault();
         }
     }

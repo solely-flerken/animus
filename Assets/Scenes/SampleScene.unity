@@ -218,16 +218,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Agent
   agentEntity:
-    name: sadsda
     gameKey: npc_borin
-    description: asdsad
-    type: asd
+    name: Borin
+    description: NPC named Borin
+    type: 1
     details:
-      backstory: asddsa
-    id: 
-    createdAt: 
-    updatedAt: 
-  actionRegistry: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
+      backstory: You are Borin, a gruff Dwarven blacksmith. You are obsessed with
+        finding your lost Family axe, 'Glimmerheart'. You are a man of few words
+        and suspicious of strangers but might help them if they can help you find
+        your axe.
+  actionCollection: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
 --- !u!4 &163025905
 Transform:
   m_ObjectHideFlags: 0
@@ -684,7 +684,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 930261045}
-  - component: {fileID: 930261044}
   - component: {fileID: 930261049}
   - component: {fileID: 930261046}
   - component: {fileID: 930261047}
@@ -709,19 +708,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d07ff7774874025947831727631bad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Environment.PointOfInterest.PointOfInterestManager
---- !u!114 &930261044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930261042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 575b62849755400587f732ca4164d0dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Core.AnimusServiceManager
-  settings: {fileID: 11400000, guid: 539e038006b977247aed67fbe98cb348, type: 2}
 --- !u!4 &930261045
 Transform:
   m_ObjectHideFlags: 0

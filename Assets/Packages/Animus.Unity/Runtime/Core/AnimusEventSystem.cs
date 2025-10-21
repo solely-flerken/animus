@@ -1,6 +1,4 @@
-﻿using System;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core
 {
@@ -19,13 +17,6 @@ namespace Packages.Animus.Unity.Runtime.Core
             {
                 Destroy(gameObject);
             }
-        }
-
-        public static event Action<ActionPayload> OnActionReceived;
-
-        public static void InvokeActionReceived(ActionPayload payload)
-        {
-            OnActionReceived?.Invoke(payload);
         }
     }
 }

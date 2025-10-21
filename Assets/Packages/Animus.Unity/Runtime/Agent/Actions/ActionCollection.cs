@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
-    [CreateAssetMenu(fileName = "ActionRegistry", menuName = "NPC/Actions/ActionRegistry")]
-    public class ActionRegistry : ScriptableObject
+    [CreateAssetMenu(fileName = "ActionCollection", menuName = "NPC/Actions/ActionCollection")]
+    public class ActionCollection : ScriptableObject
     {
         [SerializeField] private List<NpcAction> actions;
 
@@ -37,6 +37,11 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         public List<string> GetActionKeys()
         {
             return new List<string>(_actionsMap.Keys);
+        }
+
+        public NpcAction GetRandomAction()
+        {
+            return actions.Count == 0 ? null : actions[Random.Range(0, actions.Count)];
         }
     }
 }

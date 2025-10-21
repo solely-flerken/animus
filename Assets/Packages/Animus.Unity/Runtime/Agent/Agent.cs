@@ -1,5 +1,4 @@
-﻿using System;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
+﻿using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
     {
         public AnimusEntity<AgentDetails> agentEntity;
 
-        public ActionRegistry actionRegistry;
+        public ActionCollection actionCollection;
 
         private NavMeshAgent _navMeshAgent;
         private Vector3 _currentTargetPosition;
@@ -25,26 +24,9 @@ namespace Packages.Animus.Unity.Runtime.Agent
         private void Start()
         {
             AgentRegistry.Instance.Register(this);
-            actionRegistry.Initialize();
-
-            RegisterAsync();
+            actionCollection.Initialize();
         }
-
-        private async void RegisterAsync()
-        {
-            try
-            {
-                var service = AnimusServiceManager.Service;
-                agentEntity = await service.RegisterAgent(agentEntity);
-
-                await service.ActivateAgent(agentEntity);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-            }
-        }
-
+        
         private void OnDisable()
         {
             AgentRegistry.Instance?.Unregister(this);

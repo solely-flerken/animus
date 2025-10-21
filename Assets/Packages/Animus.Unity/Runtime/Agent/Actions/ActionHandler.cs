@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Packages.Animus.Unity.Runtime.Core;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
@@ -21,45 +20,34 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
         }
 
-        private void Start()
+        public static void ProcessAction<T>(ActionPayload<T> actionPayload)
         {
-            AnimusEventSystem.OnActionReceived += ProcessAction;
-        }
-
-        private void OnDisable()
-        {
-            AnimusEventSystem.OnActionReceived -= ProcessAction;
-        }
-
-        private static void ProcessAction(ActionPayload actionPayload)
-        {
-            var targetAgent = AgentRegistry.Instance?.AllItems.First(a => a.agentEntity.id == actionPayload.agentId);
+            var targetAgent =
+                AgentRegistry.Instance.allItems.FirstOrDefault(a => a.agentEntity.gameKey == actionPayload.gameKey);
             if (targetAgent == null)
             {
-                Debug.LogError($"Command failed: Agent '{actionPayload.agentId}' not found in the registry.");
+                Debug.LogError($"Command failed: Agent '{actionPayload.gameKey}' not found in the registry.");
                 return;
             }
 
-            if (targetAgent.actionRegistry == null)
+            if (targetAgent.actionCollection == null)
             {
                 Debug.LogError(
                     $"Command failed: Agent '{targetAgent.agentEntity.gameKey}' does not have an action registry assigned.");
                 return;
             }
 
-            var actionKey = actionPayload.action;
+            var actionKey = actionPayload.actionKey;
 
-            var action = targetAgent.actionRegistry.GetAction(actionKey);
-            if (action != null)
-            {
-                Debug.Log($"Agent '{targetAgent.agentEntity.gameKey}' is executing command '{actionKey}'.");
-                action.Execute(targetAgent, null);
-            }
-            else
+            var action = targetAgent.actionCollection.GetAction(actionKey);
+            if (action == null)
             {
                 Debug.LogWarning(
-                    $"Command ignored: Agent '{targetAgent.agentEntity.gameKey}' (Profile: {targetAgent.actionRegistry.name}) is not capable of performing the action '{actionKey}'.");
+                    $"Command ignored: Agent '{targetAgent.agentEntity.gameKey}' (Profile: {targetAgent.actionCollection.name}) is not capable of performing the action '{actionKey}'.");
             }
+
+            Debug.Log($"Agent '{targetAgent.agentEntity.gameKey}' is executing command '{actionKey}'.");
+            action.Execute(targetAgent, null);
         }
     }
 }

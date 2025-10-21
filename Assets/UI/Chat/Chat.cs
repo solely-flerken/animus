@@ -4,8 +4,6 @@ using Audio;
 using Events;
 using Input;
 using Packages.Animus.Unity.Runtime.Agent;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
-using Packages.Animus.Unity.Runtime.Core;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -45,14 +43,14 @@ namespace UI.Chat
             _chatBox = Root.Q<VisualElement>("chatBox");
             _chatView = Root.Q<ScrollView>("chatView");
             _messageInput = Root.Q<TextField>("messageInput");
-
-            CloseChat();
             
+            CloseChat();
+
             UIActions.Enable();
             UIActions.Submit.performed += OnToggleChat;
             UIActions.ScrollWheel.performed += OnScroll;
-            
-            EventSystem.OnDisplayMessageInChat += OnMessageSubmit;
+
+            EventSystem.OnDisplayMessageInChat += LogMessage;
         }
 
         private void OnDestroy()
@@ -62,7 +60,7 @@ namespace UI.Chat
             UIActions.ScrollWheel.performed -= OnScroll;
             UIActions.Disable();
 
-            EventSystem.OnDisplayMessageInChat -= OnMessageSubmit;
+            EventSystem.OnDisplayMessageInChat -= LogMessage;
         }
 
         protected override void Show()
@@ -136,9 +134,15 @@ namespace UI.Chat
         {
             if (string.IsNullOrEmpty(message)) return;
 
-            GlobalAudioManager.Instance.Play("submit-message");
-
-            ExecuteCommand(message);
+            if (message.StartsWith('/'))
+            {
+                ExecuteCommand(message);
+            }
+            else
+            {
+                LogMessage($"Player: {message}");
+                EventSystem.InvokeChatMessage(message);
+            }
         }
 
         private void ExecuteCommand(string command)
@@ -154,46 +158,26 @@ namespace UI.Chat
                 case "/clear":
                     ClearConsole();
                     break;
-                // TODO: Refactor. Just for quick testing
-                case "/npc" when args.Length >= 3 && args[1] == "goto" && args[2] == "poi":
-                    var agents = FindObjectsByType<Agent>(FindObjectsSortMode.None);
-                    if (agents.Length == 0) return;
-                    var poi = PointOfInterestRegistry.Instance?.GetRandomPoi();
-                    if (poi == null) return;
-                    LogMessage($"NPC {agents[0].agentEntity.name} moving to POI {poi.name}");
-                    agents[0].GoToPoi(poi);
-                    break;
-                case "/mock":
-                    if (parameters == null)
+                case "/npc" when parameters?.Length >= 3 && parameters[1] == "goto" && parameters[2] == "poi":
+                    var agent = AgentRegistry.Instance.allItems.FirstOrDefault(x =>
+                        x.agentEntity.gameKey == parameters[0]);
+                    if (agent == null)
+                    {
+                        LogMessage($"No NPC with the gameKey: {parameters[0]}");
+                        return;
+                    }
+
+                    var poi = PointOfInterestRegistry.Instance.GetRandomPoi();
+                    if (poi == null)
                     {
                         return;
                     }
 
-                    switch (parameters[0])
-                    {
-                        // TODO: Refactor
-                        case "response":
-                            var actionKey = parameters[1];
-                            LogMessage($"Mocking action received: {actionKey}");
-
-                            var action = new ActionPayload
-                            {
-                                agentId =
-                                    FindObjectsByType<Agent>(FindObjectsSortMode.None).First(a => a).agentEntity.id,
-                                action = actionKey,
-                                dialogue = "Oh, hello there!"
-                            };
-                            AnimusEventSystem.InvokeActionReceived(action);
-                            break;
-                    }
-
-                    break;
-                case not null when mainCommand.StartsWith('/'):
-                    LogMessage("Unknown command: " + command);
+                    LogMessage($"NPC {agent.agentEntity.name} moving to POI {poi.name}");
+                    agent.GoToPoi(poi);
                     break;
                 default:
-                    LogMessage(command);
-                    EventSystem.InvokeChatMessage(command);
+                    LogMessage("Invalid or unknown command: " + command);
                     break;
             }
         }
@@ -202,6 +186,8 @@ namespace UI.Chat
         {
             var newMessageLabel = new Label(message);
             _chatView.Add(newMessageLabel);
+
+            GlobalAudioManager.Instance.Play("submit-message");
 
             _chatView.schedule
                 .Execute(_ => { _chatView.verticalScroller.value = _chatView.verticalScroller.highValue; })
