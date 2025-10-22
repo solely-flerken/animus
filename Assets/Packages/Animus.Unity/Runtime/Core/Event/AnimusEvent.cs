@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 
 namespace Packages.Animus.Unity.Runtime.Core.Event
 {

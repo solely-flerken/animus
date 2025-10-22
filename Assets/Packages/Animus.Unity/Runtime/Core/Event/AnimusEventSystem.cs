@@ -1,8 +1,7 @@
 ﻿using System;
-using Packages.Animus.Unity.Runtime.Core.Event;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Core
+namespace Packages.Animus.Unity.Runtime.Core.Event
 {
     public class AnimusEventSystem : MonoBehaviour
     {

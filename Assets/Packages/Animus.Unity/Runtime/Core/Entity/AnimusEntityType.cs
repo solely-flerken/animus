@@ -1,4 +1,4 @@
-﻿namespace Packages.Animus.Unity.Runtime.Core
+﻿namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
     public enum AnimusEntityType
     {

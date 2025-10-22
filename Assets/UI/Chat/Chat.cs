@@ -5,7 +5,7 @@ using Audio;
 using Events;
 using Input;
 using Packages.Animus.Unity.Runtime.Agent;
-using Packages.Animus.Unity.Runtime.Core;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Packages.Animus.Unity.Runtime.Core
+namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
     [Serializable]
     public class AnimusEntity

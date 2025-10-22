@@ -1,5 +1,5 @@
 ﻿using System;
-using Packages.Animus.Unity.Runtime.Core;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent
