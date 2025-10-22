@@ -2,7 +2,9 @@
 {
     public enum AnimusEntityType
     {
-        Object,
+        None,
+        Player,
         Agent,
+        Object
     }
 }

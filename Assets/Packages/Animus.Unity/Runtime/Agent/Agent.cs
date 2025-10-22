@@ -1,5 +1,4 @@
 ﻿using Packages.Animus.Unity.Runtime.Agent.Actions;
-using Packages.Animus.Unity.Runtime.Core;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,7 +8,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
     [RequireComponent(typeof(NavMeshAgent))]
     public class Agent : MonoBehaviour
     {
-        public AnimusEntity<AgentDetails> agentEntity;
+        public AnimusAgent animusAgent;
 
         public ActionCollection actionCollection;
 

@@ -165,14 +165,15 @@ namespace UI.Chat
             var mainCommand = args[0];
             var parameters = args.Length > 1 ? args[1..] : null;
 
+            Agent agent;
             switch (mainCommand.ToLower())
             {
                 case "/clear":
                     ClearConsole();
                     break;
                 case "/npc" when parameters?.Length >= 3 && parameters[1] == "goto" && parameters[2] == "poi":
-                    var agent = AgentRegistry.Instance.allItems.FirstOrDefault(x =>
-                        x.agentEntity.gameKey == parameters[0]);
+                    agent = AgentRegistry.Instance.allItems.FirstOrDefault(x =>
+                        x.animusAgent.gameKey == parameters[0]);
                     if (agent == null)
                     {
                         LogMessage($"No NPC with the gameKey: {parameters[0]}");
@@ -185,7 +186,7 @@ namespace UI.Chat
                         return;
                     }
 
-                    LogMessage($"NPC {agent.agentEntity.name} moving to POI {poi.name}");
+                    LogMessage($"NPC {agent.animusAgent.name} moving to POI {poi.name}");
                     agent.GoToPoi(poi);
                     break;
                 default:
