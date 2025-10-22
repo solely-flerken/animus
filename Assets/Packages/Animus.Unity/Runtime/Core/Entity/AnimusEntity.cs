@@ -1,12 +1,11 @@
-﻿using System;
+﻿using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
-    [Serializable]
-    public class AnimusEntity
+    public class AnimusEntity : MonoBehaviour
     {
         public string gameKey;
-        public string name;
+        public string entityName;
         public string description;
         public virtual AnimusEntityType Type => AnimusEntityType.None;
     }

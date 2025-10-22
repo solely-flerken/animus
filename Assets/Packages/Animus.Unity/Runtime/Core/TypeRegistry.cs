@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core
@@ -26,6 +28,8 @@ namespace Packages.Animus.Unity.Runtime.Core
 
         public readonly List<TItem> allItems = new();
 
+        private readonly Dictionary<Type, IList> _cache = new();
+        
         protected virtual void Awake()
         {
             if (Instance == null)
@@ -44,6 +48,7 @@ namespace Packages.Animus.Unity.Runtime.Core
             if (!allItems.Contains(item))
             {
                 allItems.Add(item);
+                _cache.Clear();
             }
         }
 
@@ -52,7 +57,31 @@ namespace Packages.Animus.Unity.Runtime.Core
             if (allItems.Contains(item))
             {
                 allItems.Remove(item);
+                _cache.Clear();
             }
+        }
+
+        public List<TSub> GetAll<TSub>() where TSub : TItem
+        {
+            var type = typeof(TSub);
+            
+            if (_cache.TryGetValue(type, out var list))
+            {
+                return (List<TSub>)list;
+            }
+            
+            List<TSub> result = new();
+            foreach (var item in allItems)
+            {
+                if (item is TSub sub)
+                {
+                    result.Add(sub);
+                }
+            }
+
+            _cache[type] = result;
+            
+            return result;
         }
     }
 }

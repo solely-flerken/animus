@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                     {
                         var actionPayload = new ActionPayload<string>
                         {
-                            gameKey = agent.animusAgent.gameKey,
+                            gameKey = agent.gameKey,
                             actionKey = agent.actionCollection.GetRandomAction().actionKey,
                             details = ""
                         };

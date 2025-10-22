@@ -168,16 +168,16 @@ namespace UI.Chat
             var mainCommand = args[0];
             var parameters = args.Length > 1 ? args[1..] : null;
 
-            Agent agent;
+            AnimusAgent animusAgent;
             switch (mainCommand.ToLower())
             {
                 case "/clear":
                     ClearConsole();
                     break;
                 case "/npc" when parameters?.Length >= 3 && parameters[1] == "goto" && parameters[2] == "poi":
-                    agent = AgentRegistry.Instance.allItems.FirstOrDefault(x =>
-                        x.animusAgent.gameKey == parameters[0]);
-                    if (agent == null)
+                    animusAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(x =>
+                        x.gameKey == parameters[0]);
+                    if (animusAgent == null)
                     {
                         LogMessage($"No NPC with the gameKey: {parameters[0]}");
                         return;
@@ -189,12 +189,13 @@ namespace UI.Chat
                         return;
                     }
 
-                    LogMessage($"NPC {agent.animusAgent.name} moving to POI {poi.name}");
-                    agent.GoToPoi(poi);
+                    LogMessage($"NPC {animusAgent.name} moving to POI {poi.name}");
+                    animusAgent.GoToPoi(poi);
                     break;
                 case "/talk" when parameters?.Length >= 2 && !string.IsNullOrEmpty(parameters[1]):
-                    agent = AgentRegistry.Instance.allItems.FirstOrDefault(x => x.animusAgent.gameKey == parameters[0]);
-                    if (agent == null)
+                    animusAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>()
+                        .FirstOrDefault(x => x.gameKey == parameters[0]);
+                    if (animusAgent == null)
                     {
                         LogMessage($"No NPC with the gameKey: {parameters[0]}");
                         return;
@@ -205,7 +206,7 @@ namespace UI.Chat
                     {
                         EventType = AnimusEventType.Dialog,
                         EventSource = null,
-                        EventTarget = new List<AnimusEntity> { agent.animusAgent },
+                        EventTarget = new List<AnimusEntity> { animusAgent },
                     };
 
                     AnimusEventSystem.InvokeDialogEvent(animusEvent);
@@ -251,7 +252,7 @@ namespace UI.Chat
                     {
                         _currentMessage = _messageInput.value;
                     }
-                    
+
                     if (_historyIndex < _messageHistory.Count - 1)
                     {
                         _historyIndex++;
