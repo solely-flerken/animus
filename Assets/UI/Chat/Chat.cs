@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Audio;
 using Events;
@@ -23,6 +24,9 @@ namespace UI.Chat
         private TextField _messageInput;
         private bool _isChatOpen;
 
+        private readonly List<string> _messageHistory = new();
+        private int _historyIndex = -1;
+
         private void Awake()
         {
             if (_instance == null)
@@ -43,7 +47,8 @@ namespace UI.Chat
             _chatBox = Root.Q<VisualElement>("chatBox");
             _chatView = Root.Q<ScrollView>("chatView");
             _messageInput = Root.Q<TextField>("messageInput");
-            
+            _messageInput.RegisterCallback<KeyDownEvent>(OnKeyDown, TrickleDown.TrickleDown);
+
             CloseChat();
 
             UIActions.Enable();
@@ -128,11 +133,18 @@ namespace UI.Chat
             _messageInput.Blur();
             _messageInput.value = "";
             PlayerActions.Enable();
+
+            _historyIndex = -1;
         }
 
         private void OnMessageSubmit(string message)
         {
             if (string.IsNullOrEmpty(message)) return;
+
+            if (_messageHistory.Count == 0 || message != _messageHistory[0])
+            {
+                _messageHistory.Insert(0, message);
+            }
 
             if (message.StartsWith('/'))
             {
@@ -203,6 +215,39 @@ namespace UI.Chat
         {
             _messageInput.Focus();
             _messageInput.UnregisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
+        }
+
+        private void OnKeyDown(KeyDownEvent evt)
+        {
+            switch (evt.keyCode)
+            {
+                case KeyCode.UpArrow:
+                {
+                    evt.StopPropagation();
+
+                    if (_historyIndex < _messageHistory.Count - 1)
+                    {
+                        _historyIndex++;
+                    }
+
+                    _messageInput.value = _messageHistory[_historyIndex];
+                    _messageInput.selectIndex = _messageInput.text.Length;
+                    break;
+                }
+                case KeyCode.DownArrow:
+                {
+                    evt.StopPropagation();
+
+                    if (_historyIndex > 0)
+                    {
+                        _historyIndex--;
+                        _messageInput.value = _messageHistory[_historyIndex];
+                        _messageInput.selectIndex = _messageInput.text.Length;
+                    }
+
+                    break;
+                }
+            }
         }
     }
 }
