@@ -27,6 +27,7 @@ namespace UI.Chat
         private bool _isChatOpen;
 
         private readonly List<string> _messageHistory = new();
+        private string _currentMessage;
         private int _historyIndex = -1;
 
         private void Awake()
@@ -246,24 +247,40 @@ namespace UI.Chat
                 {
                     evt.StopPropagation();
 
+                    if (_historyIndex == -1)
+                    {
+                        _currentMessage = _messageInput.value;
+                    }
+                    
                     if (_historyIndex < _messageHistory.Count - 1)
                     {
                         _historyIndex++;
                     }
 
-                    _messageInput.value = _messageHistory[_historyIndex];
-                    _messageInput.selectIndex = _messageInput.text.Length;
+                    if (_historyIndex >= 0)
+                    {
+                        _messageInput.value = _messageHistory[_historyIndex];
+                        _messageInput.selectIndex = _messageInput.text.Length;
+                    }
+
                     break;
                 }
                 case KeyCode.DownArrow:
                 {
                     evt.StopPropagation();
 
-                    if (_historyIndex > 0)
+                    if (_historyIndex >= 0)
                     {
                         _historyIndex--;
-                        _messageInput.value = _messageHistory[_historyIndex];
-                        _messageInput.selectIndex = _messageInput.text.Length;
+                        if (_historyIndex >= 0)
+                        {
+                            _messageInput.value = _messageHistory[_historyIndex];
+                            _messageInput.selectIndex = _messageInput.text.Length;
+                        }
+                        else
+                        {
+                            _messageInput.value = _currentMessage;
+                        }
                     }
 
                     break;
