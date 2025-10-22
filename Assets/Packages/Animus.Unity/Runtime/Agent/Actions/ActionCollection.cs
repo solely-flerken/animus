@@ -6,7 +6,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     [CreateAssetMenu(fileName = "ActionCollection", menuName = "NPC/Actions/ActionCollection")]
     public class ActionCollection : ScriptableObject
     {
-        [SerializeField] private List<NpcAction> actions;
+        public List<NpcAction> actions;
 
         private Dictionary<string, NpcAction> _actionsMap;
 
