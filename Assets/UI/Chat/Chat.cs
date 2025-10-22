@@ -8,6 +8,7 @@ using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
+using Packages.Animus.Unity.Runtime.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -205,7 +206,7 @@ namespace UI.Chat
                     var animusEvent = new DialogEvent
                     {
                         EventType = AnimusEventType.Dialog,
-                        EventSource = null,
+                        EventSource = AnimusEntityRegistry.Instance.GetAll<AnimusPlayer>().First(),
                         EventTarget = new List<AnimusEntity> { animusAgent },
                     };
 

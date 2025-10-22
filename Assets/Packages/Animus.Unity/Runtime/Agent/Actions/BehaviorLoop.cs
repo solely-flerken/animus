@@ -50,7 +50,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                 try
                 {
                     // TODO
-                    foreach (var agent in AgentRegistry.Instance.allItems)
+                    foreach (var agent in AnimusEntityRegistry.Instance.GetAll<AnimusAgent>())
                     {
                         var actionPayload = new ActionPayload<string>
                         {

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5770965085560246500}
   - component: {fileID: 2849922015615667602}
   - component: {fileID: 2744148191794597675}
+  - component: {fileID: -7535430826707977608}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -86,6 +87,21 @@ MonoBehaviour:
   mouseSensitivity: 0.7
   verticalLookLimit: 80
   animationSmoothTime: 0.1
+--- !u!114 &-7535430826707977608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8491066225574531592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2386ecac92944fff834d9803b81f4556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Player.AnimusPlayer
+  gameKey: player_1
+  entityName: 
+  description: 
 --- !u!1 &8766478362289998422
 GameObject:
   m_ObjectHideFlags: 0
