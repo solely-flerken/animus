@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Packages.Animus.Unity.Runtime.Core.Event;
+using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core
 {
@@ -17,6 +19,13 @@ namespace Packages.Animus.Unity.Runtime.Core
             {
                 Destroy(gameObject);
             }
+        }
+
+        public static event Action<AnimusEvent> OnDialogEvent;
+
+        public static void InvokeDialogEvent(AnimusEvent animusEvent)
+        {
+            OnDialogEvent?.Invoke(animusEvent);
         }
     }
 }

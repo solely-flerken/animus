@@ -5,6 +5,8 @@ using Audio;
 using Events;
 using Input;
 using Packages.Animus.Unity.Runtime.Agent;
+using Packages.Animus.Unity.Runtime.Core;
+using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -188,6 +190,24 @@ namespace UI.Chat
 
                     LogMessage($"NPC {agent.animusAgent.name} moving to POI {poi.name}");
                     agent.GoToPoi(poi);
+                    break;
+                case "/talk" when parameters?.Length >= 2 && !string.IsNullOrEmpty(parameters[1]):
+                    agent = AgentRegistry.Instance.allItems.FirstOrDefault(x => x.animusAgent.gameKey == parameters[0]);
+                    if (agent == null)
+                    {
+                        LogMessage($"No NPC with the gameKey: {parameters[0]}");
+                        return;
+                    }
+
+                    // TODO:
+                    var animusEvent = new DialogEvent
+                    {
+                        EventType = AnimusEventType.Dialog,
+                        EventSource = null,
+                        EventTarget = new List<AnimusEntity> { agent.animusAgent },
+                    };
+
+                    AnimusEventSystem.InvokeDialogEvent(animusEvent);
                     break;
                 default:
                     LogMessage("Invalid or unknown command: " + command);
