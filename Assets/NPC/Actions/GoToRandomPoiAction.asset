@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GoToRandomPoiAction
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Actions.GoToRandomPoiAction
   actionKey: goto
+  description: This action makes an entity go to a specific location
