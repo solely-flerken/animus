@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.AI;
@@ -33,13 +34,29 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 
         private void Start()
         {
+            AnimusEventSystem.OnDialogEvent += HandleDialogEvent;
+            
             _cts = new CancellationTokenSource();
             Loop().Forget();
         }
 
         private void OnDisable()
         {
+            AnimusEventSystem.OnDialogEvent -= HandleDialogEvent;
+            
             _cts.Cancel();
+        }
+
+        private void HandleDialogEvent(AnimusEvent animusEvent)
+        {
+            if (animusEvent.EventTarget.Count != 1 && animusEvent.EventTarget.First() is AnimusAgent)
+            {
+                Debug.Log($"{nameof(DialogEvent)} can only have one event target which must be of type {nameof(AnimusAgent)}");
+            }
+            
+            var targetAgent = animusEvent.EventTarget.First() as AnimusAgent;
+            
+            // TODO: Start the thinking cycle
         }
 
         private async UniTaskVoid Loop()
