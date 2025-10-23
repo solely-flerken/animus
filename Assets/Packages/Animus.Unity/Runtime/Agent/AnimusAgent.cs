@@ -1,5 +1,6 @@
 ﻿using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,6 +12,8 @@ namespace Packages.Animus.Unity.Runtime.Agent
     {
         public override AnimusEntityType Type => AnimusEntityType.Agent;
         [TextArea(3, 10)] public string persona;
+
+        public ConversationHistory conversationHistory;
 
         public ActionCollection actionCollection;
 
@@ -25,6 +28,8 @@ namespace Packages.Animus.Unity.Runtime.Agent
         private void Start()
         {
             AnimusEntityRegistry.Instance.Register(this);
+
+            conversationHistory = new ConversationHistory(50);
             actionCollection.Initialize();
         }
 

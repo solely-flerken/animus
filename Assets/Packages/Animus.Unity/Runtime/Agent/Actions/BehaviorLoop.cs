@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Core.AI;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -52,6 +55,16 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                     // TODO
                     foreach (var agent in AnimusEntityRegistry.Instance.GetAll<AnimusAgent>())
                     {
+                        // TODO: If interacts with player or another NPC we retrieve that conversation history:
+                        AnimusEntity interactingEntity = null;
+                        
+                        var prompt = new PromptBuilder()
+                            .WithPersona(agent)
+                            .WithAvailableActions(agent.actionCollection.actions)
+                            .WithRecentEvents(new List<AnimusEvent>())
+                            .WithConversationHistory(agent.conversationHistory.GetHistoryFor(interactingEntity.gameKey,50))
+                            .Build();
+
                         var actionPayload = new ActionPayload<string>
                         {
                             gameKey = agent.gameKey,
@@ -69,6 +82,14 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                     break;
                 }
             }
+        }
+
+        private void Cycle()
+        {
+            // TODO:
+            // Get world state
+            // Get agent state
+            // Get memories
         }
     }
 }

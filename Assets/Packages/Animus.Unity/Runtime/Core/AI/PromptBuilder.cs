@@ -2,6 +2,7 @@
 using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
+using Packages.Animus.Unity.Runtime.Core.Memory;
 using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Core.AI
@@ -40,7 +41,7 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
             return this;
         }
 
-        public PromptBuilder ConversationHistory(List<string> conversationHistory)
+        public PromptBuilder WithConversationHistory(List<DialogLine> conversationHistory)
         {
             _context.ConversationHistory = conversationHistory;
             return this;
