@@ -56,13 +56,14 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                     foreach (var agent in AnimusEntityRegistry.Instance.GetAll<AnimusAgent>())
                     {
                         // TODO: If interacts with player or another NPC we retrieve that conversation history:
-                        AnimusEntity interactingEntity = null;
-                        
+                        // AnimusEntity interactingEntity = null;
+
                         var prompt = new PromptBuilder()
                             .WithPersona(agent)
                             .WithAvailableActions(agent.actionCollection.actions)
                             .WithRecentEvents(new List<AnimusEvent>())
-                            .WithConversationHistory(agent.conversationHistory.GetHistoryFor(interactingEntity.gameKey,50))
+                            //.WithConversationHistory(agent.conversationHistory.GetHistoryFor(interactingEntity.gameKey,50))
+                            .WithRecentEvents(agent.eventHistory.Events)
                             .Build();
 
                         var actionPayload = new ActionPayload<string>

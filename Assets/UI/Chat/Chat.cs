@@ -203,11 +203,13 @@ namespace UI.Chat
                     }
 
                     // TODO:
+                    var source = AnimusEntityRegistry.Instance.GetAll<AnimusPlayer>().First();
                     var animusEvent = new DialogEvent
                     {
                         EventType = AnimusEventType.Dialog,
-                        EventSource = AnimusEntityRegistry.Instance.GetAll<AnimusPlayer>().First(),
+                        EventSource = source,
                         EventTarget = new List<AnimusEntity> { animusAgent },
+                        EventLocation = source.transform.position,
                     };
 
                     AnimusEventSystem.InvokeDialogEvent(animusEvent);

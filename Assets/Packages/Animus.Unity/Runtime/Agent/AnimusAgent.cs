@@ -1,5 +1,6 @@
 ﻿using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
         [TextArea(3, 10)] public string persona;
 
         public ConversationHistory conversationHistory;
-
+        public EventHistory eventHistory;
         public ActionCollection actionCollection;
 
         private NavMeshAgent _navMeshAgent;
@@ -30,6 +31,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
             AnimusEntityRegistry.Instance.Register(this);
 
             conversationHistory = new ConversationHistory(50);
+            eventHistory = new EventHistory();
             actionCollection.Initialize();
         }
 
