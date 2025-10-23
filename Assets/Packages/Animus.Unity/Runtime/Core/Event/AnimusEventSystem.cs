@@ -35,6 +35,10 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
             
             const float maxDistance = 10f; // TODO: Specify this in some kind of setting
 
+            // TODO: Make refactor this. Make the event have a subtargets field for this specific case.
+            // This would move the logic to check for other agents in range to the caller.
+            // Does this lead to more code?
+            
             // Make other agents in a certain range observe this event.
             var allAnimusAgents = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>();
             foreach (var animusAgent in allAnimusAgents)
