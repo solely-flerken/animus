@@ -27,6 +27,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
 
         public static void InvokeDialogEvent(AnimusEvent animusEvent)
         {
+            if (animusEvent is not DialogEvent)
+            {
+                Debug.Log("Expected animusEvent to be DialogEvent");
+                return;
+            }
+            
             const float maxDistance = 10f; // TODO: Specify this in some kind of setting
 
             // Make other agents in a certain range observe this event.
