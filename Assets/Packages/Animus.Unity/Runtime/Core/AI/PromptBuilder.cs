@@ -65,12 +65,13 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
         public string Build(bool prettyPrint = false)
         {
             var formatting = prettyPrint ? Formatting.Indented : Formatting.None;
-
+            
             var settings = new JsonSerializerSettings
             {
                 ContractResolver = new IgnoreUnityBasePropertiesResolver(),
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
-
+            
             return JsonConvert.SerializeObject(_context, formatting, settings);
         }
     }
