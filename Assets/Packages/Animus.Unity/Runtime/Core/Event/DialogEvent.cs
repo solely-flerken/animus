@@ -2,6 +2,6 @@
 {
     public class DialogEvent : AnimusEvent
     {
-        
+        public string Text { get; set; }
     }
 }

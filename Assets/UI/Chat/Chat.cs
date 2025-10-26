@@ -210,6 +210,7 @@ namespace UI.Chat
                         EventSource = source,
                         EventTarget = new List<AnimusEntity> { animusAgent },
                         EventLocation = source.transform.position,
+                        Text = parameters[1].Trim()
                     };
 
                     AnimusEventSystem.InvokeDialogEvent(animusEvent);
