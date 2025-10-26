@@ -16,6 +16,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
         [JsonConverter(typeof(AnimusEntityListGameKeyConverter))]
         public List<AnimusEntity> EventTarget { get; set; }
 
+        [JsonConverter(typeof(Vector3Converter))]
         public Vector3 EventLocation { get; set; }
     }
 }
