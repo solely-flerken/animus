@@ -8,8 +8,6 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
 {
     public class PromptContext
     {
-        // TODO: Determine types for all parts and add missing ones. Update the PromptBuilder accordingly.
-        
         [JsonProperty("persona", NullValueHandling = NullValueHandling.Ignore)]
         public string Persona { get; set; }
 
@@ -31,7 +29,7 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
         [JsonProperty("rules", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Rules { get; set; }
 
-        [JsonProperty("task_instruction")]
-        public string TaskInstruction { get; set; } = "Given the context above, decide your next action or dialogue.";
+        [JsonProperty("task_instruction")] 
+        public string TaskInstruction { get; set; } = TaskInstructions.NextAction;
     }
 }
