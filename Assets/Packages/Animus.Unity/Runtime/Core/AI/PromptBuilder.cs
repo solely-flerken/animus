@@ -3,6 +3,7 @@ using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
+using Packages.Animus.Unity.Runtime.Core.Utils.Json;
 using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Core.AI
@@ -64,7 +65,13 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
         public string Build(bool prettyPrint = false)
         {
             var formatting = prettyPrint ? Formatting.Indented : Formatting.None;
-            return JsonConvert.SerializeObject(_context, formatting);
+
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new IgnoreUnityBasePropertiesResolver(),
+            };
+
+            return JsonConvert.SerializeObject(_context, formatting, settings);
         }
     }
 }
