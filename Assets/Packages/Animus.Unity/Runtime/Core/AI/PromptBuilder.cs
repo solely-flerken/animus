@@ -4,6 +4,7 @@ using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Core.Utils.Json;
+using Packages.Animus.Unity.Runtime.Environment;
 using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Core.AI
@@ -36,9 +37,9 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
             return this;
         }
 
-        public PromptBuilder WithEnvironmentDescription(string description)
+        public PromptBuilder WithEnvironment(EnvironmentSnapshot environmentSnapshot)
         {
-            _context.EnvironmentDescription = description;
+            _context.Environment = environmentSnapshot;
             return this;
         }
 
@@ -65,13 +66,13 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
         public string Build(bool prettyPrint = false)
         {
             var formatting = prettyPrint ? Formatting.Indented : Formatting.None;
-            
+
             var settings = new JsonSerializerSettings
             {
                 ContractResolver = new IgnoreUnityBasePropertiesResolver(),
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
-            
+
             return JsonConvert.SerializeObject(_context, formatting, settings);
         }
     }

@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Core.Utils.Json;
+using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Environment
 {
@@ -6,5 +9,8 @@ namespace Packages.Animus.Unity.Runtime.Environment
     {
         public List<object> VisibleObjects { get; set; }
         public List<object> PointsOfInterest { get; set; }
+
+        [JsonConverter(typeof(AnimusEntityListGameKeyConverter))]
+        public List<AnimusEntity> KnownEntities => AnimusEntityRegistry.Instance.allItems;
     }
 }
