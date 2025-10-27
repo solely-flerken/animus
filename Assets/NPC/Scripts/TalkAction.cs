@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace NPC.Scripts
 {
-    [CreateAssetMenu(fileName = "TalkAction", menuName = "NPC/Action/Talk")]
+    [CreateAssetMenu(fileName = "TalkAction", menuName = "Animus/NPC/Action/Talk")]
     public class TalkAction : NpcAction
     {
         public override void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload)

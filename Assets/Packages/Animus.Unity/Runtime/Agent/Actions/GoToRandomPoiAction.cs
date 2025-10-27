@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
-    [CreateAssetMenu(fileName = "GoToRandomPoiAction", menuName = "NPC/Actions/GoToRandomPoi")]
+    [CreateAssetMenu(fileName = "GoToRandomPoiAction", menuName = "Animus/NPC/Action/GoToRandomPoi")]
     public class GoToRandomPoiAction : NpcAction
     {
         public override void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload)

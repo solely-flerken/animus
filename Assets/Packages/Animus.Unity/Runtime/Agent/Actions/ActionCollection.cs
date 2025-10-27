@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
-    [CreateAssetMenu(fileName = "ActionCollection", menuName = "NPC/Actions/ActionCollection")]
+    [CreateAssetMenu(fileName = "ActionCollection", menuName = "Animus/NPC/Action/ActionCollection")]
     public class ActionCollection : ScriptableObject
     {
         public List<NpcAction> actions;
