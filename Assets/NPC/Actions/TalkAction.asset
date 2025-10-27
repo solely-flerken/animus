@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPC.Scripts.TalkAction
   actionKey: talk
   description: This action lets the entity display a message in chat
+  parameters:
+  - name: text
+    type: 0
