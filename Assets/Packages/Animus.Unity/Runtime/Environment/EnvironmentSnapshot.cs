@@ -8,6 +8,11 @@ using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Environment
 {
+    /*
+     * TODO: Make it so each field in here gets a type e.g. PointsOfInterest get the Location type.
+     * That way we can use those types to define the types of actions parameters.
+     * Also we need to refactor the ActionParameterType to include those types.
+     */
     public class EnvironmentSnapshot
     {
         public List<object> VisibleObjects { get; set; }
