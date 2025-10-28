@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Packages.Animus.Unity.Runtime.Core
 {
@@ -29,7 +30,7 @@ namespace Packages.Animus.Unity.Runtime.Core
         public readonly List<TItem> allItems = new();
 
         private readonly Dictionary<Type, IList> _cache = new();
-        
+
         protected virtual void Awake()
         {
             if (Instance == null)
@@ -64,12 +65,12 @@ namespace Packages.Animus.Unity.Runtime.Core
         public List<TSub> GetAll<TSub>() where TSub : TItem
         {
             var type = typeof(TSub);
-            
+
             if (_cache.TryGetValue(type, out var list))
             {
                 return (List<TSub>)list;
             }
-            
+
             List<TSub> result = new();
             foreach (var item in allItems)
             {
@@ -80,8 +81,18 @@ namespace Packages.Animus.Unity.Runtime.Core
             }
 
             _cache[type] = result;
-            
+
             return result;
+        }
+
+        public TSub GetRandom<TSub>() where TSub : TItem
+        {
+            var items = GetAll<TSub>();
+            if (items == null || items.Count == 0)
+                return null;
+
+            var index = Random.Range(0, items.Count);
+            return items[index];
         }
     }
 }
