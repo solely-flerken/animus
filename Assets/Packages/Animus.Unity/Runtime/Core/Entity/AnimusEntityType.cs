@@ -9,6 +9,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         None,
         Player,
         Agent,
-        Object
+        Object,
+        Location
     }
 }

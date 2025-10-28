@@ -1,17 +1,17 @@
-﻿using UnityEngine;
+﻿using Packages.Animus.Unity.Runtime.Core.Entity;
 
 namespace Packages.Animus.Unity.Runtime.Environment.PointOfInterest
 {
-    public class PointOfInterest : MonoBehaviour
+    public class PointOfInterest : AnimusEntity
     {
         private void Start()
         {
-            PointOfInterestRegistry.Instance?.Register(this);
+            AnimusEntityRegistry.Instance.Register(this);
         }
 
         private void OnDisable()
         {
-            PointOfInterestRegistry.Instance?.Unregister(this);
+            AnimusEntityRegistry.Instance.Unregister(this);
         }
     }
 }
