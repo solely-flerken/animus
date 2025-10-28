@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
+using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Environment;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
@@ -9,7 +10,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     {
         public override void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload)
         {
-            var poi = PointOfInterestRegistry.Instance.GetRandomPoi();
+            var poi = AnimusEntityRegistry.Instance.GetRandom<PointOfInterest>();
             Debug.Log($"Action: {actionKey} - Going to {poi.name}");
             animusAgent.GoToPoi(poi);
         }

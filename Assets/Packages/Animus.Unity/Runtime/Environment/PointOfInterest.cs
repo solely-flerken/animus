@@ -1,6 +1,6 @@
 ﻿using Packages.Animus.Unity.Runtime.Core.Entity;
 
-namespace Packages.Animus.Unity.Runtime.Environment.PointOfInterest
+namespace Packages.Animus.Unity.Runtime.Environment
 {
     public class PointOfInterest : AnimusEntity
     {

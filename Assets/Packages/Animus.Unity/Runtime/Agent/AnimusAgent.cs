@@ -2,7 +2,7 @@
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
-using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
+using Packages.Animus.Unity.Runtime.Environment;
 using UnityEngine;
 using UnityEngine.AI;
 

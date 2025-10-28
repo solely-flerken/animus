@@ -7,7 +7,7 @@ using Input;
 using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Environment.PointOfInterest;
+using Packages.Animus.Unity.Runtime.Environment;
 using Packages.Animus.Unity.Runtime.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -184,7 +184,7 @@ namespace UI.Chat
                         return;
                     }
 
-                    var poi = PointOfInterestRegistry.Instance.GetRandomPoi();
+                    var poi = AnimusEntityRegistry.Instance.GetRandom<PointOfInterest>();
                     if (poi == null)
                     {
                         return;
