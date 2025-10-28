@@ -28,16 +28,16 @@ namespace Packages.Animus.Unity.Runtime.Core.Utils.Json
         }
     }
 
-    public class AnimusEntityListGameKeyConverter : JsonConverter<List<AnimusEntity>>
+    public class AnimusEntityListGameKeyConverter<T> : JsonConverter<List<T>> where T : AnimusEntity
     {
-        public override void WriteJson(JsonWriter writer, List<AnimusEntity> value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, List<T> value, JsonSerializer serializer)
         {
             var keys = value?.Select(e => e?.gameKey).ToList() ?? new List<string>();
             serializer.Serialize(writer, keys);
         }
 
-        public override List<AnimusEntity> ReadJson(JsonReader reader, Type objectType,
-            List<AnimusEntity> existingValue, bool hasExistingValue,
+        public override List<T> ReadJson(JsonReader reader, Type objectType, List<T> existingValue,
+            bool hasExistingValue,
             JsonSerializer serializer)
         {
             throw new NotImplementedException();
