@@ -684,7 +684,6 @@ GameObject:
   - component: {fileID: 930261049}
   - component: {fileID: 930261046}
   - component: {fileID: 930261047}
-  - component: {fileID: 930261043}
   - component: {fileID: 930261048}
   m_Layer: 0
   m_Name: AnimusManager
@@ -693,18 +692,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &930261043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930261042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d07ff7774874025947831727631bad6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Environment.PointOfInterest.PointOfInterestManager
 --- !u!4 &930261045
 Transform:
   m_ObjectHideFlags: 0
