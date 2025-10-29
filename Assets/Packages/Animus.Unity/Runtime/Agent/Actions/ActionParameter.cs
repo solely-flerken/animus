@@ -1,4 +1,7 @@
 ﻿using System;
+using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Core.Utils;
+using Packages.Animus.Unity.Runtime.Core.Utils.TypeSelection;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
@@ -6,6 +9,6 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     public class ActionParameter
     {
         public string name;
-        public ActionParameterType type;
+        [TypeFilter(typeof(AnimusEntity))] public SerializableType type;
     }
 }

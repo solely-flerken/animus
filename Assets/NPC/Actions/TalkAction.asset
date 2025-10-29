@@ -16,4 +16,6 @@ MonoBehaviour:
   description: This action lets the entity display a message in chat
   parameters:
   - name: text
-    type: 0
+    type:
+      assemblyQualifiedName: Packages.Animus.Unity.Runtime.Agent.AnimusAgent, Animus.Unity,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
