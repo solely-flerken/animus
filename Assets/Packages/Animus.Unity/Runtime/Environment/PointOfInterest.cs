@@ -4,6 +4,8 @@ namespace Packages.Animus.Unity.Runtime.Environment
 {
     public class PointOfInterest : AnimusEntity
     {
+        public override AnimusEntityType Type => AnimusEntityType.Location;
+
         private void Start()
         {
             AnimusEntityRegistry.Instance.Register(this);

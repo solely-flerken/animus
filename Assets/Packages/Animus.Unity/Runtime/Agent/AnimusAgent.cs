@@ -12,6 +12,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
     public class AnimusAgent : AnimusEntity
     {
         public override AnimusEntityType Type => AnimusEntityType.Agent;
+        
         [TextArea(3, 10)] public string persona;
 
         public ConversationHistory conversationHistory;
