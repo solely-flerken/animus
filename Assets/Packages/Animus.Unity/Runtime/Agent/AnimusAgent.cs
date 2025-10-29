@@ -12,12 +12,18 @@ namespace Packages.Animus.Unity.Runtime.Agent
     public class AnimusAgent : AnimusEntity
     {
         public override AnimusEntityType Type => AnimusEntityType.Agent;
-        
+
         [TextArea(3, 10)] public string persona;
+
+        public ActionCollection actionCollection;
+        
+        [Header("NPC Perception")]
+        public float perceptionRadius = 20f;
+        public float fieldOfViewAngle = 120f;
+        public LayerMask obstacleLayer;
 
         public ConversationHistory conversationHistory;
         public EventHistory eventHistory;
-        public ActionCollection actionCollection;
 
         private NavMeshAgent _navMeshAgent;
         private Vector3 _currentTargetPosition;
