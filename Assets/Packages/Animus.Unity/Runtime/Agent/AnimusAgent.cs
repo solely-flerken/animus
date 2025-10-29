@@ -41,7 +41,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
             AnimusEntityRegistry.Instance?.Unregister(this);
         }
 
-        public void GoToPoi(PointOfInterest poi)
+        public void GoToPoi(AnimusLocation poi)
         {
             _currentTargetPosition = poi.transform.position;
             _navMeshAgent.SetDestination(_currentTargetPosition);

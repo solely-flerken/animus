@@ -10,7 +10,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     {
         public override void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload)
         {
-            var poi = AnimusEntityRegistry.Instance.GetRandom<PointOfInterest>();
+            var poi = AnimusEntityRegistry.Instance.GetRandom<AnimusLocation>();
             Debug.Log($"Action: {actionKey} - Going to {poi.name}");
             animusAgent.GoToPoi(poi);
         }

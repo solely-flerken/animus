@@ -2,7 +2,7 @@
 
 namespace Packages.Animus.Unity.Runtime.Environment
 {
-    public class PointOfInterest : AnimusEntity
+    public class AnimusLocation : AnimusEntity
     {
         public override AnimusEntityType Type => AnimusEntityType.Location;
 

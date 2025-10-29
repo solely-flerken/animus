@@ -184,7 +184,7 @@ namespace UI.Chat
                         return;
                     }
 
-                    var poi = AnimusEntityRegistry.Instance.GetRandom<PointOfInterest>();
+                    var poi = AnimusEntityRegistry.Instance.GetRandom<AnimusLocation>();
                     if (poi == null)
                     {
                         return;

@@ -17,8 +17,8 @@ namespace Packages.Animus.Unity.Runtime.Environment
     {
         public List<object> VisibleObjects { get; set; }
 
-        [JsonConverter(typeof(AnimusEntityListGameKeyConverter<PointOfInterest>))]
-        public List<PointOfInterest> PointsOfInterest => AnimusEntityRegistry.Instance.GetAll<PointOfInterest>();
+        [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusLocation>))]
+        public List<AnimusLocation> PointsOfInterest => AnimusEntityRegistry.Instance.GetAll<AnimusLocation>();
 
         [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusEntity>))]
         public List<AnimusEntity> KnownEntities =>
