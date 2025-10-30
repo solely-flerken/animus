@@ -15,6 +15,6 @@ namespace Packages.Animus.Unity.Runtime.Environment
         public List<AnimusLocation> PointsOfInterest => AnimusEntityRegistry.Instance.GetAll<AnimusLocation>();
 
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
-        public List<AnimusActor> KnownEntities => AnimusEntityRegistry.Instance.GetAll<AnimusActor>().ToList();
+        public List<AnimusActor> KnownCharacters => AnimusEntityRegistry.Instance.GetAll<AnimusActor>().ToList();
     }
 }
