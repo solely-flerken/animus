@@ -16,13 +16,13 @@ namespace Packages.Animus.Unity.Runtime.Environment
      */
     public class EnvironmentSnapshot
     {
-        [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusEntity>))]
+        [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
         public List<AnimusEntity> VisibleObjects { get; set; }
 
-        [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusLocation>))]
+        [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
         public List<AnimusLocation> PointsOfInterest => AnimusEntityRegistry.Instance.GetAll<AnimusLocation>();
 
-        [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusEntity>))]
+        [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
         public List<AnimusEntity> KnownEntities =>
             AnimusEntityRegistry.Instance
                 .GetAll<AnimusEntity>()
