@@ -219,11 +219,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Agent
   gameKey: npc_borin
   entityName: Borin
-  description: NPC named Borin
+  description: This is a description
   persona: You are Borin, a gruff Dwarven blacksmith. You are obsessed with finding
     your lost Family axe, 'Glimmerheart'. You are a man of few words and suspicious
     of strangers but might help them if they can help you find your axe.
   actionCollection: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
+  perceptionRadius: 20
+  fieldOfViewAngle: 120
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &163025905
 Transform:
   m_ObjectHideFlags: 0
@@ -882,8 +887,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Environment.PointOfInterest.PointOfInterest
   gameKey: location_1
-  entityName: 
-  description: 
+  entityName: Location 1
+  description: This is a description
 --- !u!1 &1413890003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,8 +1196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Environment.PointOfInterest.PointOfInterest
   gameKey: location_2
-  entityName: 
-  description: 
+  entityName: Location 2
+  description: This is a description
 --- !u!1 &1941803959
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,6 +1352,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7535430826707977608, guid: 271767a9fd77e4245ad2eaa6ba7cdda8, type: 3}
+      propertyPath: entityName
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -7535430826707977608, guid: 271767a9fd77e4245ad2eaa6ba7cdda8, type: 3}
+      propertyPath: description
+      value: This is a description
+      objectReference: {fileID: 0}
     - target: {fileID: 5770965085560246500, guid: 271767a9fd77e4245ad2eaa6ba7cdda8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
