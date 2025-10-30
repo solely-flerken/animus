@@ -9,7 +9,7 @@ using UnityEngine.AI;
 namespace Packages.Animus.Unity.Runtime.Agent
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class AnimusAgent : AnimusEntity
+    public class AnimusAgent : AnimusActor
     {
         public override AnimusEntityType Type => AnimusEntityType.Agent;
 

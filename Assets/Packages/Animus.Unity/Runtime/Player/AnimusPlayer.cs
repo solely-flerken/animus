@@ -2,7 +2,7 @@
 
 namespace Packages.Animus.Unity.Runtime.Player
 {
-    public class AnimusPlayer : AnimusEntity
+    public class AnimusPlayer : AnimusActor
     {
         public override AnimusEntityType Type => AnimusEntityType.Player;
 
