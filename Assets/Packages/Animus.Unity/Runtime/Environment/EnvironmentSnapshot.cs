@@ -8,6 +8,12 @@ using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Environment
 {
+    /*
+     * TODO: Add types to environment descriptions.
+     * Add AnimusObjects
+     * Add description, ... fields to entity in environment descriptions
+     * Refactor/Fix JsonConverters
+     */
     public class EnvironmentSnapshot
     {
         [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusEntity>))]
