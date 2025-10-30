@@ -11,9 +11,9 @@ namespace Packages.Animus.Unity.Runtime.Environment
         {
             var snapshot = new EnvironmentSnapshot();
 
-            var visibleObjects = new List<AnimusEntity>();
+            var visibleObjects = new List<AnimusObject>();
             
-            var nearbyObjects = AnimusEntityRegistry.Instance.GetAll<AnimusEntity>();
+            var nearbyObjects = AnimusEntityRegistry.Instance.GetAll<AnimusObject>();
             foreach (var @object in nearbyObjects)
             {
                 var objTransform = @object.transform;

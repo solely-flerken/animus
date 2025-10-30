@@ -9,7 +9,7 @@ namespace Packages.Animus.Unity.Runtime.Environment
     public class EnvironmentSnapshot
     {
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
-        public List<AnimusEntity> VisibleObjects { get; set; }
+        public List<AnimusObject> VisibleObjects { get; set; }
 
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
         public List<AnimusLocation> PointsOfInterest => AnimusEntityRegistry.Instance.GetAll<AnimusLocation>();
