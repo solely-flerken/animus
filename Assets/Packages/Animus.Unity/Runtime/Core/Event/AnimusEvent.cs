@@ -13,7 +13,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
         [JsonConverter(typeof(AnimusEntityGameKeyConverter))]
         public AnimusEntity EventSource { get; set; }
 
-        [JsonConverter(typeof(AnimusEntityListGameKeyConverter<AnimusEntity>))]
+        [JsonConverter(typeof(AnimusEntityGameKeyListConverter<AnimusEntity>))]
         public List<AnimusEntity> EventTarget { get; set; }
 
         [JsonConverter(typeof(Vector3Converter))]
