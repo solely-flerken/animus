@@ -193,7 +193,7 @@ namespace UI.Chat
                     LogMessage($"NPC {animusAgent.name} moving to POI {poi.name}");
                     animusAgent.GoToPoi(poi);
                     break;
-                case "/talk" when parameters?.Length >= 2 && !string.IsNullOrEmpty(parameters[1]):
+                case "/talk" when parameters?.Length >= 2:
                     animusAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>()
                         .FirstOrDefault(x => x.gameKey == parameters[0]);
                     if (animusAgent == null)
@@ -201,6 +201,8 @@ namespace UI.Chat
                         LogMessage($"No NPC with the gameKey: {parameters[0]}");
                         return;
                     }
+
+                    var messageText = string.Join(' ', parameters.Skip(1));
 
                     // TODO:
                     var source = AnimusEntityRegistry.Instance.GetAll<AnimusPlayer>().First();
@@ -210,7 +212,7 @@ namespace UI.Chat
                         EventSource = source,
                         EventTarget = new List<AnimusEntity> { animusAgent },
                         EventLocation = source.transform.position,
-                        Text = parameters[1].Trim()
+                        Text = messageText.Trim()
                     };
 
                     AnimusEventSystem.InvokeDialogEvent(animusEvent);
