@@ -4,8 +4,14 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.AI;
+using Packages.Animus.Unity.Runtime.Core.AI.Rules;
+using Packages.Animus.Unity.Runtime.Core.AI.Service;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
+using Packages.Animus.Unity.Runtime.Core.Memory;
+using Packages.Animus.Unity.Runtime.Core.Utils.Save;
+using Packages.Animus.Unity.Runtime.Environment;
+using Packages.Animus.Unity.Runtime.Player;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -15,7 +21,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     {
         [SerializeField] private AnimusSettings settings;
 
-        public static BehaviorLoop Instance { get; private set; }
+        private static BehaviorLoop Instance { get; set; }
 
         private CancellationTokenSource _cts;
 
@@ -35,7 +41,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         private void Start()
         {
             AnimusEventSystem.OnDialogEvent += HandleDialogEvent;
-            
+
             _cts = new CancellationTokenSource();
             Loop().Forget();
         }
@@ -43,20 +49,47 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         private void OnDisable()
         {
             AnimusEventSystem.OnDialogEvent -= HandleDialogEvent;
-            
+
             _cts.Cancel();
         }
 
-        private void HandleDialogEvent(AnimusEvent animusEvent)
+        private static void HandleDialogEvent(AnimusEvent animusEvent)
         {
-            if (animusEvent.EventTarget.Count != 1 && animusEvent.EventTarget.First() is AnimusAgent)
+            if (animusEvent is not DialogEvent dialogEvent || animusEvent.EventType != AnimusEventType.Dialog)
             {
-                Debug.Log($"{nameof(DialogEvent)} can only have one event target which must be of type {nameof(AnimusAgent)}");
+                Debug.LogError($"HandleDialogEvent: Expected {nameof(DialogEvent)} but got {animusEvent.GetType().Name}");
+                return;
             }
-            
-            var targetAgent = animusEvent.EventTarget.First() as AnimusAgent;
-            
-            // TODO: Start the thinking cycle
+
+
+            if (dialogEvent.EventTarget.Count != 1 && dialogEvent.EventTarget.First() is AnimusAgent or AnimusPlayer)
+            {
+                Debug.Log($"{nameof(DialogEvent)} can only have one event target which must be of type {nameof(AnimusAgent)} or  {nameof(AnimusPlayer)}");
+            }
+
+            var sourceAgent = dialogEvent.EventSource;
+            var targetAgent = dialogEvent.EventTarget.First() as AnimusAgent;
+
+            if (sourceAgent == null || targetAgent == null)
+            {
+                Debug.Log("HandleDialogEvent: Source or Target Agent is null");
+                return;
+            }
+
+            // Add the input to the conversation history
+            targetAgent.conversationHistory.AddLine(sourceAgent.gameKey, dialogEvent.Text);
+
+            var prompt = new PromptBuilder()
+                .WithPersona(targetAgent)
+                .WithAvailableActions(targetAgent.actionCollection.actions)
+                .WithRecentEvents(targetAgent.eventHistory.Events)
+                .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(sourceAgent.gameKey, 50))
+                .WithEnvironment(EnvironmentScanner.CreateSnapshot(targetAgent))
+                // .WithRelevantMemories(new List<string>())
+                .WithRules(PredefinedRulesets.CommonAgent)
+                .WithTaskInstruction("");
+
+            ProcessEventAsync(prompt.GetContext()).Forget();
         }
 
         private async UniTaskVoid Loop()
@@ -78,19 +111,14 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                         var prompt = new PromptBuilder()
                             .WithPersona(agent)
                             .WithAvailableActions(agent.actionCollection.actions)
-                            .WithRecentEvents(new List<AnimusEvent>())
-                            //.WithConversationHistory(agent.conversationHistory.GetHistoryFor(interactingEntity.gameKey,50))
                             .WithRecentEvents(agent.eventHistory.Events)
-                            .Build();
+                            .WithConversationHistory(new List<DialogLine>())
+                            .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
+                            .WithRelevantMemories(new List<string>())
+                            .WithRules(PredefinedRulesets.CommonAgent)
+                            .WithTaskInstruction("");
 
-                        var actionPayload = new ActionPayload<string>
-                        {
-                            gameKey = agent.gameKey,
-                            actionKey = agent.actionCollection.GetRandomAction().actionKey,
-                            details = ""
-                        };
-
-                        ActionHandler.ProcessAction(actionPayload);
+                        ProcessEventAsync(prompt.GetContext()).Forget();
                     }
 
                     await UniTask.Delay(TimeSpan.FromSeconds(settings.pollingInterval), cancellationToken: token);
@@ -102,12 +130,21 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
         }
 
-        private void Cycle()
+        private static async UniTaskVoid ProcessEventAsync(PromptContext context)
         {
-            // TODO:
-            // Get world state
-            // Get agent state
-            // Get memories
+            LocalJsonSaveSystem.Save(context);
+
+            var response = await AnimusService.Chat(context);
+
+            if (response != null)
+            {
+                // TODO: Handle response correctly
+                ActionHandler.ProcessAction(new ActionPayload<string>());
+            }
+            else
+            {
+                Debug.LogWarning("Animus-Backend did not return a valid response.");
+            }
         }
     }
 }
