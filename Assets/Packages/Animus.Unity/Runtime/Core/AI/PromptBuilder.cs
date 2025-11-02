@@ -5,8 +5,6 @@ using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Core.Utils.Json;
 using Packages.Animus.Unity.Runtime.Environment;
-using Unity.Plastic.Newtonsoft.Json;
-
 namespace Packages.Animus.Unity.Runtime.Core.AI
 {
     public class PromptBuilder
@@ -65,15 +63,7 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
 
         public string Build(bool prettyPrint = false)
         {
-            var formatting = prettyPrint ? Formatting.Indented : Formatting.None;
-
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = new IgnoreUnityBasePropertiesResolver(),
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
-
-            return JsonConvert.SerializeObject(_context, formatting, settings);
+            return JsonUtility.Serialize(_context, prettyPrint);
         }
     }
 }

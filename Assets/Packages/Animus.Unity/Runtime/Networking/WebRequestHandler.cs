@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Unity.Plastic.Newtonsoft.Json;
+using Packages.Animus.Unity.Runtime.Core.Utils.Json;
 using UnityEngine.Networking;
 
 namespace Packages.Animus.Unity.Runtime.Networking
@@ -19,7 +19,7 @@ namespace Packages.Animus.Unity.Runtime.Networking
         public static async Task<T> Get<T>(string url, Dictionary<string, string> headers = null)
         {
             var response = await Get(url, headers);
-            return string.IsNullOrEmpty(response) ? default : JsonConvert.DeserializeObject<T>(response);
+            return JsonUtility.Deserialize<T>(response);
         }
 
         public static async Task<string> Post(string url, string jsonBody = null,
@@ -41,9 +41,9 @@ namespace Packages.Animus.Unity.Runtime.Networking
         public static async Task<TResponse> Post<TRequest, TResponse>(string url, TRequest payload,
             Dictionary<string, string> headers = null)
         {
-            var jsonBody = JsonConvert.SerializeObject(payload);
+            var jsonBody = JsonUtility.Serialize(payload);
             var response = await Post(url, jsonBody, headers);
-            return !string.IsNullOrEmpty(response) ? JsonConvert.DeserializeObject<TResponse>(response) : default;
+            return JsonUtility.Deserialize<TResponse>(response);
         }
 
         private static void ApplyHeaders(UnityWebRequest request, Dictionary<string, string> headers)

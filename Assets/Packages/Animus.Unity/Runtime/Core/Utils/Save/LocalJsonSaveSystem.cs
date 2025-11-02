@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
+using JsonUtility = Packages.Animus.Unity.Runtime.Core.Utils.Json.JsonUtility;
 
 namespace Packages.Animus.Unity.Runtime.Core.Utils.Save
 {
@@ -22,7 +22,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Utils.Save
 
             Directory.CreateDirectory(SaveDirectory);
 
-            var json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
+            var json = JsonUtility.Serialize(saveData, prettyPrint: true);
             File.WriteAllText(savePath, json);
             return savePath;
         }
@@ -58,7 +58,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Utils.Save
             }
 
             var json = File.ReadAllText(loadPath);
-            return JsonConvert.DeserializeObject<BaseSaveData>(json);
+            return JsonUtility.Deserialize<BaseSaveData>(json);
         }
 
         public static bool Delete(string fileName)
