@@ -5,6 +5,7 @@ using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Core.Utils.Json;
 using Packages.Animus.Unity.Runtime.Environment;
+
 namespace Packages.Animus.Unity.Runtime.Core.AI
 {
     public class PromptBuilder
@@ -59,6 +60,11 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
                 _context.TaskInstruction = instruction;
 
             return this;
+        }
+
+        public PromptContext GetContext()
+        {
+            return _context;
         }
 
         public string Build(bool prettyPrint = false)
