@@ -1,4 +1,6 @@
-﻿namespace Packages.Animus.Unity.Runtime.Core.Entity
+﻿using Packages.Animus.Unity.Runtime.Core.Utils;
+
+namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
     public class AnimusEntityRegistry : TypeRegistry<AnimusEntityRegistry, AnimusEntity>
     {
