@@ -10,7 +10,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Utils.Save
     {
         private static readonly string SaveDirectory = Path.Combine(Application.persistentDataPath, "saves");
 
-        public static string Save(BaseSaveData saveData, string fileName = null)
+        public static string Save<T>(T saveData, string fileName = null)
         {
             // Generate timestamp-based filename if none provided
             if (string.IsNullOrEmpty(fileName))
@@ -43,22 +43,22 @@ namespace Packages.Animus.Unity.Runtime.Core.Utils.Save
             return savePath;
         }
 
-        public static BaseSaveData Load(string fileName)
+        public static T Load<T>(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                return new BaseSaveData();
+                return default;
             }
 
             var loadPath = ToSavePath(fileName);
 
             if (!File.Exists(loadPath))
             {
-                return new BaseSaveData();
+                return default;
             }
 
             var json = File.ReadAllText(loadPath);
-            return JsonUtility.Deserialize<BaseSaveData>(json);
+            return JsonUtility.Deserialize<T>(json);
         }
 
         public static bool Delete(string fileName)
