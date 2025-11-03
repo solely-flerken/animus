@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: AnimusSettings
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Settings.AnimusSettings
   apiServiceUrl: http://127.0.0.1:8000
+  pollingInterval: 15
