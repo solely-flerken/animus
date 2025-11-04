@@ -8,7 +8,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     [CreateAssetMenu(fileName = "GoToRandomPoiAction", menuName = "Animus/NPC/Action/GoToRandomPoi")]
     public class GoToRandomPoiAction : NpcAction
     {
-        public override void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload)
+        public override void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters)
         {
             var poi = AnimusEntityRegistry.Instance.GetRandom<AnimusLocation>();
             Debug.Log($"Action: {actionKey} - Going to {poi.name}");

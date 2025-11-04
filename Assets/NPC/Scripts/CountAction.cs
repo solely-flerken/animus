@@ -10,7 +10,7 @@ namespace NPC.Scripts
     [CreateAssetMenu(fileName = "CountAction", menuName = "Animus/NPC/Action/Count")]
     public class CountAction : NpcAction
     {
-        public override async void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload)
+        public override async void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters)
         {
             for (var i = 1; i <= 10; i++)
             {

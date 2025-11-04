@@ -45,7 +45,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
 
             Debug.Log($"Agent '{targetAgent.gameKey}' is executing command '{actionKey}'.");
-            action.Execute(targetAgent, null);
+            action.Execute(targetAgent, actionPayload.parameters);
         }
     }
 }

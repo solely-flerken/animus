@@ -8,6 +8,6 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         public string actionKey;
         public string description;
         public List<ActionParameter> parameters = new();
-        public abstract void Execute(AnimusAgent animusAgent, Dictionary<string, object> payload);
+        public abstract void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters);
     }
 }
