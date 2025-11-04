@@ -80,7 +80,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             targetAgent.conversationHistory.AddLine(sourceAgent.gameKey, dialogEvent.Text);
 
             var prompt = new PromptBuilder()
-                .WithPersona(targetAgent)
+                .SetAgent(targetAgent)
                 .WithAvailableActions(targetAgent.actionCollection.actions)
                 .WithRecentEvents(targetAgent.eventHistory.Events)
                 .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(sourceAgent.gameKey, 50))
@@ -109,7 +109,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                         // AnimusEntity interactingEntity = null;
 
                         var prompt = new PromptBuilder()
-                            .WithPersona(agent)
+                            .SetAgent(agent)
                             .WithAvailableActions(agent.actionCollection.actions)
                             .WithRecentEvents(agent.eventHistory.Events)
                             .WithConversationHistory(new List<DialogLine>())

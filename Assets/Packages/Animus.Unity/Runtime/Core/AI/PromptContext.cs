@@ -9,6 +9,9 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
 {
     public class PromptContext
     {
+        [JsonProperty("AgentKey")]
+        public string AgentKey { get; set; }
+        
         [JsonProperty("Persona", NullValueHandling = NullValueHandling.Ignore)]
         public string Persona { get; set; }
 

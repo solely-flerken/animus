@@ -12,8 +12,9 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
     {
         private readonly PromptContext _context = new();
 
-        public PromptBuilder WithPersona(AnimusAgent agent)
+        public PromptBuilder SetAgent(AnimusAgent agent)
         {
+            _context.AgentKey = agent.gameKey;
             _context.Persona = agent.persona;
             return this;
         }
