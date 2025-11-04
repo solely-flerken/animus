@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Environment;
 using UnityEngine;
@@ -10,7 +11,8 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     {
         public override void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters)
         {
-            var poi = AnimusEntityRegistry.Instance.GetRandom<AnimusLocation>();
+            var poiKey = payloadParameters.First(p => p.name.Equals("locationKey"));
+            var poi = AnimusEntityRegistry.Instance.FindByGameKey<AnimusLocation>(poiKey.value);
             Debug.Log($"Action: {actionKey} - Going to {poi.name}");
             animusAgent.GoToPoi(poi);
         }
