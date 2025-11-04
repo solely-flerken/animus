@@ -941,7 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcd0602716f44315bafb540b552d2ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Agent
-  gameKey: npc_Arinth
+  gameKey: npc_arinth
   entityName: Arinth
   description: This is a description
   persona: "You are Professor Arinth Valen, a scholar who\u2019s read too many forbidden
