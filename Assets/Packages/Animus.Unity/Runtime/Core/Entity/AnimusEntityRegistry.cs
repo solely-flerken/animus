@@ -1,12 +1,13 @@
-﻿using Packages.Animus.Unity.Runtime.Core.Utils;
+﻿using System.Linq;
+using Packages.Animus.Unity.Runtime.Core.Utils;
 
 namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
     public class AnimusEntityRegistry : TypeRegistry<AnimusEntityRegistry, AnimusEntity>
     {
-        public AnimusEntity FindByGameKey(string gameKey)
+        public T FindByGameKey<T>(string gameKey) where T : AnimusEntity
         {
-            return allItems.Find(a => a.gameKey == gameKey);
+            return string.IsNullOrEmpty(gameKey) ? null : GetAll<T>().FirstOrDefault(entity => entity.gameKey == gameKey);
         }
     }
 }
