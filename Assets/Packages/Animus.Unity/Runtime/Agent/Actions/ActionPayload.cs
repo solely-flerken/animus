@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
@@ -7,6 +8,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
     {
         public string agentKey;
         public string actionKey;
+        public List<ActionPayloadParameter> parameters; 
         public T details;
     }
 }
