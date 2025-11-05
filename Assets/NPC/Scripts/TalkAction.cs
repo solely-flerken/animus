@@ -13,7 +13,7 @@ namespace NPC.Scripts
         
         public override void OnExecute(AnimusAgent animusAgent)
         {
-            EventSystem.InvokeDisplayMessageInChat($"{animusAgent.gameKey}: {text}");
+            EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
         }
     }
 }

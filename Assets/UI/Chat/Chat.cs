@@ -214,7 +214,8 @@ namespace UI.Chat
                         EventLocation = source.transform.position,
                         Text = messageText.Trim()
                     };
-
+                    
+                    LogMessage($"Player to {animusAgent.name}: {messageText.Trim()}");
                     AnimusEventSystem.InvokeDialogEvent(animusEvent);
                     break;
                 default:
