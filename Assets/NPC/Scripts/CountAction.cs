@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Events;
 using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
@@ -10,7 +9,7 @@ namespace NPC.Scripts
     [CreateAssetMenu(fileName = "CountAction", menuName = "Animus/NPC/Action/Count")]
     public class CountAction : NpcAction
     {
-        public override async void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters)
+        public override async void OnExecute(AnimusAgent animusAgent)
         {
             for (var i = 1; i <= 10; i++)
             {
