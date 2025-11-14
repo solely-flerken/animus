@@ -19,3 +19,9 @@ MonoBehaviour:
     type:
       assemblyQualifiedName: Packages.Animus.Unity.Runtime.Agent.AnimusAgent, Animus.Unity,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - name: targetAgent
+    type:
+      assemblyQualifiedName: Packages.Animus.Unity.Runtime.Agent.AnimusAgent, Animus.Unity,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  text: 
+  targetAgent: 

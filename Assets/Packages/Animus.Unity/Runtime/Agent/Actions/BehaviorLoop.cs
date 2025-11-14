@@ -43,7 +43,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             AnimusEventSystem.OnDialogEvent += HandleDialogEvent;
 
             _cts = new CancellationTokenSource();
-            Loop().Forget();
+            // Loop().Forget();
         }
 
         private void OnDisable()
@@ -77,13 +77,13 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
 
             // Add the input to the conversation history
-            targetAgent.conversationHistory.AddLine(sourceAgent.gameKey, dialogEvent.Text);
+            targetAgent.conversationHistory.AddLine(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, sourceAgent.gameKey, dialogEvent.Text);
 
             var prompt = new PromptBuilder()
                 .SetAgent(targetAgent)
                 .WithAvailableActions(targetAgent.actionCollection.actions)
                 .WithRecentEvents(targetAgent.eventHistory.Events)
-                .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(sourceAgent.gameKey, 50))
+                .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
                 .WithEnvironment(EnvironmentScanner.CreateSnapshot(targetAgent))
                 // .WithRelevantMemories(new List<string>())
                 .WithRules(PredefinedRulesets.CommonAgent)
@@ -138,8 +138,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 
             if (response != null)
             {
-                // TODO: Handle response correctly
-                ActionHandler.ProcessAction(new ActionPayload<string>());
+                ActionHandler.ProcessAction(response.Payload);
             }
             else
             {
