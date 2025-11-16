@@ -7,6 +7,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
     public enum AnimusEntityType
     {
         None,
+        Actor,
         Player,
         Agent,
         Object,
