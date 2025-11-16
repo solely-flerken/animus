@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
@@ -13,7 +14,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         public List<ActionParameter> parameters = new();
 
         public abstract void OnExecute(AnimusAgent agent);
-        
+
         public void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters)
         {
             MapParameters(payloadParameters);
@@ -29,8 +30,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             foreach (var paramDefinition in parameters)
             {
                 // Find the payload parameter sent from the LLM
-                var payloadParam = payloadParameters.FirstOrDefault(p =>
-                    p.name.Equals(paramDefinition.name, StringComparison.OrdinalIgnoreCase));
+                var payloadParam = payloadParameters.FirstOrDefault(p => p.name.Equals(paramDefinition.name, StringComparison.OrdinalIgnoreCase));
 
                 if (payloadParam == null)
                 {
@@ -43,16 +43,39 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 
                 if (fieldToSet != null)
                 {
-                    try
+                    object valueToSet = null;
+
+                    // Check if the field is an AnimusEntity or a derived type (like AnimusAgent).
+                    if (typeof(AnimusEntity).IsAssignableFrom(fieldToSet.FieldType))
                     {
-                        // Convert the string value from the payload to the actual type of the field
-                        var value = Convert.ChangeType(payloadParam.value, fieldToSet.FieldType);
-                        fieldToSet.SetValue(this, value);
+                        if (AnimusEntityRegistry.Instance != null)
+                        {
+                            valueToSet = AnimusEntityRegistry.Instance.FindByGameKey(payloadParam.value, fieldToSet.FieldType);
+                            if (valueToSet == null)
+                            {
+                                Debug.LogError($"Could not find an AnimusEntity of type '{fieldToSet.FieldType.Name}' with key '{payloadParam.value}'.");
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError("AnimusEntityRegistry instance not found in the scene.");
+                        }
                     }
-                    catch (Exception ex)
+                    else // For all other types (string, int, bool, etc.).
                     {
-                        Debug.LogError($"Failed to map parameter '{paramDefinition.name}'. Could not convert '{payloadParam.value}' to type '{fieldToSet.FieldType}'. Exception: {ex.Message}");
+                        try
+                        {
+                            // Convert the string value from the payload to the actual type of the field
+                            valueToSet = Convert.ChangeType(payloadParam.value, fieldToSet.FieldType);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.LogError($"Failed to convert parameter '{paramDefinition.name}' from '{payloadParam.value}' to type '{fieldToSet.FieldType.Name}'. Exception: {ex.Message}");
+                            continue;
+                        }
                     }
+
+                    fieldToSet.SetValue(this, valueToSet);
                 }
                 else
                 {

@@ -2,6 +2,7 @@
 using Events;
 using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
 namespace NPC.Scripts
@@ -13,11 +14,11 @@ namespace NPC.Scripts
         public string text;
         
         [HideInInspector]
-        public string targetAgent;
+        public AnimusActor targetActor;
         
         public override void OnExecute(AnimusAgent animusAgent)
         {
-            animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetAgent }, animusAgent.gameKey, text);
+            animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
             EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
         }
     }
