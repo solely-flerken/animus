@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Audio.Scripts;
@@ -18,7 +19,7 @@ namespace Features.Chat.Scripts
 {
     public class Chat : UserInterfaceBase
     {
-        private static Chat _instance;
+        public static Chat Instance;
 
         private static InputSystem_Actions.UIActions UIActions => InputManager.UIActions;
         private static InputSystem_Actions.PlayerActions PlayerActions => InputManager.PlayerActions;
@@ -34,9 +35,9 @@ namespace Features.Chat.Scripts
 
         private void Awake()
         {
-            if (_instance == null)
+            if (Instance == null)
             {
-                _instance = this;
+                Instance = this;
             }
             else
             {
@@ -73,7 +74,7 @@ namespace Features.Chat.Scripts
             EventSystem.OnDisplayMessageInChat -= LogMessage;
         }
 
-        protected override void Show()
+        public override void Show()
         {
             Root.style.display = DisplayStyle.Flex;
 
@@ -84,7 +85,7 @@ namespace Features.Chat.Scripts
             _messageInput.style.display = DisplayStyle.Flex;
         }
 
-        protected override void Hide()
+        public override void Hide()
         {
             Root.style.display = DisplayStyle.Flex;
 
@@ -105,13 +106,7 @@ namespace Features.Chat.Scripts
 
         private void OnToggleChat(InputAction.CallbackContext context)
         {
-            _isChatOpen = !_isChatOpen;
-
             if (_isChatOpen)
-            {
-                OpenChat();
-            }
-            else
             {
                 if (context.action != UIActions.Cancel)
                 {
@@ -121,18 +116,30 @@ namespace Features.Chat.Scripts
 
                 CloseChat();
             }
+            else
+            {
+                OpenChat();
+            }
         }
 
-        private void OpenChat()
+        public void OpenChat(string prefillText = null)
         {
+            _isChatOpen = true;
             Show();
             UIActions.Cancel.performed += OnToggleChat;
             PlayerActions.Disable();
-            _messageInput.RegisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
+            
+            if (!string.IsNullOrEmpty(prefillText))
+            {
+                _messageInput.value = prefillText;
+            }
+            
+            StartCoroutine(FocusAndPositionCursor());
         }
 
         private void CloseChat()
         {
+            _isChatOpen = false;
             Hide();
             UIActions.Cancel.performed -= OnToggleChat;
             _messageInput.Blur();
@@ -248,6 +255,14 @@ namespace Features.Chat.Scripts
             _messageInput.UnregisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
         }
 
+        private IEnumerator FocusAndPositionCursor()
+        {
+            yield return new WaitForEndOfFrame();
+            _messageInput.Focus();
+            _messageInput.cursorIndex = _messageInput.text.Length;
+            _messageInput.selectIndex = _messageInput.text.Length;
+        }
+        
         private void OnKeyDown(KeyDownEvent evt)
         {
             switch (evt.keyCode)

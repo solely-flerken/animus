@@ -9,12 +9,12 @@ namespace Core.UI.Scripts
         public bool IsVisibleInitially { get; set; }
         public bool IsVisible => Root?.style.display == DisplayStyle.Flex;
 
-        protected virtual void Show()
+        public virtual void Show()
         {
             Root.style.display = DisplayStyle.Flex;
         }
 
-        protected virtual void Hide()
+        public virtual void Hide()
         {
             Root.style.display = DisplayStyle.None;
         }
