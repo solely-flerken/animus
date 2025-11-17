@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Core.Utils.Json;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
+    [JsonConverter(typeof(NpcActionConverter))]
     public abstract class NpcAction : ScriptableObject
     {
         public string actionKey;
