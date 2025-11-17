@@ -10,7 +10,7 @@ namespace Core.Interaction.Scripts
         private VisualElement _container;
         private Label _interactionPromptLabel;
 
-        private Interactable _currentInteractable;
+        private IInteractable _currentInteractable;
 
         private void Awake()
         {

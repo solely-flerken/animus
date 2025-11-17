@@ -1,27 +1,17 @@
-﻿
-using Features.Chat.Scripts;
+﻿using Features.Chat.Scripts;
 using Packages.Animus.Unity.Runtime.Agent;
 using UnityEngine;
 
 namespace Core.Interaction.Scripts
 {
-    [RequireComponent(typeof(Interactable), typeof(AnimusAgent))]
-    public class InteractableAgent : MonoBehaviour
+    [RequireComponent(typeof(AnimusAgent))]
+    public class InteractableAgent : MonoBehaviour, IInteractable
     {
-        private Interactable Interactable =>  GetComponent<Interactable>();
         private AnimusAgent Agent => GetComponent<AnimusAgent>();
-        
-        private void Start()
-        {
-            Interactable.OnInteraction += Interact;
-        }
 
-        private void OnDestroy()
-        {
-            Interactable.OnInteraction -= Interact;
-        }
+        public string InteractionPrompt => $"Talk to {Agent.gameKey}";
 
-        private void Interact(GameObject interactor)
+        public void Interact(GameObject interactor)
         {
             var commandToExecute = $"/talk {Agent.gameKey} ";
             Chat.Instance.OpenChat(commandToExecute);

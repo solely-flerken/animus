@@ -1318,7 +1318,6 @@ GameObject:
   - component: {fileID: 163025905}
   - component: {fileID: 163025904}
   - component: {fileID: 163025906}
-  - component: {fileID: 163025908}
   - component: {fileID: 163025907}
   m_Layer: 0
   m_Name: Borin
@@ -1401,19 +1400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62dcf66815fc4eafb16c4ff3c8e81a62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.Interaction.Scripts.InteractableAgent
---- !u!114 &163025908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163025903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddc042be00becfc46805c469da9a1d9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Core.Interaction.Scripts.Interactable
-  interactionTypeName: Interact
 --- !u!1 &203388139
 GameObject:
   m_ObjectHideFlags: 0
@@ -7463,7 +7449,6 @@ GameObject:
   - component: {fileID: 1045797928}
   - component: {fileID: 1045797927}
   - component: {fileID: 1045797926}
-  - component: {fileID: 1045797930}
   - component: {fileID: 1045797929}
   m_Layer: 0
   m_Name: Arinth
@@ -7547,19 +7532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62dcf66815fc4eafb16c4ff3c8e81a62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.Interaction.Scripts.InteractableAgent
---- !u!114 &1045797930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045797925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddc042be00becfc46805c469da9a1d9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Core.Interaction.Scripts.Interactable
-  interactionTypeName: Interact
 --- !u!1 &1059817630
 GameObject:
   m_ObjectHideFlags: 0

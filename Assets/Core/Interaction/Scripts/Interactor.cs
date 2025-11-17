@@ -15,7 +15,7 @@ namespace Core.Interaction.Scripts
 
         private static InteractionUIManager InteractionUI => InteractionUIManager.Instance;
 
-        private Interactable _currentInteractable;
+        private IInteractable _currentInteractable;
 
         private void Start()
         {
@@ -39,10 +39,7 @@ namespace Core.Interaction.Scripts
 
         private void OnInteract(InputAction.CallbackContext context)
         {
-            if (_currentInteractable != null)
-            {
-                _currentInteractable.InvokeInteraction(gameObject);
-            }
+            _currentInteractable?.Interact(gameObject);
         }
 
         private void DetectInteractable()
@@ -51,13 +48,13 @@ namespace Core.Interaction.Scripts
 
             if (Physics.Raycast(ray, out var hit, interactionDistance, interactionLayerMask))
             {
-                var interactable = hit.collider.GetComponentInParent<Interactable>();
+                var interactable = hit.collider.GetComponentInParent<IInteractable>();
 
-                if (interactable)
+                if (interactable != null)
                 {
                     if (interactable == _currentInteractable) return;
                     _currentInteractable = interactable;
-                    ShowPrompt(_currentInteractable.interactionTypeName);
+                    ShowPrompt(_currentInteractable.InteractionPrompt);
                 }
                 else
                 {
