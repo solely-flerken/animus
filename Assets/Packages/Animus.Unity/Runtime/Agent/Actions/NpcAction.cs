@@ -18,9 +18,14 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 
         public abstract void OnExecute(AnimusAgent agent);
 
-        public void Execute(AnimusAgent animusAgent, List<ActionPayloadParameter> payloadParameters)
+        public void Execute(AnimusAgent animusAgent, ActionPayload payload)
         {
-            MapParameters(payloadParameters);
+            MapParameters(payload.parameters);
+
+            // TODO:
+            var entry = ActionHistoryEntry.CreateFromPayload(payload, "", "success");
+            animusAgent.actionHistory.AddEntry(entry); 
+            
             OnExecute(animusAgent);
         }
 

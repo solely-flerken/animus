@@ -83,6 +83,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
                 .SetAgent(targetAgent)
                 .WithAvailableActions(targetAgent.actionCollection.actions)
                 .WithRecentEvents(targetAgent.eventHistory.Events)
+                .WithActionHistory(targetAgent.actionHistory.GetHistory())
                 .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
                 .WithEnvironment(EnvironmentScanner.CreateSnapshot(targetAgent))
                 // .WithRelevantMemories(new List<string>())

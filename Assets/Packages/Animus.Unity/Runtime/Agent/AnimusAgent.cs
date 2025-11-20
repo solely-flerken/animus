@@ -22,6 +22,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
         public float fieldOfViewAngle = 120f;
         public LayerMask obstacleLayer;
 
+        public ActionHistory actionHistory;
         public ConversationHistory conversationHistory;
         public EventHistory eventHistory;
 
@@ -37,6 +38,7 @@ namespace Packages.Animus.Unity.Runtime.Agent
         {
             AnimusEntityRegistry.Instance.Register(this);
 
+            actionHistory = new ActionHistory();
             conversationHistory = new ConversationHistory(50);
             eventHistory = new EventHistory();
             actionCollection.Initialize();

@@ -43,6 +43,12 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
             return this;
         }
 
+        public PromptBuilder WithActionHistory(List<ActionHistoryEntry> actionHistory)
+        {
+            _context.ActionHistory = actionHistory;
+            return this;
+        }
+        
         public PromptBuilder WithConversationHistory(List<DialogLine> conversationHistory)
         {
             _context.ConversationHistory = conversationHistory;

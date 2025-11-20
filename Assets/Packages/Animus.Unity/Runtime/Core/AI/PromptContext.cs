@@ -27,6 +27,9 @@ namespace Packages.Animus.Unity.Runtime.Core.AI
         [JsonProperty("EnvironmentDescription", NullValueHandling = NullValueHandling.Ignore)]
         public EnvironmentSnapshot Environment { get; set; }
 
+        [JsonProperty("ActionHistory", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ActionHistoryEntry> ActionHistory { get; set; }
+        
         [JsonProperty("ConversationHistory", NullValueHandling = NullValueHandling.Ignore)]
         public List<DialogLine> ConversationHistory { get; set; }
 

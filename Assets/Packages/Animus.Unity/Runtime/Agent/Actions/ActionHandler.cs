@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
+    // TODO: Why is this even a MonoBehaviour?
     public class ActionHandler : MonoBehaviour
     {
         public static ActionHandler Instance { get; private set; }
@@ -45,7 +46,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
 
             Debug.Log($"Agent '{targetAgent.gameKey}' is executing command '{actionKey}'.");
-            action.Execute(targetAgent, actionPayload.parameters);
+            action.Execute(targetAgent, actionPayload);
         }
     }
 }
