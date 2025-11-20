@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
-    [CreateAssetMenu(fileName = "GoToRandomPoiAction", menuName = "Animus/NPC/Action/GoToRandomPoi")]
-    public class GoToRandomPoiAction : NpcAction
+    [CreateAssetMenu(fileName = "GoToLocationAction", menuName = "Animus/NPC/Action/GoToLocationAction")]
+    public class GoToLocationAction : NpcAction
     {
         [HideInInspector] public string locationKey;
 

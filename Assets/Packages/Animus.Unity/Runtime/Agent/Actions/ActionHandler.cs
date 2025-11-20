@@ -4,24 +4,8 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
-    // TODO: Why is this even a MonoBehaviour?
-    public class ActionHandler : MonoBehaviour
+    public static class ActionHandler
     {
-        public static ActionHandler Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
         public static void ProcessAction(ActionPayload actionPayload)
         {
             var targetAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);

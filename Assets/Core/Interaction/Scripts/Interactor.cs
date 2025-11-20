@@ -1,11 +1,10 @@
 ﻿using Core.Input.Scripts;
-using Core.UI.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Core.Interaction.Scripts
 {
-    public class Interactor : UserInterfaceBase
+    public class Interactor : MonoBehaviour
     {
         public Camera playerCamera;
         public LayerMask interactionLayerMask;
@@ -57,14 +56,14 @@ namespace Core.Interaction.Scripts
                 {
                     // Looking at something, but it's not interactable.
                     _currentInteractable = null;
-                    Hide();
+                    InteractionUI.Hide();
                 }
             }
             else
             {
                 // Looking at nothing.
                 _currentInteractable = null;
-                Hide();
+                InteractionUI.Hide();
             }
         }
     }
