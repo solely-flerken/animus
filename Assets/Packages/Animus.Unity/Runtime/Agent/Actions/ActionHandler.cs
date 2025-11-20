@@ -21,7 +21,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
         }
 
-        public static void ProcessAction<T>(ActionPayload<T> actionPayload)
+        public static void ProcessAction(ActionPayload actionPayload)
         {
             var targetAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);
             if (targetAgent == null)

@@ -7,6 +7,6 @@ namespace Packages.Animus.Unity.Runtime.Core.AI.Service
     [Serializable]
     public class ApiResponse
     {
-        [JsonProperty("payload")] public ActionPayload<string> Payload { get; set; }
+        [JsonProperty("payload")] public ActionPayload Payload { get; set; }
     }
 }
