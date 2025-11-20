@@ -29,6 +29,8 @@ namespace Core.Interaction.Scripts
             Root = GetComponent<UIDocument>().rootVisualElement;
             _container = Root.Q<VisualElement>("container");
             _interactionPromptLabel = Root.Q<Label>("interactionPromptLabel");
+            
+            Hide();
         }
 
         public void Show(string message)

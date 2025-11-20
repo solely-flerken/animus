@@ -21,9 +21,6 @@ namespace Core.Interaction.Scripts
         {
             PlayerActions.Enable();
             PlayerActions.Interact.performed += OnInteract;
-
-            // Ensure the prompt is hidden when the game starts
-            HidePrompt();
         }
 
         private void OnDestroy()
@@ -54,30 +51,21 @@ namespace Core.Interaction.Scripts
                 {
                     if (interactable == _currentInteractable) return;
                     _currentInteractable = interactable;
-                    ShowPrompt(_currentInteractable.InteractionPrompt);
+                    InteractionUI.Show(_currentInteractable.InteractionPrompt);
                 }
                 else
                 {
                     // Looking at something, but it's not interactable.
-                    HidePrompt();
+                    _currentInteractable = null;
+                    Hide();
                 }
             }
             else
             {
                 // Looking at nothing.
-                HidePrompt();
+                _currentInteractable = null;
+                Hide();
             }
-        }
-        
-        private static void ShowPrompt(string message)
-        {
-            InteractionUI.Show(message);
-        }
-
-        private void HidePrompt()
-        {
-            _currentInteractable = null;
-            InteractionUI.Hide();
         }
     }
 }
