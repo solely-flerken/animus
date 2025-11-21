@@ -1,4 +1,4 @@
-﻿using Packages.Animus.Unity.Runtime.Agent;
+﻿using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
 namespace Features.Interaction.Scripts

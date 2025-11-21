@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent.Actions
+namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
 {
     [CreateAssetMenu(fileName = "ActionCollection", menuName = "Animus/NPC/Action/ActionCollection")]
     public class ActionCollection : ScriptableObject

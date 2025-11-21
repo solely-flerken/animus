@@ -1,6 +1,6 @@
 ﻿using Packages.Animus.Unity.Runtime.Core.Entity;
 
-namespace Packages.Animus.Unity.Runtime.Environment
+namespace Packages.Animus.Unity.Runtime.Modules.Environment
 {
     public class AnimusLocation : AnimusEntity
     {

@@ -8,14 +8,14 @@ using Packages.Animus.Unity.Runtime.Core.AI.Service;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
-using Packages.Animus.Unity.Runtime.Environment;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using Packages.Animus.Unity.Runtime.Integrations.AI;
-using Packages.Animus.Unity.Runtime.Player;
+using Packages.Animus.Unity.Runtime.Modules.Environment;
+using Packages.Animus.Unity.Runtime.Modules.Player;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent.Actions
+namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
 {
     public class BehaviorLoop : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Environment;
+using Packages.Animus.Unity.Runtime.Modules.Environment;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent.Actions
+namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
 {
     [CreateAssetMenu(fileName = "GoToLocationAction", menuName = "Animus/NPC/Action/GoToLocationAction")]
     public class GoToLocationAction : NpcAction

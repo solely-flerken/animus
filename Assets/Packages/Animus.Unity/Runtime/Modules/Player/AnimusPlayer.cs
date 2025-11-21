@@ -1,6 +1,6 @@
 ﻿using Packages.Animus.Unity.Runtime.Core.Entity;
 
-namespace Packages.Animus.Unity.Runtime.Player
+namespace Packages.Animus.Unity.Runtime.Modules.Player
 {
     public class AnimusPlayer : AnimusActor
     {

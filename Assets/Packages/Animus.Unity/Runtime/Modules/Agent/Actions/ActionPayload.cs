@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Packages.Animus.Unity.Runtime.Agent.Actions
+namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
 {
     [Serializable]
     public class ActionPayload

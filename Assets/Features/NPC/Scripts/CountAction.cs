@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Core.Events;
 using Cysharp.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Agent;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
+using Packages.Animus.Unity.Runtime.Modules.Agent;
+using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using UnityEngine;
 
 namespace Features.NPC.Scripts

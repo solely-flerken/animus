@@ -8,7 +8,7 @@ using Packages.Animus.Unity.Runtime.Infrastructure.Serialization.Converters;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Agent.Actions
+namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
 {
     [JsonConverter(typeof(NpcActionConverter))]
     public abstract class NpcAction : ScriptableObject

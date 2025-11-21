@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Event

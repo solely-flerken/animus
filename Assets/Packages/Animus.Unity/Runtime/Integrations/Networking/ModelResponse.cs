@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
+using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.Networking

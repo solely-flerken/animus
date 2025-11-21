@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Environment
+namespace Packages.Animus.Unity.Runtime.Modules.Environment
 {
     public static class EnvironmentScanner
     {

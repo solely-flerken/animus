@@ -4,7 +4,7 @@ using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization.Converters;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Environment
+namespace Packages.Animus.Unity.Runtime.Modules.Environment
 {
     public class EnvironmentSnapshot
     {

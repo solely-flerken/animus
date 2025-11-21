@@ -1,14 +1,14 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
-using Packages.Animus.Unity.Runtime.Environment;
+using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
+using Packages.Animus.Unity.Runtime.Modules.Environment;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Packages.Animus.Unity.Runtime.Agent
+namespace Packages.Animus.Unity.Runtime.Modules.Agent
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class AnimusAgent : AnimusActor
