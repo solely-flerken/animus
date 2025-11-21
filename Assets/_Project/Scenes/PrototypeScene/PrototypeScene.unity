@@ -2042,7 +2042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4687965506169243958, guid: 1fc96289a0d2cfd45a677bcf3fb3759e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4687965506169243958, guid: 1fc96289a0d2cfd45a677bcf3fb3759e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2050,7 +2050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4687965506169243958, guid: 1fc96289a0d2cfd45a677bcf3fb3759e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4687965506169243958, guid: 1fc96289a0d2cfd45a677bcf3fb3759e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9942,7 +9942,7 @@ MonoBehaviour:
   persona: You are Dummy. You do everything you are told.
   actionCollection: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
   perceptionRadius: 20
-  fieldOfViewAngle: 120
+  fieldOfViewAngle: 360
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
