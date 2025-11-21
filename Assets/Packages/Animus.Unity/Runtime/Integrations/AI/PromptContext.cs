@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
+using Packages.Animus.Unity.Runtime.Core.AI;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Environment;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Core.AI
+namespace Packages.Animus.Unity.Runtime.Integrations.AI
 {
     public class PromptContext
     {

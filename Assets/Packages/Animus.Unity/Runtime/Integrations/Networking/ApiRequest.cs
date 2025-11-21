@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Core.AI.Service
+namespace Packages.Animus.Unity.Runtime.Integrations.Networking
 {
     [Serializable]
     public class ApiRequest<T>

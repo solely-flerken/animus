@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Networking;
+using Packages.Animus.Unity.Runtime.Integrations.AI;
+using Packages.Animus.Unity.Runtime.Integrations.Networking;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 

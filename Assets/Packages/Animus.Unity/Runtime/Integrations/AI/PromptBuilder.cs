@@ -6,7 +6,7 @@ using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Environment;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 
-namespace Packages.Animus.Unity.Runtime.Core.AI
+namespace Packages.Animus.Unity.Runtime.Integrations.AI
 {
     public class PromptBuilder
     {

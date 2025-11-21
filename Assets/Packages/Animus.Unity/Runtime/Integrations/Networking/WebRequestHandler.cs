@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using UnityEngine.Networking;
 
-namespace Packages.Animus.Unity.Runtime.Networking
+namespace Packages.Animus.Unity.Runtime.Integrations.Networking
 {
     public static class WebRequestHandler
     {
