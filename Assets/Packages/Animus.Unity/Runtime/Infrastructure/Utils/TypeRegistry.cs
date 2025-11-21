@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Utils
 {
     /// <summary>
     /// Generic base class for creating type-safe singleton registries in Unity.

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.TypeSelection
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Utils.TypeSelection
 {
     public class TypeFilterAttribute : PropertyAttribute
     {

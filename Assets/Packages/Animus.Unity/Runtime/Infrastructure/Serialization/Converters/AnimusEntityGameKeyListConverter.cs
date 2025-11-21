@@ -4,7 +4,7 @@ using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.Json
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization.Converters
 {
     public class AnimusEntityGameKeyListConverter<T> : JsonConverter<List<T>> where T : AnimusEntity
     {

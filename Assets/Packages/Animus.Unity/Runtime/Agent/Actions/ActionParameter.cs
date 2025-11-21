@@ -1,7 +1,6 @@
 ﻿using System;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Core.Utils;
-using Packages.Animus.Unity.Runtime.Core.Utils.TypeSelection;
+using Packages.Animus.Unity.Runtime.Infrastructure.Utils.TypeSelection;
 
 namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {

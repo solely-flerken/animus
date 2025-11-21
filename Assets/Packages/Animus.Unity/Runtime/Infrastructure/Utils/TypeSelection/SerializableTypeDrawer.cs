@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.TypeSelection
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Utils.TypeSelection
 {
     [CustomPropertyDrawer(typeof(SerializableType))]
     public class SerializableTypeDrawer : PropertyDrawer

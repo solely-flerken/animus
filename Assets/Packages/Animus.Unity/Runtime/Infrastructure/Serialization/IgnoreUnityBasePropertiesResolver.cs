@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Serialization;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.Json
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization
 {
     public class IgnoreUnityBasePropertiesResolver : DefaultContractResolver
     {

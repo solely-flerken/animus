@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.TypeSelection
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Utils.TypeSelection
 {
     public class SerializableTypeConverter : JsonConverter<SerializableType>
     {

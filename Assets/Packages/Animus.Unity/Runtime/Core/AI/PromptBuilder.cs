@@ -3,8 +3,8 @@ using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
-using Packages.Animus.Unity.Runtime.Core.Utils.Json;
 using Packages.Animus.Unity.Runtime.Environment;
+using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 
 namespace Packages.Animus.Unity.Runtime.Core.AI
 {

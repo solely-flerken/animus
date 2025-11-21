@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Utils
 {
     public static class TypeExtensions
     {

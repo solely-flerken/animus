@@ -2,7 +2,7 @@
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.Json
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization.Converters
 {
     public class NpcActionConverter : JsonConverter<NpcAction>
     {

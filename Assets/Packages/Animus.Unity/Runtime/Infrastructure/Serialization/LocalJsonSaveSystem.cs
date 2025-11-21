@@ -2,9 +2,8 @@
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using JsonUtility = Packages.Animus.Unity.Runtime.Core.Utils.Json.JsonUtility;
 
-namespace Packages.Animus.Unity.Runtime.Core.Utils.Save
+namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization
 {
     public static class LocalJsonSaveSystem
     {

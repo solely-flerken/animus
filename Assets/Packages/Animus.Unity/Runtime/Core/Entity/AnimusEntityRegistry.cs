@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Packages.Animus.Unity.Runtime.Core.Utils;
+using Packages.Animus.Unity.Runtime.Infrastructure.Utils;
 
 namespace Packages.Animus.Unity.Runtime.Core.Entity
 {

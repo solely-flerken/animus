@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Core.Utils.Json;
+using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using UnityEngine.Networking;
 
 namespace Packages.Animus.Unity.Runtime.Networking
