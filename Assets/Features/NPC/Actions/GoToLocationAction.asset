@@ -17,5 +17,6 @@ MonoBehaviour:
   parameters:
   - name: locationKey
     type:
-      assemblyQualifiedName: Packages.Animus.Unity.Runtime.Environment.AnimusLocation,
+      assemblyQualifiedName: Packages.Animus.Unity.Runtime.Modules.Environment.AnimusLocation,
         Animus.Unity, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  locationKey: 
