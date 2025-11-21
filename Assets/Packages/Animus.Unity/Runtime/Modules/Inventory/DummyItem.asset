@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfce1825148408f96f9739ef72588df, type: 3}
+  m_Name: DummyItem
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Inventory.ItemDefinition
+  itemTypeId: dummyItem
+  itemName: 
+  description: You can't do anything with this item.
+  baseCost: 5
+  weight: 1
+  worldPrefab: {fileID: 3516943103764839956, guid: f55c7341f442a304eac45b1b4fa395c3, type: 3}
