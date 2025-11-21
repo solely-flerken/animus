@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 {
     public static class ActionHandler
     {
-        public static void ProcessAction(ActionPayload actionPayload)
+        public static async UniTask ProcessAction(ActionPayload actionPayload)
         {
             var targetAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);
             if (targetAgent == null)
@@ -30,7 +31,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             }
 
             Debug.Log($"Agent '{targetAgent.gameKey}' is executing command '{actionKey}'.");
-            action.Execute(targetAgent, actionPayload);
+            await action.Execute(targetAgent, actionPayload);
         }
     }
 }

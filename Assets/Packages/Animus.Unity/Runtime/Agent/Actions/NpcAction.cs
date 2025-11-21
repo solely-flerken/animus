@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Utils.Json;
 using Unity.Plastic.Newtonsoft.Json;
@@ -16,17 +17,18 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         public string description;
         public List<ActionParameter> parameters = new();
 
-        public abstract void OnExecute(AnimusAgent agent);
+        protected abstract UniTask<string> OnExecute(AnimusAgent agent);
 
-        public void Execute(AnimusAgent animusAgent, ActionPayload payload)
+        public async UniTask<ActionHistoryEntry> Execute(AnimusAgent animusAgent, ActionPayload payload)
         {
             MapParameters(payload.parameters);
 
-            // TODO:
-            var entry = ActionHistoryEntry.CreateFromPayload(payload, "", "success");
-            animusAgent.actionHistory.AddEntry(entry); 
+            var outcome = await OnExecute(animusAgent);
             
-            OnExecute(animusAgent);
+            // TODO:
+            var entry = ActionHistoryEntry.CreateFromPayload(payload, "", outcome);
+            animusAgent.actionHistory.AddEntry(entry);
+            return entry;
         }
 
         private void MapParameters(List<ActionPayloadParameter> payloadParameters)

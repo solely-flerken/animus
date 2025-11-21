@@ -1,4 +1,6 @@
-﻿using Packages.Animus.Unity.Runtime.Agent.Actions;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
@@ -49,10 +51,29 @@ namespace Packages.Animus.Unity.Runtime.Agent
             AnimusEntityRegistry.Instance?.Unregister(this);
         }
 
-        public void GoToPoi(AnimusLocation poi)
+        public async UniTask<bool> GoToPoi(AnimusLocation poi, CancellationToken cancellationToken = default)
         {
+            if (poi == null) return false;
+            
             _currentTargetPosition = poi.transform.position;
             _navMeshAgent.SetDestination(_currentTargetPosition);
+            
+            while (_navMeshAgent.pathPending)
+            {
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+            }
+            
+            while (_navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance)
+            {
+                if (_navMeshAgent.pathStatus != NavMeshPathStatus.PathComplete)
+                {
+                    Debug.LogError("Navigation path failed.");
+                    return false;
+                }
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+            }
+            
+            return _navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete;
         }
     }
 }

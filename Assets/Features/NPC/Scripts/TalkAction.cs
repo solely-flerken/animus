@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Core.Events;
+using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Agent;
 using Packages.Animus.Unity.Runtime.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
@@ -16,10 +17,12 @@ namespace Features.NPC.Scripts
         [HideInInspector]
         public AnimusActor targetActor;
         
-        public override void OnExecute(AnimusAgent animusAgent)
+        protected override async UniTask<string> OnExecute(AnimusAgent animusAgent)
         {
             animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
             EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
+            await UniTask.Yield();
+            return "Done talking.";
         }
     }
 }

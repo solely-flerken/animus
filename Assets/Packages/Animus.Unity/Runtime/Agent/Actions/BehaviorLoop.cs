@@ -141,7 +141,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             {
                 foreach (var action in response.Payload.Actions)
                 {
-                    ActionHandler.ProcessAction(action);
+                    await ActionHandler.ProcessAction(action);
                 }
             }
             else

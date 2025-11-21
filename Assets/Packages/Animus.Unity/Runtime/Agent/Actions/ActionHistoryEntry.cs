@@ -7,7 +7,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
         public string ActionKey { get; }
         public List<ActionPayloadParameter> Parameters { get; }
         public string Incentive { get; }
-        public string Outcome { get; }
+        public string Outcome { get; } // TODO: Maybe make this a bool
 
         public ActionHistoryEntry(string actionKey, List<ActionPayloadParameter> parameters, string incentive, string outcome)
         {
