@@ -82,7 +82,7 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
             var prompt = new PromptBuilder()
                 .SetAgent(targetAgent)
                 .WithAvailableActions(targetAgent.actionCollection.actions)
-                .WithRecentEvents(targetAgent.eventHistory.Events)
+                // .WithRecentEvents(targetAgent.eventHistory.Events)
                 .WithActionHistory(targetAgent.actionHistory.GetHistory())
                 .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
                 .WithEnvironment(EnvironmentScanner.CreateSnapshot(targetAgent))
@@ -139,7 +139,10 @@ namespace Packages.Animus.Unity.Runtime.Agent.Actions
 
             if (response != null)
             {
-                ActionHandler.ProcessAction(response.Payload);
+                foreach (var action in response.Payload.Actions)
+                {
+                    ActionHandler.ProcessAction(action);
+                }
             }
             else
             {
