@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Core.Interaction.Scripts
+namespace Features.Interaction.Scripts
 {
     public class Interactor : MonoBehaviour
     {

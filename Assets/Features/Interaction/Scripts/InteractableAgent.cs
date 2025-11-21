@@ -1,8 +1,7 @@
-﻿using Features.Chat.Scripts;
-using Packages.Animus.Unity.Runtime.Agent;
+﻿using Packages.Animus.Unity.Runtime.Agent;
 using UnityEngine;
 
-namespace Core.Interaction.Scripts
+namespace Features.Interaction.Scripts
 {
     [RequireComponent(typeof(AnimusAgent))]
     public class InteractableAgent : MonoBehaviour, IInteractable
@@ -14,7 +13,7 @@ namespace Core.Interaction.Scripts
         public void Interact(GameObject interactor)
         {
             var commandToExecute = $"/talk {Agent.gameKey} ";
-            Chat.Instance.OpenChat(commandToExecute);
+            Chat.Scripts.Chat.Instance.OpenChat(commandToExecute);
         }
     }
 }

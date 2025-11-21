@@ -1,7 +1,7 @@
 ﻿using Core.UI.Scripts;
 using UnityEngine.UIElements;
 
-namespace Core.Interaction.Scripts
+namespace Features.Interaction.Scripts
 {
     public class InteractionUIManager : UserInterfaceBase
     {

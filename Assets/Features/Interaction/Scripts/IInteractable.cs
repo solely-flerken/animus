@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Interaction.Scripts
+namespace Features.Interaction.Scripts
 {
     public interface IInteractable
     {
