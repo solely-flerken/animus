@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Core.Events;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
+using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Modules.Agent;
 using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
@@ -17,12 +16,18 @@ namespace Features.NPC.Scripts
         [HideInInspector]
         public AnimusActor targetActor;
         
-        protected override async UniTask<string> OnExecute(AnimusAgent animusAgent)
+        protected override UniTask<string> OnExecute(AnimusAgent animusAgent)
         {
-            animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
-            EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
-            await UniTask.Yield();
-            return "Done talking.";
+            var brain = animusAgent.GetComponent<SimpleAgentBrain>();
+
+            if (brain == null)
+            {
+                return UniTask.FromResult("failure");
+            }
+
+            brain.StartGoalTalk(text, targetActor);
+            
+            return UniTask.FromResult("success");
         }
     }
 }

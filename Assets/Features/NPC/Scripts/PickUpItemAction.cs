@@ -1,8 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
+using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Modules.Agent;
+using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
+namespace Features.NPC.Scripts
 {
     [CreateAssetMenu(fileName = "PickUpItem", menuName = "Animus/NPC/Action/PickUpItem")]
     public class PickUpItemAction : NpcAction
@@ -11,6 +14,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
         
         protected override UniTask<string> OnExecute(AnimusAgent agent)
         {
+            var brain = agent.GetComponent<SimpleAgentBrain>();
             var item = AnimusEntityRegistry.Instance.FindByGameKey<AnimusObject>(itemKey);
 
             if (item == null)
@@ -20,8 +24,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
                 return new UniTask<string>(text);
             }
 
-            agent.inventory.AddItem(item.itemData, item.quantity);
-            item.Pickup();
+            brain.StartGoalPickupItem(item);
             
             return new UniTask<string>("Successfully picked up.");
         }
