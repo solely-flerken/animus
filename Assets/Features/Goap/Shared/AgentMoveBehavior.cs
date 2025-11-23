@@ -9,10 +9,14 @@ namespace Features.Goap.Shared
     public class AgentMoveBehavior : MonoBehaviour
     {
         private const float MinMoveDistanceSqr = 0.25f * 0.25f;
-
+        
         private AgentBehaviour _agentBehaviour;
         private NavMeshAgent _navMeshAgent;
 
+        private Animator _animator;
+        private float NormalizedSpeed => _navMeshAgent.velocity.magnitude / _navMeshAgent.speed;
+        private static readonly int Forward = Animator.StringToHash("Forward");
+        
         private ITarget _currentTarget;
         private Vector3 _lastPosition;
 
@@ -20,6 +24,7 @@ namespace Features.Goap.Shared
         {
             _agentBehaviour = GetComponent<AgentBehaviour>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void Update()
@@ -35,6 +40,8 @@ namespace Features.Goap.Shared
                 _lastPosition = _currentTarget.Position;
                 _navMeshAgent.SetDestination(_currentTarget.Position);
             }
+            
+            _animator.SetFloat(Forward, NormalizedSpeed);
         }
 
         private void OnEnable()
@@ -57,6 +64,8 @@ namespace Features.Goap.Shared
             {
                 _navMeshAgent.ResetPath();
             }
+            
+            _animator.SetFloat(Forward, NormalizedSpeed);
         }
 
         private void OnTargetChanged(ITarget target, bool inRange)
@@ -64,6 +73,8 @@ namespace Features.Goap.Shared
             _currentTarget = target;
             _lastPosition = _currentTarget.Position;
             _navMeshAgent.SetDestination(_currentTarget.Position);
+            
+            _animator.SetFloat(Forward, NormalizedSpeed);
         }
     }
 }
