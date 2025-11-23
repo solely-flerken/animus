@@ -2042,7 +2042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4687965506169243958, guid: 1fc96289a0d2cfd45a677bcf3fb3759e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4687965506169243958, guid: 1fc96289a0d2cfd45a677bcf3fb3759e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9884,6 +9884,7 @@ GameObject:
   - component: {fileID: 1520046078}
   - component: {fileID: 1520046082}
   - component: {fileID: 1520046083}
+  - component: {fileID: 1520046084}
   m_Layer: 0
   m_Name: Dummy
   m_TagString: Untagged
@@ -10040,6 +10041,20 @@ MonoBehaviour:
   targetItem: {fileID: 0}
   targetItemTypeId: 
   totalItemQuantityAfterPickup: 0
+--- !u!114 &1520046084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520046073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ec8957aad048208d24cc238a78497c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Goap.Talk.TalkBehavior
+  text: 
+  targetActor: {fileID: 0}
 --- !u!1 &1520416594
 GameObject:
   m_ObjectHideFlags: 0

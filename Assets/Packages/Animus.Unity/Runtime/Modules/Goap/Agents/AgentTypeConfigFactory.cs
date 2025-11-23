@@ -2,6 +2,7 @@
 using CrashKonijn.Goap.Runtime;
 using Packages.Animus.Unity.Runtime.Modules.Goap.MoveTo;
 using Packages.Animus.Unity.Runtime.Modules.Goap.Pickup;
+using Packages.Animus.Unity.Runtime.Modules.Goap.Talk;
 using Packages.Animus.Unity.Runtime.Modules.Goap.Wander;
 
 namespace Packages.Animus.Unity.Runtime.Modules.Goap.Agents
@@ -15,6 +16,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Goap.Agents
             builder.AddCapability<WanderCapability>();
             builder.AddCapability<MoveCapability>();
             builder.AddCapability<PickupItemCapability>();
+            builder.AddCapability<TalkCapability>();
             
             return builder.Build();
         }
