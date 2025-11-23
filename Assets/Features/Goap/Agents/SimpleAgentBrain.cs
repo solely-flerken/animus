@@ -7,7 +7,6 @@ using Features.Goap.Talk;
 using Features.Goap.Wander;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Modules.Agent;
-using Packages.Animus.Unity.Runtime.Modules.Environment;
 using UnityEngine;
 
 namespace Features.Goap.Agents
@@ -56,36 +55,34 @@ namespace Features.Goap.Agents
 
         private void Start()
         {
-            StartGoalTalk();
+            // StartGoalTalk("Hello World!", AnimusEntityRegistry.Instance.GetRandom<AnimusActor>());
 
             // StartGoalPickupItem();
 
             // StartGoalMoveTo();
         }
 
-        public void StartGoalTalk()
+        public void StartGoalTalk(string text, AnimusActor targetActor)
         {
-            _talkBehaviour.text = "Hello World!";
-            _talkBehaviour.targetActor = AnimusEntityRegistry.Instance.GetRandom<AnimusActor>();
+            _talkBehaviour.text = text;
+            _talkBehaviour.targetActor = targetActor;
             _talkBehaviour.hasFinishedTalking = false;
             _provider.RequestGoal<TalkGoal>();
         }
 
-        public void StartGoalPickupItem()
+        public void StartGoalPickupItem(AnimusObject item)
         {
-            var item = AnimusEntityRegistry.Instance.GetRandom<AnimusObject>();
             _pickupItemBehavior.targetItemTypeId = item.itemData.itemTypeId;
             _pickupItemBehavior.targetItem = item;
             _pickupItemBehavior.totalItemQuantityAfterPickup = item.quantity + _animusAgent.inventory.GetItemQuantity(item.itemData.itemTypeId);
             _provider.RequestGoal<PickupItemGoal>();
         }
 
-        public void StartGoalMoveTo()
+        public void StartGoalMoveTo(AnimusEntity entity)
         {
-            var location = AnimusEntityRegistry.Instance.GetRandom<AnimusLocation>();
-            if (location != null)
+            if (entity != null)
             {
-                moveToPosition = location.transform.position;
+                moveToPosition = entity.transform.position;
                 _provider.RequestGoal<MoveGoal>();
             }
             else

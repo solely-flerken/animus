@@ -9,8 +9,7 @@ namespace Packages.Animus.Unity.Runtime.Infrastructure.Utils.TypeSelection
 
         public TypeFilterAttribute(Type filterType)
         {
-            Filter = type => !type.IsAbstract &&
-                             !type.IsInterface &&
+            Filter = type => !type.IsInterface &&
                              !type.IsGenericType &&
                              type.InheritsOrImplements(filterType);
         }
