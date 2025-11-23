@@ -1,8 +1,9 @@
-﻿using CrashKonijn.Agent.Core;
+﻿using System.Collections.Generic;
+using Core.Events;
+using CrashKonijn.Agent.Core;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
 using Packages.Animus.Unity.Runtime.Modules.Agent;
-using UnityEngine;
 
 namespace Features.Goap.Talk
 {
@@ -26,9 +27,9 @@ namespace Features.Goap.Talk
                 return ActionRunState.Stop;
             }
 
-            // TODO: Display message in chat
-            // animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
-            Debug.Log($"{animusAgent.name}: {text}");
+            animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
+            EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
+            
             data.Behavior.hasFinishedTalking = true;
 
             return ActionRunState.Completed;
