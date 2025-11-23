@@ -56,7 +56,13 @@ namespace Packages.Animus.Unity.Runtime.Modules.Inventory
         {
             return slots.Exists(s => s.itemData.itemTypeId == itemId);
         }
-
+        
+        public int GetItemQuantity(string itemId)
+        {
+            var slot = slots.Find(s => s.itemData.itemTypeId == itemId);
+            return slot?.quantity ?? 0;
+        }
+        
         private float GetCurrentWeight()
         {
             return slots.Sum(s => s.itemData.weight * s.quantity);
