@@ -1,0 +1,292 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7217938030599053639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5156055569714394881}
+  - component: {fileID: 4410804593949565968}
+  - component: {fileID: 885557233028478763}
+  - component: {fileID: 131194339834714688}
+  - component: {fileID: 5474213107221586026}
+  - component: {fileID: 5854000684609103654}
+  - component: {fileID: 5767894033202790091}
+  - component: {fileID: 8831965662886925401}
+  - component: {fileID: 665647633217748724}
+  - component: {fileID: 1326976254763234199}
+  m_Layer: 0
+  m_Name: Dummy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5156055569714394881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4802501955639186569}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4410804593949565968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd0602716f44315bafb540b552d2ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Agent
+  gameKey: npc_dummy
+  entityName: Dummy
+  description: This is a description
+  inventory:
+    gold: 50
+    maxWeight: 20
+    slots: []
+  persona: You are Dummy. You do everything you are told.
+  actionCollection: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
+  perceptionRadius: 20
+  fieldOfViewAngle: 360
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!195 &885557233028478763
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &131194339834714688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62dcf66815fc4eafb16c4ff3c8e81a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.Interaction.Scripts.InteractableAgent
+--- !u!114 &5474213107221586026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72344165e2cc41da93476bb1aa2cdd4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrashKonijn.Goap.Runtime::CrashKonijn.Goap.Runtime.GoapActionProvider
+  <LoggerConfig>k__BackingField:
+    <DebugMode>k__BackingField: 1
+    <MaxLogSize>k__BackingField: 20
+  <AgentTypeBehaviour>k__BackingField: {fileID: 0}
+  <DistanceMultiplier>k__BackingField: 1
+--- !u!114 &5854000684609103654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cef53d855ccf0b46bcf004b27c4a52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: CrashKonijn.Agent.Runtime::CrashKonijn.Agent.Runtime.AgentBehaviour
+  <ActionProviderBase>k__BackingField: {fileID: 5474213107221586026}
+  isPaused: 0
+  <LoggerConfig>k__BackingField:
+    <DebugMode>k__BackingField: 1
+    <MaxLogSize>k__BackingField: 20
+--- !u!114 &5767894033202790091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faab9462db8a4c8486871acc44f00b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Goap.Behaviors.SimpleAgentBrain
+--- !u!114 &8831965662886925401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b8f7c055644ad9b86ede6f462b7c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Goap.Shared.AgentMoveBehavior
+--- !u!114 &665647633217748724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc4218a93134eb7946a3f291226a425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Goap.Pickup.AgentPickupItemBehavior
+  targetItem: {fileID: 0}
+  targetItemTypeId: 
+  totalItemQuantityAfterPickup: 0
+--- !u!114 &1326976254763234199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ec8957aad048208d24cc238a78497c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Goap.Talk.TalkBehavior
+  text: 
+  targetActor: {fileID: 0}
+  hasFinishedTalking: 1
+--- !u!1001 &4985295018735661922
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5156055569714394881}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_Name
+      value: Paladin J Nordstrom
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 36e01732bcc2dcd4aa7394e5b2047d12, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 2897324265256266581}
+  m_SourcePrefab: {fileID: 100100000, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+--- !u!4 &4802501955639186569 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+  m_PrefabInstance: {fileID: 4985295018735661922}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5327259979232464435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 043d9fefde6b82b4bb14c74e8a309d9c, type: 3}
+  m_PrefabInstance: {fileID: 4985295018735661922}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &2897324265256266581
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5327259979232464435}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
