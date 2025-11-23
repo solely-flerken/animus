@@ -13,7 +13,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Goap.Shared
 
         private NavMeshAgent _navMeshAgent;
         private Vector3 _lastPosition;
-        private const float MinMoveDistance = 0.25f;
+        private const float MinMoveDistanceSqr = 0.25f * 0.25f;
         
         private void Awake()
         {
@@ -36,13 +36,21 @@ namespace Packages.Animus.Unity.Runtime.Modules.Goap.Shared
         private void TargetLost()
         {
             _currentTarget = null;
+            _navMeshAgent.ResetPath();
         }
 
         private void OnTargetChanged(ITarget target, bool inRange)
         {
             _currentTarget = target;
+            
+            if (inRange)
+            {
+                _navMeshAgent.ResetPath();
+                return;
+            }
+            
             _lastPosition = _currentTarget.Position;
-            _navMeshAgent.SetDestination(target.Position);
+            _navMeshAgent.SetDestination(_currentTarget.Position);
         }
 
         private void Update()
@@ -52,7 +60,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Goap.Shared
                 return;
             }
 
-            if (MinMoveDistance <= Vector3.Distance(_currentTarget.Position, _lastPosition))
+            if (Vector3.SqrMagnitude(_currentTarget.Position - _lastPosition) > MinMoveDistanceSqr)
             {
                 _lastPosition = _currentTarget.Position;
                 _navMeshAgent.SetDestination(_currentTarget.Position);
