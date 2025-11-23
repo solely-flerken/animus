@@ -29,6 +29,8 @@ namespace Features.Goap.Shared
 
         private void Update()
         {
+            _animator.SetFloat(Forward, NormalizedSpeed);
+            
             if (_currentTarget == null)
             {
                 return;
@@ -64,8 +66,6 @@ namespace Features.Goap.Shared
             {
                 _navMeshAgent.ResetPath();
             }
-            
-            _animator.SetFloat(Forward, NormalizedSpeed);
         }
 
         private void OnTargetChanged(ITarget target, bool inRange)
@@ -73,8 +73,6 @@ namespace Features.Goap.Shared
             _currentTarget = target;
             _lastPosition = _currentTarget.Position;
             _navMeshAgent.SetDestination(_currentTarget.Position);
-            
-            _animator.SetFloat(Forward, NormalizedSpeed);
         }
     }
 }
