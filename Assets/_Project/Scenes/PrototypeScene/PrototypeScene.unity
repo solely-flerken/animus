@@ -1787,7 +1787,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: e1b4d32375f7aa442bdf9fc243588ee3, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: be6fe12186f55c64e84ad6178d05421e, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &218320002
 Transform:
@@ -10055,6 +10055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Goap.Talk.TalkBehavior
   text: 
   targetActor: {fileID: 0}
+  hasFinishedTalking: 1
 --- !u!1 &1520416594
 GameObject:
   m_ObjectHideFlags: 0
