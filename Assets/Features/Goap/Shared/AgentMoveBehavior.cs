@@ -9,11 +9,12 @@ namespace Features.Goap.Shared
     public class AgentMoveBehavior : MonoBehaviour
     {
         private const float MinMoveDistanceSqr = 0.25f * 0.25f;
+
         private AgentBehaviour _agentBehaviour;
+        private NavMeshAgent _navMeshAgent;
+
         private ITarget _currentTarget;
         private Vector3 _lastPosition;
-
-        private NavMeshAgent _navMeshAgent;
 
         private void Awake()
         {
@@ -23,9 +24,13 @@ namespace Features.Goap.Shared
 
         private void Update()
         {
-            if (_currentTarget == null) return;
+            if (_currentTarget == null)
+            {
+                return;
+            }
 
-            if (Vector3.SqrMagnitude(_currentTarget.Position - _lastPosition) > MinMoveDistanceSqr)
+            var distanceToTarget = Vector3.SqrMagnitude(_currentTarget.Position - _lastPosition);
+            if (distanceToTarget > MinMoveDistanceSqr)
             {
                 _lastPosition = _currentTarget.Position;
                 _navMeshAgent.SetDestination(_currentTarget.Position);
@@ -48,19 +53,15 @@ namespace Features.Goap.Shared
         {
             _currentTarget = null;
 
-            if (_navMeshAgent) _navMeshAgent.ResetPath();
+            if (_navMeshAgent && _navMeshAgent.isOnNavMesh)
+            {
+                _navMeshAgent.ResetPath();
+            }
         }
 
         private void OnTargetChanged(ITarget target, bool inRange)
         {
             _currentTarget = target;
-
-            if (inRange)
-            {
-                _navMeshAgent.ResetPath();
-                return;
-            }
-
             _lastPosition = _currentTarget.Position;
             _navMeshAgent.SetDestination(_currentTarget.Position);
         }

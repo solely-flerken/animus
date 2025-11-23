@@ -16,7 +16,7 @@ namespace Features.Goap.MoveTo
             builder.AddAction<MoveAction>()
                 .SetTarget<MoveTarget>()
                 .SetMoveMode(ActionMoveMode.MoveBeforePerforming)
-                .SetStoppingDistance(1f)
+                .SetStoppingDistance(2f)
                 .AddEffect<IsAtLocation>(EffectType.Increase);
 
             builder.AddTargetSensor<MoveTargetSensor>()
