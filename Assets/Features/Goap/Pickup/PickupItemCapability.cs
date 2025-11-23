@@ -14,6 +14,7 @@ namespace Features.Goap.Pickup
 
             builder.AddAction<PickupItemAction>()
                 .SetTarget<ItemTarget>()
+                .SetStoppingDistance(2f)
                 .AddEffect<HasItem>(EffectType.Increase);
 
             builder.AddTargetSensor<ItemTargetSensor>()
