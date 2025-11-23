@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TalkAction
   m_EditorClassIdentifier: Assembly-CSharp::NPC.Scripts.TalkAction
   actionKey: talk
-  description: This action lets the entity display a message in chat
+  description: Say something to the target.
   parameters:
   - name: text
     type:
@@ -23,5 +23,5 @@ MonoBehaviour:
     type:
       assemblyQualifiedName: Packages.Animus.Unity.Runtime.Core.Entity.AnimusActor,
         Animus.Unity, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  text: 
+  text: I'm interested in exploring this location. Would you like to come with me?
   targetActor: {fileID: 0}

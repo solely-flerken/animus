@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Core.Memory
 {
@@ -6,8 +7,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Memory
     {
         public string Speaker { get; }
         public string Text { get; }
-        public DateTime Timestamp { get; }
-
+        [JsonIgnore] public DateTime Timestamp { get; }
+        
         public DialogLine(string speaker, string text)
         {
             Speaker = speaker;
