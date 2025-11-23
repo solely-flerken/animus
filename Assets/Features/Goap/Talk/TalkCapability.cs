@@ -1,6 +1,6 @@
 ﻿using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
-using Features.Goap.Shared;
+using Features.Goap.MoveTo;
 
 namespace Features.Goap.Talk
 {
@@ -14,12 +14,10 @@ namespace Features.Goap.Talk
                 .AddCondition<HasTalked>(Comparison.GreaterThanOrEqual, 1);
 
             builder.AddAction<TalkAction>()
-                .SetTarget<SelfTarget>()
+                .SetTarget<MoveTarget>()
+                .SetStoppingDistance(4f)
                 .AddEffect<HasTalked>(EffectType.Increase);
 
-            builder.AddTargetSensor<SelfTargetSensor>()
-                .SetTarget<SelfTarget>();
-            
             builder.AddWorldSensor<HasTalkedSensor>()
                 .SetKey<HasTalked>();
             

@@ -67,6 +67,7 @@ namespace Features.Goap.Agents
             _talkBehaviour.text = text;
             _talkBehaviour.targetActor = targetActor;
             _talkBehaviour.hasFinishedTalking = false;
+            moveToPosition = targetActor.transform.position;
             _provider.RequestGoal<TalkGoal>();
         }
 
