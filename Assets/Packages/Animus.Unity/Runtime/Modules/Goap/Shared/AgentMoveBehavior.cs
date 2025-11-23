@@ -35,8 +35,12 @@ namespace Packages.Animus.Unity.Runtime.Modules.Goap.Shared
 
         private void TargetLost()
         {
-            _currentTarget = null;
-            _navMeshAgent.ResetPath();
+            _currentTarget = null; 
+
+            if (_navMeshAgent)
+            {
+                _navMeshAgent.ResetPath();
+            }
         }
 
         private void OnTargetChanged(ITarget target, bool inRange)
