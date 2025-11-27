@@ -6,7 +6,6 @@ using Features.Goap.Pickup;
 using Features.Goap.Talk;
 using Features.Goap.Wander;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
 namespace Features.Goap.Agents

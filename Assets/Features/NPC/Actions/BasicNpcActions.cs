@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
 namespace Features.NPC.Actions

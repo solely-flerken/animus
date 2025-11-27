@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Modules.Environment

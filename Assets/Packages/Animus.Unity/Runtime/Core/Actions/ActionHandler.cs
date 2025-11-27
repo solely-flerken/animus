@@ -2,14 +2,13 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public static class ActionHandler
     {
-        public static async UniTask ProcessAction(Core.Actions.ActionPayload actionPayload)
+        public static async UniTask ProcessAction(ActionPayload actionPayload)
         {
             var targetAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);
             if (targetAgent == null)

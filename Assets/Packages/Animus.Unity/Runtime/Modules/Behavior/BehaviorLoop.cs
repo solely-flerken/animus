@@ -10,7 +10,6 @@ using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using Packages.Animus.Unity.Runtime.Integrations.AI;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;

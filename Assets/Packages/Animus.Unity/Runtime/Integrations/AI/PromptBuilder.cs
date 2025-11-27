@@ -4,7 +4,6 @@ using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
-using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.AI
@@ -41,12 +40,6 @@ namespace Packages.Animus.Unity.Runtime.Integrations.AI
         public PromptBuilder WithEnvironment(EnvironmentSnapshot environmentSnapshot)
         {
             _context.Environment = environmentSnapshot;
-            return this;
-        }
-
-        public PromptBuilder WithActionHistory(List<ActionHistoryEntry> actionHistory)
-        {
-            _context.ActionHistory = actionHistory;
             return this;
         }
         

@@ -8,7 +8,6 @@ using Core.Input.Scripts;
 using Core.UI.Scripts;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.Player;
 using UnityEngine;

@@ -3,7 +3,6 @@ using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.AI;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
-using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Unity.Plastic.Newtonsoft.Json;
 
@@ -29,9 +28,6 @@ namespace Packages.Animus.Unity.Runtime.Integrations.AI
         [JsonProperty("EnvironmentDescription", NullValueHandling = NullValueHandling.Ignore)]
         public EnvironmentSnapshot Environment { get; set; }
 
-        [JsonProperty("ActionHistory", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ActionHistoryEntry> ActionHistory { get; set; }
-        
         [JsonProperty("ConversationHistory", NullValueHandling = NullValueHandling.Ignore)]
         public List<DialogLine> ConversationHistory { get; set; }
 
