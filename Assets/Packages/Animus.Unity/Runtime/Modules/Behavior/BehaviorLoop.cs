@@ -79,14 +79,14 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
             }
 
             // Add the input to the conversation history
-            targetAgent.conversationHistory.AddLine(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, sourceAgent.gameKey, dialogEvent.Text);
+            AnimusAgent.SharedHistory.AddLine(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, sourceAgent.gameKey, dialogEvent.Text);
 
             var prompt = new PromptBuilder()
                 .SetAgent(targetAgent)
                 .WithAvailableActions(targetAgent.actionCollection.actions)
                 // .WithRecentEvents(targetAgent.eventHistory.Events)
-                .WithActionHistory(targetAgent.actionHistory.GetHistory())
-                .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
+                // .WithActionHistory(targetAgent.actionHistory.GetHistory())
+                .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
                 .WithEnvironment(EnvironmentScanner.CreateSnapshot(targetAgent))
                 .WithRelevantMemories(targetAgent.memories)
                 .WithRules(PredefinedRulesets.CommonAgent)
@@ -114,8 +114,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
                             .WithAvailableActions(agent.actionCollection.actions)
-                            .WithRecentEvents(agent.eventHistory.Events)
-                            .WithConversationHistory(new List<DialogLine>())
+                            // .WithRecentEvents(agent.eventHistory.Events)
+                            .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRelevantMemories(agent.memories)
                             .WithRules(PredefinedRulesets.CommonAgent)

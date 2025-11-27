@@ -3,7 +3,7 @@ using Unity.Plastic.Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Core.Memory
 {
-    public struct DialogLine
+    public readonly struct DialogLine
     {
         public string Speaker { get; }
         public string Text { get; }

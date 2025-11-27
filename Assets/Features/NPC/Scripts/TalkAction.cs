@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Modules.Agent;
@@ -25,6 +26,7 @@ namespace Features.NPC.Scripts
                 return UniTask.FromResult("failure");
             }
 
+            AnimusAgent.SharedHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
             brain.StartGoalTalk(text, targetActor);
             
             return UniTask.FromResult("success");

@@ -26,7 +26,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Agent
         public LayerMask obstacleLayer;
 
         public ActionHistory actionHistory;
-        public ConversationHistory conversationHistory;
+        public static ConversationHistory SharedHistory = new();
         public EventHistory eventHistory;
         public List<string> memories;
 
@@ -43,7 +43,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Agent
             AnimusEntityRegistry.Instance.Register(this);
 
             actionHistory = new ActionHistory();
-            conversationHistory = new ConversationHistory(50);
+            SharedHistory = new ConversationHistory(50);
             eventHistory = new EventHistory();
             actionCollection.Initialize();
         }

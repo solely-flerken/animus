@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Core.Events;
+﻿using Core.Events;
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
@@ -27,7 +26,6 @@ namespace Features.Goap.Talk
                 return ActionRunState.Stop;
             }
 
-            animusAgent.conversationHistory.AddLine(new List<string> { animusAgent.gameKey, targetActor.gameKey }, animusAgent.gameKey, text);
             EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
             
             data.Behavior.hasFinishedTalking = true;
