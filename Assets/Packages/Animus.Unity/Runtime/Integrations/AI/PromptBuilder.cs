@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Packages.Animus.Unity.Runtime.Core.Actions;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
 using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 

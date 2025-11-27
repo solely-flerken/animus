@@ -1,7 +1,7 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 
 namespace Features.Goap.Pickup
 {

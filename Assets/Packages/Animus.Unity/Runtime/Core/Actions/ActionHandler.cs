@@ -2,9 +2,10 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Modules.Agent;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Modules.Agent.Actions
+namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public static class ActionHandler
     {

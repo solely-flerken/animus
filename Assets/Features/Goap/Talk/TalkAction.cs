@@ -2,7 +2,7 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
-using Packages.Animus.Unity.Runtime.Modules.Agent;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 
 namespace Features.Goap.Talk
 {
