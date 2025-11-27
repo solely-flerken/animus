@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
@@ -27,6 +28,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Agent
         public ActionHistory actionHistory;
         public ConversationHistory conversationHistory;
         public EventHistory eventHistory;
+        public List<string> memories;
 
         private NavMeshAgent _navMeshAgent;
         private Vector3 _currentTargetPosition;

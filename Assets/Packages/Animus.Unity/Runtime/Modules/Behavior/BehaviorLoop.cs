@@ -88,7 +88,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
                 .WithActionHistory(targetAgent.actionHistory.GetHistory())
                 .WithConversationHistory(targetAgent.conversationHistory.GetHistoryFor(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
                 .WithEnvironment(EnvironmentScanner.CreateSnapshot(targetAgent))
-                // .WithRelevantMemories(new List<string>())
+                .WithRelevantMemories(targetAgent.memories)
                 .WithRules(PredefinedRulesets.CommonAgent)
                 .WithTaskInstruction("");
 
@@ -117,7 +117,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
                             .WithRecentEvents(agent.eventHistory.Events)
                             .WithConversationHistory(new List<DialogLine>())
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
-                            .WithRelevantMemories(new List<string>())
+                            .WithRelevantMemories(agent.memories)
                             .WithRules(PredefinedRulesets.CommonAgent)
                             .WithTaskInstruction("");
 

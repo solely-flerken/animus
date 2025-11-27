@@ -5265,6 +5265,14 @@ PrefabInstance:
       propertyPath: entityName
       value: Arinth
       objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: memories.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: 'memories.Array.data[0]'
+      value: You like to talk to Borin.
+      objectReference: {fileID: 0}
     - target: {fileID: 5156055569714394881, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11299,6 +11307,14 @@ PrefabInstance:
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: entityName
       value: Borin
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: memories.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: 'memories.Array.data[0]'
+      value: You like to talk to Arinth.
       objectReference: {fileID: 0}
     - target: {fileID: 5156055569714394881, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: m_LocalPosition.x
