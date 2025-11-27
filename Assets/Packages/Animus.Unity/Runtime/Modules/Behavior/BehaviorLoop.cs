@@ -141,10 +141,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
 
             if (response != null)
             {
-                foreach (var action in response.Payload.Actions)
-                {
-                    await ActionHandler.ProcessAction(action);
-                }
+                await ActionHandler.ProcessAction(response.Payload);
             }
             else
             {
