@@ -22,7 +22,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         private static BehaviorLoop Instance { get; set; }
 
         private CancellationTokenSource _cts;
-
+        
+        private readonly HashSet<string> _thinkingAgents = new();
+        
         protected void Awake()
         {
             if (Instance == null)
@@ -51,7 +53,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             _cts.Cancel();
         }
 
-        private static void HandleDialogEvent(AnimusEvent animusEvent)
+        private void HandleDialogEvent(AnimusEvent animusEvent)
         {
             if (animusEvent is not DialogEvent dialogEvent || animusEvent.EventType != AnimusEventType.Dialog)
             {
@@ -70,7 +72,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             // Add to conversation history
             AnimusAgent.SharedHistory.AddLine(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, sourceAgent.gameKey, dialogEvent.Text);
-
+            
             var prompt = new PromptBuilder()
                 .SetAgent(targetAgent)
                 .WithAvailableActions(targetAgent.actionRunner)
@@ -105,6 +107,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                             continue;
                         }
                         
+                        // Is this agent already waiting for a response?
+                        if (!_thinkingAgents.Add(agent.gameKey))
+                        {
+                            continue;
+                        }
+
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
                             .WithAvailableActions(agent.actionRunner)
@@ -121,32 +129,44 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
                     await UniTask.Delay(TimeSpan.FromSeconds(settings.pollingInterval), cancellationToken: token);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.LogError($"BehaviorLoop Loop Error: {ex.Message}");
                     break;
                 }
             }
         }
 
-        private static async UniTaskVoid ProcessEventAsync(PromptContext context)
+        private async UniTaskVoid ProcessEventAsync(PromptContext context)
         {
-            LocalJsonSaveSystem.Save(context);
-
-            var response = await AnimusService.Chat(context);
-
-            if (response != null && response.Payload != null)
+            try
             {
-                // Ensure the payload has the agent key, if missing, fill it from context
-                if (string.IsNullOrEmpty(response.Payload.agentKey))
+                LocalJsonSaveSystem.Save(context);
+
+                var response = await AnimusService.Chat(context);
+
+                if (response != null && response.Payload != null)
                 {
-                    response.Payload.agentKey = context.AgentKey;
+                    if (string.IsNullOrEmpty(response.Payload.agentKey))
+                    {
+                        response.Payload.agentKey = context.AgentKey;
+                    }
+
+                    // Execute Action
+                    await ActionHandler.ProcessAction(response.Payload);
                 }
-                
-                await ActionHandler.ProcessAction(response.Payload);
+                else
+                {
+                    Debug.LogWarning($"[{context.AgentKey}] Animus-Backend returned no response.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Debug.LogWarning("Animus-Backend returned no response.");
+                Debug.LogError($"[{context.AgentKey}] Error processing event: {ex.Message}");
+            }
+            finally
+            {
+                _thinkingAgents.Remove(context.AgentKey);
             }
         }
     }
