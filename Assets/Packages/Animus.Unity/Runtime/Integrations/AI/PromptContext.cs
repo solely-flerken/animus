@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.AI;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
@@ -17,7 +18,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.AI
         public string Persona { get; set; }
 
         [JsonProperty("AvailableActions", NullValueHandling = NullValueHandling.Ignore)]
-        public List<NpcAction> AvailableActions { get; set; }
+        public List<ActionDefinition> AvailableActions { get; set; }
 
         [JsonProperty("RelevantMemories", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> RelevantMemories { get; set; }

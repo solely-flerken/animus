@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5156055569714394881}
   - component: {fileID: 4410804593949565968}
+  - component: {fileID: 5810531694428068963}
+  - component: {fileID: 7863136777337225223}
   - component: {fileID: 885557233028478763}
   - component: {fileID: 131194339834714688}
   - component: {fileID: 5474213107221586026}
@@ -61,12 +63,37 @@ MonoBehaviour:
     maxWeight: 20
     slots: []
   persona: You are Dummy. You do everything you are told.
-  actionCollection: {fileID: 11400000, guid: 8fecc44450d11834691394f3592ef052, type: 2}
   perceptionRadius: 20
   fieldOfViewAngle: 360
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 0
+  memories: []
+  actionRunner: {fileID: 5810531694428068963}
+--- !u!114 &5810531694428068963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d10af5d5d234cc291edc6f4755e2641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Core.Actions.AgentActionRunner
+--- !u!114 &7863136777337225223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce99c592aa1648308966e7531140a9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.NPC.Actions.BasicNpcActions
 --- !u!195 &885557233028478763
 NavMeshAgent:
   m_ObjectHideFlags: 0

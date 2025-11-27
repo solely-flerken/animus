@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
@@ -19,9 +20,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.AI
             return this;
         }
 
-        public PromptBuilder WithAvailableActions(List<NpcAction> actions)
+        public PromptBuilder WithAvailableActions(AgentActionRunner runner)
         {
-            _context.AvailableActions = actions;
+            _context.AvailableActions = runner.GenerateActionSchema();
             return this;
         }
 

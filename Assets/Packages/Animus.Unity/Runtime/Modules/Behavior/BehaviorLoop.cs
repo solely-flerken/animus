@@ -7,13 +7,11 @@ using Packages.Animus.Unity.Runtime.Core.AI.Rules;
 using Packages.Animus.Unity.Runtime.Core.AI.Service;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Core.Memory;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using Packages.Animus.Unity.Runtime.Integrations.AI;
 using Packages.Animus.Unity.Runtime.Modules.Agent;
 using Packages.Animus.Unity.Runtime.Modules.Agent.Actions;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
-using Packages.Animus.Unity.Runtime.Modules.Player;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -45,7 +43,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
             AnimusEventSystem.OnDialogEvent += HandleDialogEvent;
 
             _cts = new CancellationTokenSource();
-            // Loop().Forget();
+            Loop().Forget();
         }
 
         private void OnDisable()
@@ -63,27 +61,21 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
                 return;
             }
 
-
-            if (dialogEvent.EventTarget.Count != 1 && dialogEvent.EventTarget.First() is AnimusAgent or AnimusPlayer)
-            {
-                Debug.Log($"{nameof(DialogEvent)} can only have one event target which must be of type {nameof(AnimusAgent)} or  {nameof(AnimusPlayer)}");
-            }
-
             var sourceAgent = dialogEvent.EventSource;
-            var targetAgent = dialogEvent.EventTarget.First() as AnimusAgent;
-
+            var targetAgent = dialogEvent.EventTarget.FirstOrDefault() as AnimusAgent;
+            
             if (sourceAgent == null || targetAgent == null)
             {
-                Debug.Log("HandleDialogEvent: Source or Target Agent is null");
+                Debug.LogWarning("HandleDialogEvent: Source or Target Agent invalid.");
                 return;
             }
 
-            // Add the input to the conversation history
+            // Add to conversation history
             AnimusAgent.SharedHistory.AddLine(new List<string> { sourceAgent.gameKey, targetAgent.gameKey }, sourceAgent.gameKey, dialogEvent.Text);
 
             var prompt = new PromptBuilder()
                 .SetAgent(targetAgent)
-                .WithAvailableActions(targetAgent.actionCollection.actions)
+                .WithAvailableActions(targetAgent.actionRunner)
                 // .WithRecentEvents(targetAgent.eventHistory.Events)
                 // .WithActionHistory(targetAgent.actionHistory.GetHistory())
                 .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { sourceAgent.gameKey, targetAgent.gameKey }, 50))
@@ -105,16 +97,21 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
             {
                 try
                 {
-                    // TODO
-                    foreach (var agent in AnimusEntityRegistry.Instance.GetAll<AnimusAgent>())
+                    var agents = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>();
+                    
+                    foreach (var agent in agents)
                     {
-                        // TODO: If interacts with player or another NPC we retrieve that conversation history:
-                        // AnimusEntity interactingEntity = null;
-
+                        if (agent.actionRunner == null)
+                        {
+                            // Agent can't execute actions
+                            continue;
+                        }
+                        
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
-                            .WithAvailableActions(agent.actionCollection.actions)
+                            .WithAvailableActions(agent.actionRunner)
                             // .WithRecentEvents(agent.eventHistory.Events)
+                            // .WithActionHistory(agent.actionHistory.GetHistory())
                             .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRelevantMemories(agent.memories)
@@ -139,13 +136,19 @@ namespace Packages.Animus.Unity.Runtime.Modules.Behavior
 
             var response = await AnimusService.Chat(context);
 
-            if (response != null)
+            if (response != null && response.Payload != null)
             {
+                // Ensure the payload has the agent key, if missing, fill it from context
+                if (string.IsNullOrEmpty(response.Payload.agentKey))
+                {
+                    response.Payload.agentKey = context.AgentKey;
+                }
+                
                 await ActionHandler.ProcessAction(response.Payload);
             }
             else
             {
-                Debug.LogWarning("Animus-Backend did not return a valid response.");
+                Debug.LogWarning("Animus-Backend returned no response.");
             }
         }
     }
