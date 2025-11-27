@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.AI.Rules;
 using Packages.Animus.Unity.Runtime.Core.AI.Service;
 using Packages.Animus.Unity.Runtime.Core.Entity;
@@ -14,7 +13,7 @@ using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Modules.Behavior
+namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public class BehaviorLoop : MonoBehaviour
     {
