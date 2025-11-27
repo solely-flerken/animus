@@ -1,4 +1,4 @@
-﻿namespace Packages.Animus.Unity.Runtime.Core.AI.Rules
+﻿namespace Packages.Animus.Unity.Runtime.Integrations.Prompting.Constants
 {
     public static class Rule
     {

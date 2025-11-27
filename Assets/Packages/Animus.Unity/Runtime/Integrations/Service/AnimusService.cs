@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Integrations.AI;
 using Packages.Animus.Unity.Runtime.Integrations.Networking;
+using Packages.Animus.Unity.Runtime.Integrations.Prompting;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Core.AI.Service
+namespace Packages.Animus.Unity.Runtime.Integrations.Service
 {
     public static class AnimusService
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Packages.Animus.Unity.Runtime.Core.AI.Rules
+namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 {
     public class Ruleset
     {

@@ -1,4 +1,4 @@
-﻿namespace Packages.Animus.Unity.Runtime.Core.AI
+﻿namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 {
     public static class TaskInstructions
     {

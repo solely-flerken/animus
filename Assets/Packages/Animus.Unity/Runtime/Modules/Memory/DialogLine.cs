@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace Packages.Animus.Unity.Runtime.Core.Memory
+namespace Packages.Animus.Unity.Runtime.Modules.Memory
 {
     public readonly struct DialogLine
     {

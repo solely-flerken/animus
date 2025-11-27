@@ -3,8 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Core.Memory;
-using Packages.Animus.Unity.Runtime.Modules.Environment;
+using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
 using UnityEngine.AI;
 
