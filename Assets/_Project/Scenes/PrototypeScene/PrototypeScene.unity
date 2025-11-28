@@ -3174,7 +3174,6 @@ GameObject:
   - component: {fileID: 423201887}
   - component: {fileID: 423201888}
   - component: {fileID: 423201889}
-  - component: {fileID: 423201890}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3221,19 +3220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2b8370b98e40408edd5124c152e04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Input.InputManager
---- !u!114 &423201890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423201885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa4b432cae374dd1b4d4910c2337883d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Core.Config.Script.GameManager
-  animusConfig: {fileID: 11400000, guid: 58c4fdf5229baf84da6a7d367dfa24dd, type: 2}
 --- !u!1 &463595147
 GameObject:
   m_ObjectHideFlags: 0
@@ -6451,7 +6437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b00bab992414e9097f83a5534a17cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Actions.ActionQueueMonitor
-  settings: {fileID: 11400000, guid: 539e038006b977247aed67fbe98cb348, type: 2}
 --- !u!114 &930261050
 MonoBehaviour:
   m_ObjectHideFlags: 0
