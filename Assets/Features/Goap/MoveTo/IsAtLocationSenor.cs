@@ -20,9 +20,9 @@ namespace Features.Goap.MoveTo
         {
             var brain = references.GetCachedComponent<SimpleAgentBrain>();
 
-            if (brain && brain.moveToPosition != null)
+            if (brain && brain.moveToPosition)
             {
-                var distance = Vector3.Distance(agent.Transform.position, brain.moveToPosition.Value);
+                var distance = Vector3.Distance(agent.Transform.position, brain.moveToPosition.position);
                 return distance <= 2f;
             }
 

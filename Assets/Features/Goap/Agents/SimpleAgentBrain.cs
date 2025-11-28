@@ -20,7 +20,7 @@ namespace Features.Goap.Agents
         private TalkBehavior _talkBehaviour;
         private AnimusAgent _animusAgent;
 
-        public Vector3? moveToPosition;
+        public Transform moveToPosition;
 
         private void Awake()
         {
@@ -67,7 +67,7 @@ namespace Features.Goap.Agents
             _talkBehaviour.text = text;
             _talkBehaviour.targetActor = targetActor;
             _talkBehaviour.hasFinishedTalking = false;
-            moveToPosition = targetActor.transform.position;
+            moveToPosition = targetActor.transform;
             _provider.RequestGoal<TalkGoal>();
         }
 
@@ -83,7 +83,7 @@ namespace Features.Goap.Agents
         {
             if (entity != null)
             {
-                moveToPosition = entity.transform.position;
+                moveToPosition = entity.transform;
                 _provider.RequestGoal<MoveGoal>();
             }
             else

@@ -18,12 +18,12 @@ namespace Features.Goap.MoveTo
         {
             var brain = references.GetCachedComponent<SimpleAgentBrain>();
 
-            if (!brain || brain.moveToPosition == null)
+            if (!brain || !brain.moveToPosition)
             {
                 return null;
             }
 
-            return new PositionTarget(brain.moveToPosition.Value);
+            return new TransformTarget(brain.moveToPosition);
         }
     }
 }
