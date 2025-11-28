@@ -2,6 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Actions;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
@@ -38,15 +39,18 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
 
         private void Start()
         {
-            AnimusEntityRegistry.Instance.Register(this);
-
             SharedHistory = new ConversationHistory(50);
             eventHistory = new EventHistory();
         }
 
+        private void OnEnable()
+        {
+            AnimusGameManager.EntityRegistry?.Register(this);
+        }
+
         private void OnDisable()
         {
-            AnimusEntityRegistry.Instance?.Unregister(this);
+            AnimusGameManager.EntityRegistry?.Unregister(this);
         }
 
         public async UniTask<bool> GoToPoi(AnimusLocation poi, CancellationToken cancellationToken = default)

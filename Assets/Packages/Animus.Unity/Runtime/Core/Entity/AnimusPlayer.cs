@@ -1,17 +1,19 @@
-﻿namespace Packages.Animus.Unity.Runtime.Core.Entity
+﻿using Packages.Animus.Unity.Runtime.Core.Config.Script;
+
+namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
     public class AnimusPlayer : AnimusActor
     {
         public override AnimusEntityType Type => AnimusEntityType.Player;
 
-        private void Start()
+        private void OnEnable()
         {
-            AnimusEntityRegistry.Instance.Register(this);
+            AnimusGameManager.EntityRegistry?.Register(this);
         }
 
         private void OnDisable()
         {
-            AnimusEntityRegistry.Instance?.Unregister(this);
+            AnimusGameManager.EntityRegistry?.Unregister(this);
         }
     }
 }

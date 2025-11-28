@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Environment
 
             var visibleObjects = new List<AnimusObject>();
             
-            var nearbyObjects = AnimusEntityRegistry.Instance.GetAll<AnimusObject>();
+            var nearbyObjects = AnimusGameManager.EntityRegistry.GetAll<AnimusObject>();
             foreach (var @object in nearbyObjects)
             {
                 var objTransform = @object.transform;

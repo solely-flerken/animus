@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization.Converters;
 using Unity.Plastic.Newtonsoft.Json;
@@ -12,9 +13,9 @@ namespace Packages.Animus.Unity.Runtime.Modules.Environment
         public List<AnimusObject> VisibleObjects { get; set; }
 
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
-        public List<AnimusLocation> PointsOfInterest => AnimusEntityRegistry.Instance.GetAll<AnimusLocation>();
+        public List<AnimusLocation> PointsOfInterest => AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>();
 
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
-        public List<AnimusActor> KnownCharacters => AnimusEntityRegistry.Instance.GetAll<AnimusActor>().ToList();
+        public List<AnimusActor> KnownCharacters => AnimusGameManager.EntityRegistry.GetAll<AnimusActor>().ToList();
     }
 }

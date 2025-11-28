@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -39,7 +40,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
             // Does this lead to more code?
             
             // Make other agents in a certain range observe this event.
-            var allAnimusAgents = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>();
+            var allAnimusAgents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
             foreach (var animusAgent in allAnimusAgents)
             {
                 var distanceSqr = (animusAgent.transform.position - animusEvent.EventLocation).sqrMagnitude;

@@ -1,4 +1,5 @@
-﻿using Packages.Animus.Unity.Runtime.Modules.Inventory;
+﻿using Packages.Animus.Unity.Runtime.Core.Config.Script;
+using Packages.Animus.Unity.Runtime.Modules.Inventory;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Entity
@@ -20,21 +21,24 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
                 {
                     Destroy(child.gameObject);
                 }
-                
+
                 var go = Instantiate(itemData.worldPrefab, transform);
                 go.transform.localPosition = Vector3.zero;
             }
 
-            gameKey = $"{itemData.itemTypeId}_{AnimusEntityRegistry.Instance.GetAll<AnimusObject>().Count + 1}";
+            gameKey = $"{itemData.itemTypeId}_{AnimusGameManager.EntityRegistry.GetAll<AnimusObject>().Count + 1}";
             entityName = itemData.name;
             description = itemData.description;
-            
-            AnimusEntityRegistry.Instance.Register(this);
+        }
+
+        private void OnEnable()
+        {
+            AnimusGameManager.EntityRegistry?.Register(this);
         }
 
         private void OnDisable()
         {
-            AnimusEntityRegistry.Instance?.Unregister(this);
+            AnimusGameManager.EntityRegistry?.Unregister(this);
         }
 
         public ItemDefinition Pickup()

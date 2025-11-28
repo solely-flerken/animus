@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
     {
         public static async UniTask ProcessAction(ActionPayload actionPayload)
         {
-            var targetAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);
+            var targetAgent = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);
             if (targetAgent == null)
             {
                 Debug.LogError($"Command failed: Agent '{actionPayload.agentKey}' not found in the registry.");

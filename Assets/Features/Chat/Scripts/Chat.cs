@@ -6,9 +6,9 @@ using Core.Audio.Scripts;
 using Core.Events;
 using Core.Input.Scripts;
 using Core.UI.Scripts;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Modules.Environment;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -182,7 +182,7 @@ namespace Features.Chat.Scripts
                     ClearConsole();
                     break;
                 case "/npc" when parameters?.Length >= 3 && parameters[1] == "goto" && parameters[2] == "poi":
-                    animusAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>().FirstOrDefault(x =>
+                    animusAgent = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>().FirstOrDefault(x =>
                         x.gameKey == parameters[0]);
                     if (animusAgent == null)
                     {
@@ -190,7 +190,7 @@ namespace Features.Chat.Scripts
                         return;
                     }
 
-                    var poi = AnimusEntityRegistry.Instance.GetRandom<AnimusLocation>();
+                    var poi = AnimusGameManager.EntityRegistry.GetRandom<AnimusLocation>();
                     if (poi == null)
                     {
                         return;
@@ -200,7 +200,7 @@ namespace Features.Chat.Scripts
                     animusAgent.GoToPoi(poi);
                     break;
                 case "/talk" when parameters?.Length >= 2:
-                    animusAgent = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>()
+                    animusAgent = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>()
                         .FirstOrDefault(x => x.gameKey == parameters[0]);
                     if (animusAgent == null)
                     {
@@ -211,7 +211,7 @@ namespace Features.Chat.Scripts
                     var messageText = string.Join(' ', parameters.Skip(1));
 
                     // TODO:
-                    var source = AnimusEntityRegistry.Instance.GetAll<AnimusPlayer>().First();
+                    var source = AnimusGameManager.EntityRegistry.GetAll<AnimusPlayer>().First();
                     var animusEvent = new DialogEvent
                     {
                         EventType = AnimusEventType.Dialog,

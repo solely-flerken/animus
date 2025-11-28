@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
@@ -97,7 +98,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             {
                 try
                 {
-                    var agents = AnimusEntityRegistry.Instance.GetAll<AnimusAgent>();
+                    var agents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
                     
                     foreach (var agent in agents)
                     {

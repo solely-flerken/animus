@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace Features.NPC.Actions
         [AgentAction("move_to", "Moves the agent to a specific entity.")]
         public UniTask<string> MoveTo(string entityKey)
         {
-            var targetEntity = AnimusEntityRegistry.Instance.FindByGameKey<AnimusEntity>(entityKey);
+            var targetEntity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(entityKey);
             if (targetEntity == null)
             {
                 return UniTask.FromResult($"failure: entity '{entityKey}' not found");
@@ -36,7 +37,7 @@ namespace Features.NPC.Actions
         [AgentAction("talk", "Say something to another character.")]
         public UniTask<string> Talk(string message, string targetActorKey)
         {
-            var targetActor = AnimusEntityRegistry.Instance.FindByGameKey<AnimusActor>(targetActorKey);
+            var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
             {
                 return UniTask.FromResult($"failure: actor '{targetActorKey}' not found");
@@ -51,7 +52,7 @@ namespace Features.NPC.Actions
         [AgentAction("pickup_item", "Pickup the specified item.")]
         public UniTask<string> Pickup(string itemKey)
         {
-            var item = AnimusEntityRegistry.Instance.FindByGameKey<AnimusObject>(itemKey);
+            var item = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusObject>(itemKey);
             if (item == null)
             {
                 return UniTask.FromResult($"failure: item '{itemKey}' not found");
