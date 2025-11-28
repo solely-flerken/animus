@@ -18,8 +18,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public class BehaviorLoop : MonoBehaviour
     {
-        [SerializeField] private AnimusSettings settings;
-
         private static BehaviorLoop Instance { get; set; }
 
         private CancellationTokenSource _cts;
@@ -128,7 +126,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         ProcessEventAsync(prompt.GetContext()).Forget();
                     }
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(settings.pollingInterval), cancellationToken: token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(AnimusSettings.Instance.pollingInterval), cancellationToken: token);
                 }
                 catch (Exception ex)
                 {

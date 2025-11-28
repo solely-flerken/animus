@@ -10,16 +10,11 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Service
 {
     public static class AnimusService
     {
-        private static readonly AnimusSettings Settings;
-
-        static AnimusService()
-        {
-            Settings = Resources.Load<AnimusSettings>("AnimusSettings");
-        }
-        
         public static async Task<ApiResponse> Chat(PromptContext promptContext)
         {
-            if (string.IsNullOrEmpty(Settings.apiServiceUrl))
+            var apiServiceUrl = AnimusSettings.Instance.apiServiceUrl;
+            
+            if (string.IsNullOrEmpty(apiServiceUrl))
             {
                 Debug.LogError("Backend URL is not set in AnimusSettings!");
                 return null;
@@ -35,7 +30,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Service
             try
             {
                 var response = await WebRequestHandler.Post<ApiRequest<PromptContext>, ApiResponse>(
-                    $"{Settings.apiServiceUrl}/chat",
+                    $"{apiServiceUrl}/chat",
                     requestPayload,
                     headers
                 );
