@@ -16,6 +16,7 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
+    [Obsolete("Use ActionConsumer/ActionQueueManager instead")]
     public class BehaviorLoop : MonoBehaviour
     {
         private static BehaviorLoop Instance { get; set; }
