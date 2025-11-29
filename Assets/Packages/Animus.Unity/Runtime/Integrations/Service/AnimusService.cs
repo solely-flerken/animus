@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Integrations.Networking;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting;
@@ -10,10 +11,10 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Service
 {
     public static class AnimusService
     {
-        public static async Task<ApiResponse> Chat(PromptContext promptContext)
+        public static async Task<ApiResponse> Chat(PromptContext promptContext, CancellationToken cancellationToken = default)
         {
             var apiServiceUrl = AnimusSettings.Instance.apiServiceUrl;
-            
+
             if (string.IsNullOrEmpty(apiServiceUrl))
             {
                 Debug.LogError("Backend URL is not set in AnimusSettings!");
@@ -32,10 +33,16 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Service
                 var response = await WebRequestHandler.Post<ApiRequest<PromptContext>, ApiResponse>(
                     $"{apiServiceUrl}/chat",
                     requestPayload,
-                    headers
+                    headers,
+                    cancellationToken
                 );
 
                 return response;
+            }
+            catch (OperationCanceledException)
+            {
+                // Rethrow to let the ActionQueue know it was cancelled intentionally
+                throw;
             }
             catch (Exception e)
             {
