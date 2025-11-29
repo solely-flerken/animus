@@ -10463,7 +10463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CrashKonijn.Goap.Runtime::CrashKonijn.Goap.Runtime.GoapBehaviour
   configInitializer: {fileID: 0}
   agentTypeConfigFactories:
-  - {fileID: 0}
+  - {fileID: 1605829291}
 --- !u!4 &1605829289
 Transform:
   m_ObjectHideFlags: 0

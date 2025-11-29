@@ -55,7 +55,7 @@ namespace Features.Goap.Agents
 
         private void Start()
         {
-            StartGoalTalk("Hello World!", AnimusGameManager.EntityRegistry.GetRandom<AnimusActor>());
+            // StartGoalTalk("Hello World!", AnimusGameManager.EntityRegistry.GetRandom<AnimusActor>());
 
             // StartGoalPickupItem();
 
