@@ -105,7 +105,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
                             .WithAvailableActions(agent.actionRunner)
-                            .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
+                            .WithConversationHistory(
+                                AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRelevantMemories(agent.memories)
                             .WithRules(PredefinedRulesets.CommonAgent)
@@ -114,7 +115,13 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         SendRequestAsync(agent.gameKey, prompt.GetContext()).Forget();
                     }
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(AnimusSettings.Instance.pollingInterval), cancellationToken: token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(AnimusSettings.Instance.pollingInterval),
+                        cancellationToken: token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // This is normal behavior when the object is destroyed or play mode ends.
+                    break;
                 }
                 catch (Exception ex)
                 {
