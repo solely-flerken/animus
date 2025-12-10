@@ -10,6 +10,7 @@ using Packages.Animus.Unity.Runtime.Integrations.Prompting;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting.Constants;
 using Packages.Animus.Unity.Runtime.Integrations.Service;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
+using Packages.Animus.Unity.Runtime.Modules.Memory;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public class ActionQueueManager : MonoBehaviour
     {
-        private static ActionQueueManager Instance { get; set; }
+        public static ActionQueueManager Instance { get; set; }
         
         [Header("Debug Info (Read Only)")] 
         [SerializeField] private List<string> thinkingAgentsDebug = new();
@@ -117,6 +118,13 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         // Does Agent already have a finished action waiting in the queue?
                         if (HasPendingActionInQueue(agent.gameKey)) continue;
 
+                        var anchors = ConversationAnchor.ConversationAnchors;
+                        if (anchors.TryGetValue(agent.gameKey, out var anchor))
+                        {
+                            // If it's not my turn, I cannot request the LLM.
+                            if (!anchor.IsAgentTurn(agent.gameKey)) continue;
+                        }
+                        
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
                             .WithAvailableActions(agent.actionRunner)
@@ -218,6 +226,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         /// </summary>
         public void CancelAgentRequest(string agentKey)
         {
+            Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
+            
             if (_activeRequests.TryGetValue(agentKey, out var request))
             {
                 request.cts.Cancel();
