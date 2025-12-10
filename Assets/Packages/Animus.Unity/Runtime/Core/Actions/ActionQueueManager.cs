@@ -17,6 +17,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public class ActionQueueManager : MonoBehaviour
     {
+        private static ActionQueueManager Instance { get; set; }
+        
         [Header("Debug Info (Read Only)")] 
         [SerializeField] private List<string> thinkingAgentsDebug = new();
         [SerializeField] private List<ActionPayload> queuedActionsDebug = new();
@@ -25,6 +27,19 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         private readonly Dictionary<string, PendingRequest> _activeRequests = new();
 
         public ConcurrentQueue<QueuedAction> ActionQueue { get; } = new();
+        
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
         
         private void Start()
         {

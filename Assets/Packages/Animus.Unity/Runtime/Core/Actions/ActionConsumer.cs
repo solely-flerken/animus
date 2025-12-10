@@ -7,12 +7,27 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public class ActionConsumer : MonoBehaviour
     {
+        private static ActionConsumer Instance { get; set; }
+        
         [Header("Dependencies")]
         [SerializeField] private ActionQueueManager queueManager;
 
         [Header("Settings")] 
         [Tooltip("Delay between processing actions")]
         [SerializeField] private float processInterval = 0.1f;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
