@@ -2211,6 +2211,7 @@ GameObject:
   - component: {fileID: 2849922015615667602}
   - component: {fileID: 2744148191794597675}
   - component: {fileID: -7535430826707977608}
+  - component: {fileID: 3088503342575341048}
   - component: {fileID: 5404206852195180678}
   m_Layer: 2
   m_Name: Player
@@ -2302,6 +2303,22 @@ MonoBehaviour:
   gameKey: player_1
   entityName: Player
   description: This is a description
+  inventory:
+    gold: 50
+    maxWeight: 20
+    slots: []
+--- !u!114 &3088503342575341048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8491066225574531592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4259689ec846471ca230918c38f8a660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Player.Scripts.AnimusPlayerController
 --- !u!114 &5404206852195180678
 MonoBehaviour:
   m_ObjectHideFlags: 0

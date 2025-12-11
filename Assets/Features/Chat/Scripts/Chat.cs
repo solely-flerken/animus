@@ -6,6 +6,7 @@ using Core.Audio.Scripts;
 using Core.Events;
 using Core.Input.Scripts;
 using Core.UI.Scripts;
+using Features.Player.Scripts;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
@@ -212,17 +213,19 @@ namespace Features.Chat.Scripts
 
                     // TODO:
                     var source = AnimusGameManager.EntityRegistry.GetAll<AnimusPlayer>().First();
-                    var animusEvent = new DialogEvent
-                    {
-                        EventType = AnimusEventType.Dialog,
-                        EventSource = source,
-                        EventTarget = new List<AnimusEntity> { animusAgent },
-                        EventLocation = source.transform.position,
-                        Text = messageText.Trim()
-                    };
+                    // var animusEvent = new DialogEvent
+                    // {
+                    //     EventType = AnimusEventType.Dialog,
+                    //     EventSource = source,
+                    //     EventTarget = new List<AnimusEntity> { animusAgent },
+                    //     EventLocation = source.transform.position,
+                    //     Text = messageText.Trim()
+                    // };
                     
                     LogMessage($"Player to {animusAgent.name}: {messageText.Trim()}");
-                    AnimusEventSystem.InvokeDialogEvent(animusEvent);
+                    source.GetComponent<AnimusPlayerController>().PlayerSpeak(messageText.Trim(), animusAgent.gameKey);
+                    
+                    // AnimusEventSystem.InvokeDialogEvent(animusEvent);
                     break;
                 default:
                     LogMessage("Invalid or unknown command: " + command);
