@@ -84,7 +84,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             if (diff.TotalSeconds > StalemateTimeoutSeconds)
             {
                 RemoveParticipant(CurrentSpeakerKey);
-                Debug.Log($"[ConversationAnchor] Stalemate detected ({diff.TotalSeconds:F1}s silence). Kicking speaker: {{CurrentSpeakerKey}}");
+                Debug.Log($"[ConversationAnchor] Stalemate detected ({diff.TotalSeconds:F1}s silence). Kicking speaker: {CurrentSpeakerKey}");
                 return true;
             }
             
