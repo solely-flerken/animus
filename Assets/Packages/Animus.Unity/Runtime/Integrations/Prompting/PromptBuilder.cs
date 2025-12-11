@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
@@ -19,6 +20,30 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             return this;
         }
 
+        public PromptBuilder WithCurrentState()
+        {
+            // Is this agent is in an active anchor?
+            if (ConversationAnchor.ConversationAnchors.TryGetValue(_context.AgentKey, out var anchor))
+            {
+                // Get everyone else in the conversation
+                var others = anchor.Participants.Where(p => p != _context.AgentKey).ToList();
+                var othersStr = others.Count > 0 ? string.Join(", ", others) : "No one";
+
+                _context.CurrentState =
+                    $"STATUS: IN_CONVERSATION\n" +
+                    $"PARTICIPANTS: {othersStr}\n" +
+                    $"INSTRUCTION: You are currently talking. Respond to the conversation history or leave the conversation to end it.";
+            }
+            else
+            {
+                _context.CurrentState =
+                    "STATUS: IDLE\n" +
+                    "INSTRUCTION: You are free to choose any of the available actions.";
+            }
+            
+            return this;
+        }
+        
         public PromptBuilder WithAvailableActions(AgentActionRunner runner)
         {
             _context.AvailableActions = runner.GenerateActionSchema();
@@ -71,6 +96,11 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         public string Build(bool prettyPrint = false)
         {
             return JsonUtility.Serialize(_context, prettyPrint);
+        }
+
+        public string BuildString()
+        {
+            return "";
         }
     }
 }

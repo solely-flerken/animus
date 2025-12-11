@@ -14,6 +14,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         
         [JsonProperty("Persona", NullValueHandling = NullValueHandling.Ignore)]
         public string Persona { get; set; }
+        
+        [JsonProperty("CurrentState", NullValueHandling = NullValueHandling.Ignore)]
+        public string CurrentState { get; set; }
 
         [JsonProperty("AvailableActions", NullValueHandling = NullValueHandling.Ignore)]
         public List<ActionDefinition> AvailableActions { get; set; }

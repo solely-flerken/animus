@@ -128,8 +128,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
                             .WithAvailableActions(agent.actionRunner)
-                            .WithConversationHistory(
-                                AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
+                            .WithCurrentState()
+                            .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRelevantMemories(agent.memories)
                             .WithRules(PredefinedRulesets.CommonAgent)
