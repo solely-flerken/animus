@@ -74,7 +74,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             }
             
             Participants.Clear();
-            Debug.Log($"[Anchor] Conversation {Id} dissolved.");
+            Debug.Log($"[ConversationAnchor] Conversation {Id} dissolved.");
         }
         
         public bool CheckStalemate()
@@ -83,8 +83,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             
             if (diff.TotalSeconds > StalemateTimeoutSeconds)
             {
-                RemoveParticipant(CurrentSpeakerKey);
                 Debug.Log($"[ConversationAnchor] Stalemate detected ({diff.TotalSeconds:F1}s silence). Kicking speaker: {CurrentSpeakerKey}");
+                RemoveParticipant(CurrentSpeakerKey);
                 return true;
             }
             
@@ -99,6 +99,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             if (!string.IsNullOrEmpty(specificTargetKey) && Participants.Contains(specificTargetKey))
             {
                 CurrentSpeakerKey = specificTargetKey;
+                // Debug.Log($"[ConversationAnchor] Turn explicitly passed to {CurrentSpeakerKey}.");
                 return;
             }
             
@@ -115,6 +116,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
                 // Fallback
                 CurrentSpeakerKey = Participants.First();
             }
+            
+            // Debug.Log($"[ConversationAnchor] Turn passed to next participant {CurrentSpeakerKey}.");
         }
 
         public bool IsAgentTurn(string agentKey)

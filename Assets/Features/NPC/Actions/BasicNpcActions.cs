@@ -52,6 +52,12 @@ namespace Features.NPC.Actions
             // Since we interact with a certain agent that agent's context is now outdated
             ActionQueueManager.Instance?.CancelAgentRequest(targetActorKey);
             
+            // Cancel every participant's actions
+            if (ConversationAnchor.ConversationAnchors.TryGetValue(targetActorKey, out var currentTargetAnchor))
+            {
+                currentTargetAnchor.Participants.ForEach(p => ActionQueueManager.Instance?.CancelAgentRequest(p));
+            }
+            
             var anchors = ConversationAnchor.ConversationAnchors;
             var sourceAnchor = anchors.GetValueOrDefault(_agent.gameKey);
             var targetAnchor = anchors.GetValueOrDefault(targetActorKey);
