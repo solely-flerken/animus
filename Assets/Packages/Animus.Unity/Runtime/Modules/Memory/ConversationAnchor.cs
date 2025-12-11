@@ -9,6 +9,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
     {
         public static Dictionary<string, ConversationAnchor> ConversationAnchors = new();
         
+        private const double StalemateTimeoutSeconds = 15.0f;
+        
         public string Id { get; } = Guid.NewGuid().ToString();
         public List<string> Participants { get; } = new();
         public string CurrentSpeakerKey { get; private set; }
@@ -73,6 +75,20 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             
             Participants.Clear();
             Debug.Log($"[Anchor] Conversation {Id} dissolved.");
+        }
+        
+        public bool CheckStalemate()
+        {
+            var diff = DateTime.UtcNow - LastInteractionTime;
+            
+            if (diff.TotalSeconds > StalemateTimeoutSeconds)
+            {
+                RemoveParticipant(CurrentSpeakerKey);
+                Debug.Log($"[ConversationAnchor] Stalemate detected ({diff.TotalSeconds:F1}s silence). Kicking speaker: {{CurrentSpeakerKey}}");
+                return true;
+            }
+            
+            return false;
         }
         
         public void PassTurn(string specificTargetKey = null)

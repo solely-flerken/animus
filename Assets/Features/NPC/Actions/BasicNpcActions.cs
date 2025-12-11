@@ -24,6 +24,11 @@ namespace Features.NPC.Actions
         [AgentAction("move_to", "Moves the agent to a specific entity.")]
         public UniTask<string> MoveTo(string entityKey)
         {
+            if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
+            {
+                anchor.RemoveParticipant(_agent.gameKey);
+            }
+            
             var targetEntity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(entityKey);
             if (targetEntity == null)
             {
@@ -129,6 +134,11 @@ namespace Features.NPC.Actions
         [AgentAction("pickup_item", "Pickup the specified item.")]
         public UniTask<string> Pickup(string itemKey)
         {
+            if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
+            {
+                anchor.RemoveParticipant(_agent.gameKey);
+            }
+            
             var item = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusObject>(itemKey);
             if (item == null)
             {
