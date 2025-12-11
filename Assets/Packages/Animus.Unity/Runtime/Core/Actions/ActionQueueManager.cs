@@ -206,7 +206,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             }
             catch (OperationCanceledException)
             {
-                Debug.Log($"[{agentKey}] Thinking process cancelled.");
+                // Debug.Log($"[{agentKey}] Thinking process cancelled.");
             }
             catch (Exception ex)
             {
@@ -232,10 +232,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         /// </summary>
         public void CancelAgentRequest(string agentKey)
         {
-            Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
-            
             if (_activeRequests.TryGetValue(agentKey, out var request))
             {
+                Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
                 request.cts.Cancel();
                 _activeRequests.Remove(agentKey);
             }

@@ -34,11 +34,11 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
 
-            Debug.Log($"Agent '{targetAgent.gameKey}' executing: {actionPayload.actionKey}");
+            // Debug.Log($"Agent '{targetAgent.gameKey}' executing: {actionPayload.actionKey}");
 
             var outcome = await targetAgent.actionRunner.Execute(actionPayload.actionKey, paramsDict);
             
-            Debug.Log($"Result: {outcome}");
+            // Debug.Log($"Result: {outcome}");
         }
     }
 }
