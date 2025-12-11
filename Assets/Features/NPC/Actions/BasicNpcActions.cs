@@ -96,7 +96,36 @@ namespace Features.NPC.Actions
 
             return UniTask.FromResult($"success: said '{message}' to {targetActor.gameKey}");
         }
+        
+        [AgentAction("leave_conversation", "End the conversation with a final message.")]
+        public UniTask<string> LeaveConversation(string finalMessage, string targetActorKey)
+        {
+            var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
+            if (targetActor == null)
+            {
+                return UniTask.FromResult($"failure: actor '{targetActorKey}' not found");
+            }
 
+            // Since we interact with a certain agent that agent's context is now outdated
+            ActionQueueManager.Instance?.CancelAgentRequest(targetActorKey);
+
+            if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
+            {
+                AnimusAgent.SharedHistory.AddLine(new List<string>(anchor.Participants), _agent.gameKey, finalMessage);
+
+                // Remove the agent from the anchor
+                anchor.RemoveParticipant(_agent.gameKey);
+            }
+            else
+            {
+                Debug.Log("[LeaveConversation] Critical Error: Trying to leave non-existing conversation anchor. Shouldn't be possible.");
+            }
+
+            _brain.StartGoalTalk(finalMessage, targetActor);
+
+            return UniTask.FromResult($"success: said goodbye '{finalMessage}' and left conversation.");
+        }
+        
         [AgentAction("pickup_item", "Pickup the specified item.")]
         public UniTask<string> Pickup(string itemKey)
         {
