@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Features.Gate.Scripts
 {
-    public class Gate : MonoBehaviour, IInteractable
+    public class InteractableGate : MonoBehaviour, IInteractable
     {
         public string InteractionPrompt => $"{(_isOpen ? "Close" : "Open")} Door";
         
