@@ -33,9 +33,9 @@ namespace Features.Interaction.Scripts
             Hide();
         }
 
-        public void Show(string message)
+        public void Show(IInteractable interactable)
         {
-            _interactionPromptLabel.text = message;
+            _interactionPromptLabel.Bind(BindableProperty<string>.Bind(() => interactable.InteractionPrompt), nameof(Label.text));
             Show();
         }
     }

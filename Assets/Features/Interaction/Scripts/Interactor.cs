@@ -50,7 +50,7 @@ namespace Features.Interaction.Scripts
                 {
                     if (interactable == _currentInteractable) return;
                     _currentInteractable = interactable;
-                    InteractionUI.Show(_currentInteractable.InteractionPrompt);
+                    InteractionUI.Show(_currentInteractable);
                 }
                 else
                 {
