@@ -5,7 +5,6 @@ using Features.Goap.MoveTo;
 using Features.Goap.Pickup;
 using Features.Goap.Talk;
 using Features.Goap.Wander;
-using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 

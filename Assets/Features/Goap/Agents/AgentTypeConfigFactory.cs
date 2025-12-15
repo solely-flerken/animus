@@ -11,8 +11,8 @@ namespace Features.Goap.Agents
     {
         public override IAgentTypeConfig Create()
         {
-            var builder = new AgentTypeBuilder(AgentConstants.General);
-
+            var builder = CreateBuilder(AgentConstants.General);
+            
             builder.AddCapability<WanderCapability>();
             builder.AddCapability<MoveCapability>();
             builder.AddCapability<PickupItemCapability>();
