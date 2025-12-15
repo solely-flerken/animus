@@ -21,6 +21,12 @@ namespace Features.NPC.Actions
             _brain = GetComponent<SimpleAgentBrain>();
         }
 
+        [AgentAction("idle", "Remain idle and take no action.")]
+        public UniTask<string> Idle()
+        {
+            return UniTask.FromResult("success: idle");
+        }
+        
         [AgentAction("move_to", "Moves the agent to a specific entity.")]
         public UniTask<string> MoveTo(string entityKey)
         {
