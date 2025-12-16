@@ -116,6 +116,24 @@ namespace Packages.Animus.Unity.Runtime.Modules.Poi.Scripts
             if (fadeEndDistanceClose < fadeStartDistanceClose) fadeEndDistanceClose = fadeStartDistanceClose;
             if (fadeStartDistanceFar < fadeEndDistanceClose) fadeStartDistanceFar = fadeEndDistanceClose;
             if (fadeEndDistanceFar < fadeStartDistanceFar) fadeEndDistanceFar = fadeStartDistanceFar;
+            
+            // Update text in editor
+            UpdateTextInEditor();
+        }
+
+        private void UpdateTextInEditor()
+        {
+            if (targetText == null) return;
+
+            if (_animusLocation == null)
+            {
+                _animusLocation = GetComponent<AnimusLocation>();
+            }
+
+            if (_animusLocation != null)
+            {
+                targetText.text = _animusLocation.entityName;
+            }
         }
     }
 }
