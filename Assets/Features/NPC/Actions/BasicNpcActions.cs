@@ -24,7 +24,7 @@ namespace Features.NPC.Actions
         [AgentAction("idle", "Remain idle and take no action.")]
         public UniTask<string> Idle()
         {
-            return UniTask.FromResult("success: idle");
+            return UniTask.FromResult("I stood idle for a moment.");
         }
         
         [AgentAction("move_to", "Moves the agent to a specific entity.")]
@@ -38,12 +38,13 @@ namespace Features.NPC.Actions
             var targetEntity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(entityKey);
             if (targetEntity == null)
             {
-                return UniTask.FromResult($"failure: entity '{entityKey}' not found");
+                return UniTask.FromResult($"I tried to move to '{entityKey}', but I couldn't find it.");
             }
 
+            // TODO: Maybe callback to add to memory that the agent arrived at his target
             _brain.StartGoalMoveTo(targetEntity);
 
-            return UniTask.FromResult($"success: moving to {targetEntity.gameKey}");
+            return UniTask.FromResult($"I started moving towards {targetEntity.gameKey}.");
         }
 
         [AgentAction("talk", "Say something to another character.")]
@@ -52,7 +53,7 @@ namespace Features.NPC.Actions
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
             {
-                return UniTask.FromResult($"failure: actor '{targetActorKey}' not found");
+                return UniTask.FromResult("");
             }
             
             // Since we interact with a certain agent that agent's context is now outdated
@@ -111,7 +112,7 @@ namespace Features.NPC.Actions
             
             _brain.StartGoalTalk(message, targetActor);
 
-            return UniTask.FromResult($"success: said '{message}' to {targetActor.gameKey}");
+            return UniTask.FromResult($"I said '{message}' to {targetActor.gameKey}.");
         }
         
         [AgentAction("leave_conversation", "End the conversation with a final message.")]
@@ -120,7 +121,7 @@ namespace Features.NPC.Actions
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
             {
-                return UniTask.FromResult($"failure: actor '{targetActorKey}' not found");
+                return UniTask.FromResult("");
             }
 
             // Since we interact with a certain agent that agent's context is now outdated
@@ -140,7 +141,7 @@ namespace Features.NPC.Actions
 
             _brain.StartGoalTalk(finalMessage, targetActor);
 
-            return UniTask.FromResult($"success: said goodbye '{finalMessage}' and left conversation.");
+            return UniTask.FromResult($"I said goodbye to {targetActor.gameKey} and left the conversation.");
         }
         
         [AgentAction("pickup_item", "Pickup the specified item.")]
@@ -154,12 +155,12 @@ namespace Features.NPC.Actions
             var item = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusObject>(itemKey);
             if (item == null)
             {
-                return UniTask.FromResult($"failure: item '{itemKey}' not found");
+                return UniTask.FromResult("");
             }
 
             _brain.StartGoalPickupItem(item);
 
-            return UniTask.FromResult($"success: picked up {item.gameKey}");
+            return UniTask.FromResult($"I picked up the {item.gameKey}.");
         }
     }
 }

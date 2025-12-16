@@ -15,11 +15,11 @@ namespace Features.NPC.Actions
             if (interactableGate == null)
             {
                 Debug.LogError("Gate object is not assigned!");
-                return UniTask.FromResult("failure: Gate object is not assigned!");
+                return UniTask.FromResult("");
             }
             
             interactableGate?.OpenGate();
-            return UniTask.FromResult("success: opening gate");
+            return UniTask.FromResult("I opened the gate.");
         }
 
         [AgentAction("close_gate", "Close the Gate.")]
@@ -28,11 +28,11 @@ namespace Features.NPC.Actions
             if (interactableGate == null)
             {
                 Debug.LogError("Gate object is not assigned!");
-                return UniTask.FromResult("failure: Gate object is not assigned!");
+                return UniTask.FromResult("");
             }
             
             interactableGate?.CloseGate();
-            return UniTask.FromResult("success: closing gate");
+            return UniTask.FromResult("I closed the gate.");
         }
     }
 }
