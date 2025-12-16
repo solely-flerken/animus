@@ -249,13 +249,6 @@ namespace Features.Chat.Scripts
             _chatView.Clear();
         }
 
-        [Obsolete]
-        private void OnInputGeometryChanged(GeometryChangedEvent evt)
-        {
-            _messageInput.Focus();
-            _messageInput.UnregisterCallback<GeometryChangedEvent>(OnInputGeometryChanged);
-        }
-
         private IEnumerator FocusAndPositionCursor()
         {
             yield return new WaitForEndOfFrame();
