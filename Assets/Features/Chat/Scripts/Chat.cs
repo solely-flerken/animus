@@ -9,7 +9,6 @@ using Core.UI.Scripts;
 using Features.Player.Scripts;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Core.Event;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -198,7 +197,7 @@ namespace Features.Chat.Scripts
                     }
 
                     LogMessage($"NPC {animusAgent.name} moving to POI {poi.name}");
-                    animusAgent.GoToPoi(poi);
+                    _ = animusAgent.GoToPoi(poi);
                     break;
                 case "/talk" when parameters?.Length >= 2:
                     animusAgent = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>()
@@ -250,6 +249,7 @@ namespace Features.Chat.Scripts
             _chatView.Clear();
         }
 
+        [Obsolete]
         private void OnInputGeometryChanged(GeometryChangedEvent evt)
         {
             _messageInput.Focus();
