@@ -12893,7 +12893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5346108952544b02a9668a20b1c3df4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.NPC.Actions.GuardActions
-  interactableGate: {fileID: 0}
+  interactableGate: {fileID: 258241222}
 --- !u!1 &2107269647
 GameObject:
   m_ObjectHideFlags: 0
