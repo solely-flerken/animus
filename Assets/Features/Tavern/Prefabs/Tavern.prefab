@@ -278,6 +278,7 @@ Transform:
   - {fileID: 5122756172836671523}
   - {fileID: 1301400163316951901}
   - {fileID: 2772385322352492750}
+  - {fileID: 538319801560669027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4842496253207857302
@@ -8650,6 +8651,84 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4958141964136856, guid: 7738ccb3c7ccb2f4aa36bd30a8fbb7ef, type: 3}
   m_PrefabInstance: {fileID: 5129563800724780636}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5164116956574032690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4386076167004111270}
+    m_Modifications:
+    - target: {fileID: 1822643876715858821, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: gameKey
+      value: location_tavern
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822643876715858821, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: entityName
+      value: Tavern
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822643876715858821, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: description
+      value: The city's tavern.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837623890190889367, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_Name
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463279004530375835, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_text
+      value: Tavern
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.1475601
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.3431492
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+--- !u!4 &538319801560669027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+  m_PrefabInstance: {fileID: 5164116956574032690}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5171629921869749509
 PrefabInstance:
