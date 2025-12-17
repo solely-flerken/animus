@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Infrastructure.Serialization.Converters;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Event

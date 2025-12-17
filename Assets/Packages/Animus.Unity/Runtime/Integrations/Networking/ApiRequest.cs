@@ -1,5 +1,5 @@
 ﻿using System;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.Networking
 {
