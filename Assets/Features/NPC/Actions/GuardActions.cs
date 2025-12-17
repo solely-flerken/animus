@@ -37,7 +37,7 @@ namespace Features.NPC.Actions
                     interactableGate?.OpenGate();
                     return UniTask.FromResult("I opened the gate.");
                 },
-                condition: null // TODO: Check if closed
+                condition: () => !interactableGate.IsOpen
             );
 
             _actionSystem.RegisterAction(openGateAction);
@@ -57,7 +57,7 @@ namespace Features.NPC.Actions
                     interactableGate?.CloseGate();
                     return UniTask.FromResult("I closed the gate.");
                 },
-                condition: null // TODO: Check if open
+                condition: () => interactableGate.IsOpen
             );
 
             _actionSystem.RegisterAction(openGateAction);

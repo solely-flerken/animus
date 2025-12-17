@@ -5,14 +5,15 @@ namespace Features.Gate.Scripts
 {
     public class InteractableGate : MonoBehaviour, IInteractable
     {
-        public string InteractionPrompt => $"{(_isOpen ? "Close" : "Open")} Door";
-        
+        public string InteractionPrompt => $"{(IsOpen ? "Close" : "Open")} Door";
+
         [SerializeField] private Transform leftDoor;
         [SerializeField] private Transform rightDoor;
         [SerializeField] private float openAngle = 90f;
         [SerializeField] private float rotationSpeed = 3f;
 
-        private bool _isOpen;
+        public bool IsOpen { get; private set; }
+        
         private float _targetAngle;
         private float _currentAngle;
         private Quaternion _leftClosedRotation;
@@ -36,19 +37,19 @@ namespace Features.Gate.Scripts
 
         public void ToggleDoors()
         {
-            _isOpen = !_isOpen;
-            _targetAngle = _isOpen ? openAngle : 0f;
+            IsOpen = !IsOpen;
+            _targetAngle = IsOpen ? openAngle : 0f;
         }
 
         public void OpenGate()
         {
-            _isOpen = true;
+            IsOpen = true;
             _targetAngle = openAngle;
         }
 
         public void CloseGate()
         {
-            _isOpen = false;
+            IsOpen = false;
             _targetAngle = 0f;
         }
 
