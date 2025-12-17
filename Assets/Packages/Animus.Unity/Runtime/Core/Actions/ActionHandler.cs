@@ -18,9 +18,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 return;
             }
     
-            if (targetAgent.actionRunner == null)
+            if (targetAgent.agentActionSystem == null)
             {
-                Debug.LogError($"Command failed: Agent '{targetAgent.gameKey}' has no AgentActionRunner component.");
+                Debug.LogError($"Command failed: Agent '{targetAgent.gameKey}' has no AgentActionSystem component.");
                 return;
             }
     
@@ -34,7 +34,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
 
-            var outcome = await targetAgent.actionRunner.Execute(actionPayload.actionKey, paramsDict);
+            var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.actionKey, paramsDict);
 
             if (string.IsNullOrWhiteSpace(outcome))
             {

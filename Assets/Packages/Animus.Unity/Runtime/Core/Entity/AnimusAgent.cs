@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 namespace Packages.Animus.Unity.Runtime.Core.Entity
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent), typeof(AgentActionSystem))]
     public class AnimusAgent : AnimusActor
     {
         public override AnimusEntityType Type => AnimusEntityType.Agent;
@@ -26,7 +26,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public EventHistory eventHistory;
         public List<string> memories;
 
-        public AgentActionRunner actionRunner;
+        public AgentActionSystem agentActionSystem;
         
         private NavMeshAgent _navMeshAgent;
         private Vector3 _currentTargetPosition;
@@ -34,7 +34,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            actionRunner = GetComponent<AgentActionRunner>();
+            agentActionSystem = GetComponent<AgentActionSystem>();
         }
 
         private void Start()

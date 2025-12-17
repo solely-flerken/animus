@@ -44,9 +44,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             return this;
         }
         
-        public PromptBuilder WithAvailableActions(AgentActionRunner runner)
+        public PromptBuilder WithAvailableActions(AgentActionSystem agentActionSystem)
         {
-            _context.AvailableActions = runner.GenerateActionSchema();
+            _context.AvailableActions = agentActionSystem.GenerateSchema();
             return this;
         }
 

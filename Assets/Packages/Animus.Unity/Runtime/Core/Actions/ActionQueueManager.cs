@@ -125,7 +125,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                     foreach (var agent in agents)
                     {
                         // Can Agent perform actions?
-                        if (agent.actionRunner == null) continue;
+                        if (agent.agentActionSystem == null) continue;
 
                         // Is Agent already thinking?
                         if (_activeRequests.ContainsKey(agent.gameKey)) continue;
@@ -143,7 +143,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         Profiler.BeginSample("Animus.PromptBuilder");
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
-                            .WithAvailableActions(agent.actionRunner)
+                            .WithAvailableActions(agent.agentActionSystem)
                             .WithCurrentState()
                             .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))

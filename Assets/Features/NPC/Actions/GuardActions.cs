@@ -5,34 +5,62 @@ using UnityEngine;
 
 namespace Features.NPC.Actions
 {
+    [RequireComponent(typeof(AgentActionSystem))]
     public class GuardActions : MonoBehaviour
     {
+        private AgentActionSystem _actionSystem;
+
         [SerializeField] private InteractableGate interactableGate;
-        
-        [AgentAction("open_gate", "Open the Gate.")]
-        public UniTask<string> OpenGate()
+
+        private void Awake()
         {
-            if (interactableGate == null)
-            {
-                Debug.LogError("Gate object is not assigned!");
-                return UniTask.FromResult("");
-            }
-            
-            interactableGate?.OpenGate();
-            return UniTask.FromResult("I opened the gate.");
+            _actionSystem = GetComponent<AgentActionSystem>();
         }
 
-        [AgentAction("close_gate", "Close the Gate.")]
-        public UniTask<string> CloseGate()
+        private void Start()
         {
-            if (interactableGate == null)
-            {
-                Debug.LogError("Gate object is not assigned!");
-                return UniTask.FromResult("");
-            }
-            
-            interactableGate?.CloseGate();
-            return UniTask.FromResult("I closed the gate.");
+            RegisterOpenGate();
+            RegisterCloseGate();
+        }
+
+        private void RegisterOpenGate()
+        {
+            var openGateAction = new AgentAction("open_gate", "Open the gate.",
+                logic: _ =>
+                {
+                    if (interactableGate == null)
+                    {
+                        Debug.LogError("Gate object is not assigned!");
+                        return UniTask.FromResult("");
+                    }
+
+                    interactableGate?.OpenGate();
+                    return UniTask.FromResult("I opened the gate.");
+                },
+                condition: null // TODO: Check if closed
+            );
+
+            _actionSystem.RegisterAction(openGateAction);
+        }
+
+        private void RegisterCloseGate()
+        {
+            var openGateAction = new AgentAction("close_gate", "Close the Gate.",
+                logic: _ =>
+                {
+                    if (interactableGate == null)
+                    {
+                        Debug.LogError("Gate object is not assigned!");
+                        return UniTask.FromResult("");
+                    }
+
+                    interactableGate?.CloseGate();
+                    return UniTask.FromResult("I closed the gate.");
+                },
+                condition: null // TODO: Check if open
+            );
+
+            _actionSystem.RegisterAction(openGateAction);
         }
     }
 }

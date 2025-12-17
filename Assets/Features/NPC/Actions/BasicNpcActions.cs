@@ -9,26 +9,106 @@ using UnityEngine;
 
 namespace Features.NPC.Actions
 {
-    [RequireComponent(typeof(AnimusAgent), typeof(SimpleAgentBrain))]
+    [RequireComponent(typeof(AnimusAgent), typeof(AgentActionSystem), typeof(SimpleAgentBrain))]
     public class BasicNpcActions : MonoBehaviour
     {
+        private AgentActionSystem _actionSystem;
         private AnimusAgent _agent;
         private SimpleAgentBrain _brain;
 
         private void Awake()
         {
+            _actionSystem = GetComponent<AgentActionSystem>();
             _agent = GetComponent<AnimusAgent>();
             _brain = GetComponent<SimpleAgentBrain>();
         }
 
-        [AgentAction("idle", "Remain idle and take no action.")]
-        public UniTask<string> Idle()
+        private void Start()
         {
-            return UniTask.FromResult("I stood idle for a moment.");
+            RegisterIdle();
+            RegisterMoveTo();
+            RegisterTalk();
+            RegisterLeaveConversation();
+            RegisterPickup();
+        }
+
+        private void RegisterIdle()
+        {
+            var idleAction = new AgentAction("idle", "Remain idle and take no action.",
+                _ => UniTask.FromResult("I stood idle for a moment."));
+
+            _actionSystem.RegisterAction(idleAction);
+        }
+
+        private void RegisterMoveTo()
+        {
+            var moveAction = new AgentAction("move_to", "Moves to a target.",
+                logic: async (args) =>
+                {
+                    var entityKey = args["entityKey"].ToString();
+                    return await MoveTo(entityKey);
+                },
+                condition: () => !IsTalking()
+            );
+            
+            moveAction.AddParam<string>("entityKey");
+        
+            _actionSystem.RegisterAction(moveAction);
+        }
+
+        private void RegisterTalk()
+        {
+            var talkAction = new AgentAction("talk", "Say something.",
+                logic: async (args) =>
+                {
+                    var message = args["message"].ToString();
+                    var targetActorKey = args["targetActorKey"].ToString();
+                    return await Talk(message, targetActorKey);
+                },
+                condition: null
+            );
+            
+            talkAction.AddParam<string>("message")
+                .AddParam<string>("targetActorKey");
+            
+            _actionSystem.RegisterAction(talkAction);
+        }
+
+        private void RegisterLeaveConversation()
+        {
+            var leaveConversationAction = new AgentAction("leave_conversation", "End the conversation with a final message.",
+                logic: async (args) =>
+                {
+                    var message = args["finalMessage"].ToString();
+                    var targetActorKey = args["targetActorKey"].ToString();
+                    return await LeaveConversation(message, targetActorKey);
+                },
+                condition: null
+            );
+            
+            leaveConversationAction.AddParam<string>("finalMessage")
+                .AddParam<string>("targetActorKey");
+            
+            _actionSystem.RegisterAction(leaveConversationAction);
         }
         
-        [AgentAction("move_to", "Moves the agent to a specific entity.")]
-        public UniTask<string> MoveTo(string entityKey)
+        private void RegisterPickup()
+        {
+            var pickupAction = new AgentAction("pickup_item", "Pickup the specified item.",
+                logic: async (args) =>
+                {
+                    var itemKey = args["itemKey"].ToString();
+                    return await Pickup(itemKey);
+                },
+                condition: AnyObjectVisible
+            );
+            
+            pickupAction.AddParam<string>("itemKey");
+            
+            _actionSystem.RegisterAction(pickupAction);
+        }
+        
+        private UniTask<string> MoveTo(string entityKey)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -46,8 +126,7 @@ namespace Features.NPC.Actions
 
             return UniTask.FromResult($"I started moving towards {targetEntity.gameKey}.");
         }
-
-        [AgentAction("talk", "Say something to another character.")]
+        
         public UniTask<string> Talk(string message, string targetActorKey)
         {
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
@@ -115,7 +194,6 @@ namespace Features.NPC.Actions
             return UniTask.FromResult($"I said '{message}' to {targetActor.gameKey}.");
         }
         
-        [AgentAction("leave_conversation", "End the conversation with a final message.")]
         public UniTask<string> LeaveConversation(string finalMessage, string targetActorKey)
         {
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
@@ -144,7 +222,6 @@ namespace Features.NPC.Actions
             return UniTask.FromResult($"I said goodbye to {targetActor.gameKey} and left the conversation.");
         }
         
-        [AgentAction("pickup_item", "Pickup the specified item.")]
         public UniTask<string> Pickup(string itemKey)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
@@ -161,6 +238,17 @@ namespace Features.NPC.Actions
             _brain.StartGoalPickupItem(item);
 
             return UniTask.FromResult($"I picked up the {item.gameKey}.");
+        }
+        
+        private bool IsTalking()
+        {
+            return ConversationAnchor.ConversationAnchors.ContainsKey(_agent.gameKey);
+        }
+        
+        private bool AnyObjectVisible()
+        {
+            // TODO:
+            return false;
         }
     }
 }
