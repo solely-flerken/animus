@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
+    [Obsolete("Use AgentActionSystem instead.")]
     public class AgentActionRunner : MonoBehaviour
     {
         private readonly Dictionary<string, MethodInfo> _registeredActions = new();

@@ -2,6 +2,7 @@
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
+    [Obsolete("Use AgentAction instead.")]
     [AttributeUsage(AttributeTargets.Method)]
     public class AgentActionAttribute : Attribute
     {
