@@ -4,16 +4,23 @@ using UnityEngine;
 namespace Features.Interaction.Scripts
 {
     [RequireComponent(typeof(AnimusObject))]
-    public class InteractableObject: MonoBehaviour, IInteractable
+    public class InteractableObject : MonoBehaviour, IInteractable
     {
-        public AnimusObject AnimusObject => GetComponent<AnimusObject>();
-        public string InteractionPrompt => $"Pick up: {AnimusObject.name}";
+        public string InteractionPrompt => $"Pick up: {(_animusObject != null ? _animusObject.name : "")}";
+
+        private AnimusObject _animusObject;
+
+        private void Awake()
+        {
+            _animusObject = GetComponent<AnimusObject>();
+        }
+
         public void Interact(GameObject interactor)
         {
             if (interactor.TryGetComponent<AnimusActor>(out var animusActor))
             {
-                animusActor.inventory.AddItem(AnimusObject.itemData, AnimusObject.quantity);
-                AnimusObject.Pickup();
+                animusActor.inventory.AddItem(_animusObject.itemData, _animusObject.quantity);
+                _animusObject.Pickup();
             }
         }
     }
