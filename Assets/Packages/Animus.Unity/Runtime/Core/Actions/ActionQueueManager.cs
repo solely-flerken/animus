@@ -188,7 +188,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             try
             {
-                LocalJsonSaveSystem.SaveAsync(context).Forget();
+                var fileName = $"save_{agentKey}_{DateTime.Now:yyyyMMdd_HHmmss_fff}.json";
+                LocalJsonSaveSystem.SaveAsync(context, fileName).Forget();
 
                 var response = await AnimusService.Chat(context, cts.Token);
 

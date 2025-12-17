@@ -14,7 +14,7 @@ namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization
         {
             if (string.IsNullOrEmpty(fileName))
             {
-                fileName = $"save_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+                fileName = $"save_{DateTime.Now:yyyyMMdd_HHmmss}:{Guid.NewGuid():N}.json";
             }
             var savePath = ToSavePath(fileName);
             
