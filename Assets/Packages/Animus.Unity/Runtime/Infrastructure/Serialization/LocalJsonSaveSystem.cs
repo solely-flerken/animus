@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization
@@ -9,6 +10,25 @@ namespace Packages.Animus.Unity.Runtime.Infrastructure.Serialization
     {
         private static readonly string SaveDirectory = Path.Combine(Application.persistentDataPath, "saves");
 
+        public static async UniTask<string> SaveAsync<T>(T saveData, string fileName = null)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = $"save_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+            }
+            var savePath = ToSavePath(fileName);
+            
+            var json = JsonUtility.Serialize(saveData, true);
+
+            await UniTask.RunOnThreadPool(() =>
+            {
+                Directory.CreateDirectory(SaveDirectory);
+                File.WriteAllText(savePath, json);
+            });
+
+            return savePath;
+        }
+        
         public static string Save<T>(T saveData, string fileName = null)
         {
             // Generate timestamp-based filename if none provided

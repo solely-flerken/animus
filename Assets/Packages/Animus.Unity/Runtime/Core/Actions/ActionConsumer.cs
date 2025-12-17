@@ -63,8 +63,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 var actorKey = action.agentKey;
                 var payload = action.responsePayload;
 
-                LocalJsonSaveSystem.Save(action.originalContext);
-
                 Debug.Log($"[Arbiter] Executing: {actorKey} -> {payload.actionKey}");
 
                 await ActionHandler.ProcessAction(payload);

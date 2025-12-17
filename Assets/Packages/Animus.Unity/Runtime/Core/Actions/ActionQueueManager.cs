@@ -13,6 +13,7 @@ using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
@@ -28,6 +29,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         private readonly Dictionary<string, PendingRequest> _activeRequests = new();
 
         public ConcurrentQueue<QueuedAction> ActionQueue { get; } = new();
+        
+        private float _debugUpdateTimer;
+        private const float DebugRefreshRate = 0.2f; 
         
         private void Awake()
         {
@@ -52,7 +56,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         private void Update()
         {
 #if UNITY_EDITOR
-            SyncDebugViews();
+            _debugUpdateTimer += Time.deltaTime;
+            if (_debugUpdateTimer >= DebugRefreshRate)
+            {
+                _debugUpdateTimer = 0f;
+                SyncDebugViews();
+            }
 #endif
         }
 
@@ -131,6 +140,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                             if (!anchor.IsAgentTurn(agent.gameKey)) continue;
                         }
                         
+                        Profiler.BeginSample("Animus.PromptBuilder");
                         var prompt = new PromptBuilder()
                             .SetAgent(agent)
                             .WithAvailableActions(agent.actionRunner)
@@ -140,7 +150,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                             .WithRelevantMemories(agent.memories)
                             .WithRules(PredefinedRulesets.CommonAgent)
                             .WithTaskInstruction("");
-
+                        Profiler.EndSample();
+                        
                         SendRequestAsync(agent.gameKey, prompt.GetContext()).Forget();
                     }
 
@@ -177,7 +188,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             try
             {
-                LocalJsonSaveSystem.Save(context);
+                LocalJsonSaveSystem.SaveAsync(context).Forget();
 
                 var response = await AnimusService.Chat(context, cts.Token);
 
