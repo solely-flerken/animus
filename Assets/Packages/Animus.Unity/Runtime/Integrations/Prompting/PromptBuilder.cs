@@ -32,8 +32,8 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
                 _context.CurrentState =
                     $"STATUS: IN CONVERSATION\n" +
                     $"PARTICIPANTS: {othersStr}\n" +
-                    $"{anchor.GetTurnContext()}\n" +
-                    $"INSTRUCTION: You are currently talking. Respond to the conversation history or leave the conversation to end it.";
+                    $"CONSTRAINT: {anchor.GetTurnContext()}\n" +
+                    $"INSTRUCTION: You are currently talking. Respond to the conversation history or leave the conversation to end it."; // TODO: Put this into the task.
             }
             else
             {
