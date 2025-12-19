@@ -46,18 +46,18 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
                 var distanceSqr = (animusAgent.transform.position - animusEvent.EventLocation).sqrMagnitude;
                 if (distanceSqr < maxDistance)
                 {
-                    animusAgent.eventHistory.Events.Add(animusEvent);
+                    animusAgent.EventHistory.Events.Add(animusEvent);
                 }
             }
 
             if (animusEvent.EventSource is AnimusAgent sourceAgent)
             {
-                sourceAgent.eventHistory.Events.Add(animusEvent);
+                sourceAgent.EventHistory.Events.Add(animusEvent);
             }
 
             foreach (var agent in animusEvent.EventTarget.OfType<AnimusAgent>())
             {
-                agent.eventHistory.Events.Add(animusEvent);
+                agent.EventHistory.Events.Add(animusEvent);
             }
 
             OnDialogEvent?.Invoke(animusEvent);

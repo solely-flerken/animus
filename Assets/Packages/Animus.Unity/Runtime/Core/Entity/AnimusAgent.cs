@@ -23,7 +23,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public LayerMask obstacleLayer;
 
         public static ConversationHistory SharedHistory;
-        public EventHistory eventHistory;
+        public EventHistory EventHistory;
         public List<string> memories;
 
         public AgentActionSystem agentActionSystem;
@@ -40,7 +40,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         private void Start()
         {
             SharedHistory = new ConversationHistory(50);
-            eventHistory = new EventHistory();
+            EventHistory = new EventHistory();
         }
 
         private void OnEnable()
