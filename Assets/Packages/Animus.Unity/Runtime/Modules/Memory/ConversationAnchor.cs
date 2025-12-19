@@ -52,27 +52,28 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
 
         public void RemoveParticipant(string agentKey)
         {
-            if (Participants.Contains(agentKey))
-            {
-                Participants.Remove(agentKey);
-                ParticipantReasons.Remove(agentKey); 
+            if (!Participants.Contains(agentKey)) return;
+            
+            Participants.Remove(agentKey);
+            ParticipantReasons.Remove(agentKey); 
                 
-                ConversationAnchors.Remove(agentKey);
+            ConversationAnchors.Remove(agentKey);
 
-                if (CurrentSpeakerKey == agentKey)
-                {
-                    PassTurn();
-                }
+            if (CurrentSpeakerKey == agentKey)
+            {
+                PassTurn();
+            }
 
-                if (Participants.Count < 2)
-                {
-                    Dissolve();
-                }
+            if (Participants.Count < 2)
+            {
+                Dissolve();
             }
         }
         
         private void Dissolve()
         {
+            if (Participants.Count == 0) return;
+            
             var currentParticipants = Participants.ToList();
             
             foreach (var p in currentParticipants)
@@ -100,6 +101,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
         
         public void PassTurn(string specificTargetKey = null)
         {
+            if (Participants.Count == 0) return;
+            
             LastInteractionTime = DateTime.UtcNow;
             CurrentTurn++;
             
