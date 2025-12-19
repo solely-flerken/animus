@@ -30,8 +30,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
                 var othersStr = others.Count > 0 ? string.Join(", ", others) : "No one";
 
                 _context.CurrentState =
-                    $"STATUS: IN_CONVERSATION\n" +
+                    $"STATUS: IN CONVERSATION\n" +
                     $"PARTICIPANTS: {othersStr}\n" +
+                    $"{anchor.GetTurnContext()}\n" +
                     $"INSTRUCTION: You are currently talking. Respond to the conversation history or leave the conversation to end it.";
             }
             else

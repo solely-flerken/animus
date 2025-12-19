@@ -12,8 +12,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
         private const double StalemateTimeoutSeconds = 15.0f;
         
         public int CurrentTurn { get; private set; }
-        public static int MaxTurns => 10;
-        public static int SoftEndTurn => 8;
+        public static int MaxTurns => 6;
+        public static int SoftEndTurn => 4;
 
         public Dictionary<string, string> ParticipantReasons { get; } = new();
         
@@ -150,9 +150,9 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
         {
             return CurrentTurn >= MaxTurns - 1;
         }
-        
-        // TODO
-        public string GetTurnContext(string agentKey)
+
+        // TODO: Use this
+        public string GetReasonContext(string agentKey)
         {
             var conversationReason = "participating in conversation";
             if (ParticipantReasons.TryGetValue(agentKey, out var reason))
@@ -160,7 +160,13 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
                 conversationReason = reason;
             }
 
-            var context = $"Turn {CurrentTurn}. Your reason for this conversation: {conversationReason}.";
+            return $"Your reason for this conversation: {conversationReason}.";
+        }
+        
+        // TODO: Use this
+        public string GetTurnContext()
+        {
+            var context = $"Turn {CurrentTurn}/{MaxTurns}.";
 
             if (CurrentTurn >= MaxTurns - 1)
             {
@@ -168,7 +174,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             }
             else if (CurrentTurn >= SoftEndTurn)
             {
-                context += " This conversation has gone on for a while. Consider wrapping up naturally if your goal is met.";
+                context += " This conversation has gone on for a while. Consider wrapping up naturally.";
             }
 
             return context;
