@@ -46,9 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fe5f395dbb4d528eb59708c844c0cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Core.Entity.AnimusObject
-  gameKey: Automatically set for items
-  entityName: Automatically set for items
-  description: Automatically set for items
+  gameKey: Automatically set for items via Item Data
+  entityName: Automatically set for items via Item Data
+  description: Automatically set for items via Item Data
   itemData: {fileID: 11400000, guid: 40f49038cef3e1b46b65c4774507ca5b, type: 2}
   quantity: 1
 --- !u!114 &-1841605453745003520

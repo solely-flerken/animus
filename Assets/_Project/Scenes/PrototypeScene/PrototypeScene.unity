@@ -1332,7 +1332,7 @@ Transform:
   m_GameObject: {fileID: 152582905}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.87, y: -0.32, z: -30}
+  m_LocalPosition: {x: -28, y: -0.32, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5579,6 +5579,10 @@ PrefabInstance:
       value: Arinth
       objectReference: {fileID: 0}
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: description
+      value: Professor Arinth Valen, a scholar.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: memories.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -6266,7 +6270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1822643876715858821, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
       propertyPath: description
-      value: 
+      value: A Iron Mine.
       objectReference: {fileID: 0}
     - target: {fileID: 1837623890190889367, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
       propertyPath: m_Name
@@ -11654,6 +11658,10 @@ PrefabInstance:
       value: Borin
       objectReference: {fileID: 0}
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: description
+      value: Borin, a gruff Dwarven blacksmith.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: memories.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -13566,6 +13574,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7535430826707977608, guid: 271767a9fd77e4245ad2eaa6ba7cdda8, type: 3}
+      propertyPath: description
+      value: A new visitor.
+      objectReference: {fileID: 0}
     - target: {fileID: 5770965085560246500, guid: 271767a9fd77e4245ad2eaa6ba7cdda8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -13754,6 +13766,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: description
+      value: Dummy. Not good at anything, but does what he is told.
+      objectReference: {fileID: 0}
     - target: {fileID: 5156055569714394881, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -13800,7 +13816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7217938030599053639, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
