@@ -65,7 +65,15 @@ namespace Features.NPC.Actions
                     var targetActorKey = args["targetActorKey"].ToString();
                     return await Talk(message, targetActorKey);
                 },
-                condition: null
+                condition: () =>
+                {
+                    if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
+                    {
+                        return anchor.CanContinueTalking();
+                    }
+
+                    return true;
+                }
             );
             
             talkAction.AddParam<string>("message")
@@ -83,7 +91,7 @@ namespace Features.NPC.Actions
                     var targetActorKey = args["targetActorKey"].ToString();
                     return await LeaveConversation(message, targetActorKey);
                 },
-                condition: null
+                condition: IsTalking
             );
             
             leaveConversationAction.AddParam<string>("finalMessage")
