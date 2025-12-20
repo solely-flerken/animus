@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="right: 10px; top: 10px; position: absolute; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px; padding: 8px 12px;">
+        <ui:Label text="00:00" name="clock" style="font-size: 18px; color: rgb(255, 255, 255); -unity-font-style: bold; width: 60px; -unity-text-align: middle-center; letter-spacing: 2px; -unity-font-definition: url(&quot;project://database/Assets/External/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&quot;); flex-shrink: 0;"/>
+    </ui:VisualElement>
+</ui:UXML>
