@@ -17,7 +17,9 @@ namespace Features.GameTime.Scripts
         
         private float _timeMultiplier;
         private int _previousHour;
-    
+        private int _previousMinute;
+        
+        public event Action OnMinuteChanged; 
         public event Action<int> OnHourChanged;
         public event Action<int> OnDayChanged;
         public event Action OnDayStarted;
@@ -54,6 +56,7 @@ namespace Features.GameTime.Scripts
         {
             currentTime = startHour;
             _previousHour = CurrentHour;
+            _previousMinute = CurrentMinute;
         
             // Calculate how fast time should progress
             // 24 in-game hours should pass in 'dayDurationInMinutes' real-time minutes
@@ -82,7 +85,8 @@ namespace Features.GameTime.Scripts
         private void CheckHourChange()
         {
             var currentHourInt = CurrentHour;
-        
+            var currentMinuteInt = CurrentMinute;
+            
             if (currentHourInt != _previousHour)
             {
                 OnHourChanged?.Invoke(currentHourInt);
@@ -100,6 +104,12 @@ namespace Features.GameTime.Scripts
                 }
             
                 _previousHour = currentHourInt;
+            }
+            
+            if (currentMinuteInt != _previousMinute)
+            {
+                OnMinuteChanged?.Invoke();
+                _previousMinute = currentMinuteInt;
             }
         }
 

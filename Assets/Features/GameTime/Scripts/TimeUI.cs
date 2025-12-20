@@ -5,6 +5,8 @@ namespace Features.GameTime.Scripts
 {
     public class TimeUI : UserInterfaceBase
     {
+        private static TimeManager TimeManagerInstance => TimeManager.Instance;
+
         private Label _timeLabel;
 
         private void Start()
@@ -12,16 +14,27 @@ namespace Features.GameTime.Scripts
             Root = GetComponent<UIDocument>().rootVisualElement;
             _timeLabel = Root.Q<Label>("clock");
 
-            if (TimeManager.Instance == null)
+            if (TimeManagerInstance == null)
             {
                 Hide();
+                return;
             }
-            else
+
+            UpdateTimeDisplay();
+            TimeManagerInstance.OnMinuteChanged += UpdateTimeDisplay;
+        }
+
+        private void OnDestroy()
+        {
+            if (TimeManagerInstance != null)
             {
-                var timeProperty = BindableProperty<string>.Bind(TimeManager.Instance.GetFormattedTime);
-                _timeLabel.Bind(timeProperty, nameof(Label.text));
-                Show();
+                TimeManagerInstance.OnMinuteChanged -= UpdateTimeDisplay;
             }
+        }
+
+        private void UpdateTimeDisplay()
+        {
+            _timeLabel.text = TimeManagerInstance.GetFormattedTime();
         }
     }
 }
