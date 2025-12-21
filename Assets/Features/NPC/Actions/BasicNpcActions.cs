@@ -35,7 +35,7 @@ namespace Features.NPC.Actions
         private void RegisterIdle()
         {
             var idleAction = new AgentAction("idle", "Remain idle and take no action.",
-                _ => UniTask.FromResult("I stood idle for a moment."));
+                _ => UniTask.FromResult(string.Empty));
 
             _actionSystem.RegisterAction(idleAction);
         }
@@ -199,7 +199,8 @@ namespace Features.NPC.Actions
             
             _brain.StartGoalTalk(message, targetActor);
 
-            return UniTask.FromResult($"I said '{message}' to {targetActor.gameKey}.");
+            // Return nothing here since conversations are already saved in a conversation history.
+            return UniTask.FromResult(string.Empty);
         }
         
         public UniTask<string> LeaveConversation(string finalMessage, string targetActorKey)
@@ -227,7 +228,8 @@ namespace Features.NPC.Actions
 
             _brain.StartGoalTalk(finalMessage, targetActor);
 
-            return UniTask.FromResult($"I said goodbye to {targetActor.gameKey} and left the conversation.");
+            // Return nothing here since conversations are already saved in a conversation history.
+            return UniTask.FromResult(string.Empty);
         }
         
         public UniTask<string> Pickup(string itemKey)
