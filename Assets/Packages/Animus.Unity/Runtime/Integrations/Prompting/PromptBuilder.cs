@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
@@ -35,13 +36,15 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
                 var othersStr = others.Count > 0 ? string.Join(", ", others) : "No one";
                 
                 _context.CurrentState += $"You are currently in a conversation with {othersStr}. {anchor.GetTurnContext()}\n";
-                _context.TaskInstruction = "You are currently talking. Respond to the conversation history or leave the conversation to end it.";
+                _context.TaskInstruction = "You are currently talking. You must reply directly to the last statement while considering the context of the whole conversation history. Respond to the conversation history or leave the conversation to end it.";
             }
             else
             {
                 _context.CurrentState += "You are currently Idle and have nothing specific to do.\n";
                 _context.TaskInstruction = "You are free to choose any of the available actions.";
             }
+
+            _context.CurrentState = _context.CurrentState.Trim();
             
             return this;
         }
@@ -56,7 +59,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             }
 
             var schedule = agent.npcSchedule;
-            _context.Motivation = schedule ? schedule.GetScheduleContext() : "I have no specific schedule right now.";
+            _context.Motivation = schedule ? schedule.GetScheduleContext() : "You have no specific schedule right now.";
 
             return this;
         }

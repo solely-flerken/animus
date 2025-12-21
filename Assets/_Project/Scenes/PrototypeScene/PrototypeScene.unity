@@ -15925,6 +15925,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: defaultMotivation
+      value: You have no specific obligations right now.
+      objectReference: {fileID: 0}
+    - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: dailyRoutine.Array.size
       value: 1
       objectReference: {fileID: 0}

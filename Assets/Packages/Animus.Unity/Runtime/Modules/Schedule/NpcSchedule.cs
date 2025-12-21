@@ -8,7 +8,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Schedule
     {
         [Header("Configuration")]
         [SerializeField] private List<ScheduleEntry> dailyRoutine = new();
-        [SerializeField] private string defaultMotivation = "I have no specific obligations right now. I can relax or wander.";
+        [SerializeField] private string defaultMotivation = "You have no specific obligations right now.";
 
         public ScheduleEntry GetCurrentEntry()
         {
