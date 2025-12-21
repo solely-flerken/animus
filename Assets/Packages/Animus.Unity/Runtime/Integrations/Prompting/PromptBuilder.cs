@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Actions;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
+using UnityEngine;
+using JsonUtility = Packages.Animus.Unity.Runtime.Infrastructure.Serialization.JsonUtility;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 {
     public class PromptBuilder
     {
         private readonly PromptContext _context = new();
-
+        
         public PromptBuilder SetAgent(AnimusAgent agent)
         {
             _context.AgentKey = agent.gameKey;
@@ -42,6 +44,21 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
                     "INSTRUCTION: You are free to choose any of the available actions.";
             }
             
+            return this;
+        }
+
+        public PromptBuilder WithMotivation()
+        {
+            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(_context.AgentKey);
+            if (agent == null)
+            {
+                Debug.Log($"[PromptBuilder.Motivation] Couldn't find agent with key {_context.AgentKey}");
+                return this;
+            }
+
+            var schedule = agent.npcSchedule;
+            _context.Motivation = schedule ? schedule.GetScheduleContext() : "I have no specific schedule right now.";
+
             return this;
         }
         

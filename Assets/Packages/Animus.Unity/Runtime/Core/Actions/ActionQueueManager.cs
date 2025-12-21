@@ -145,11 +145,13 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                             .SetAgent(agent)
                             .WithAvailableActions(agent.agentActionSystem)
                             .WithCurrentState()
+                            .WithMotivation()
                             .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRelevantMemories(agent.memories)
                             .WithRules(PredefinedRulesets.CommonAgent)
                             .WithTaskInstruction("");
+
                         Profiler.EndSample();
                         
                         SendRequestAsync(agent.gameKey, prompt.GetContext()).Forget();
