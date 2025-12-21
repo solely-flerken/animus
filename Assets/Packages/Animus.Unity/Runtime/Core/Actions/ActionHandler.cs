@@ -34,7 +34,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
 
-            var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.actionKey, paramsDict);
+            var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
 
             if (string.IsNullOrWhiteSpace(outcome))
             {

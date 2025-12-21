@@ -22,7 +22,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
     public class ActionPayload
     {
         public string agentKey;
-        public string actionKey;
+        public string goalKey;
         public List<ActionPayloadParameter> parameters;
     }
 

@@ -63,7 +63,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 var actorKey = action.agentKey;
                 var payload = action.responsePayload;
 
-                Debug.Log($"[Arbiter] Executing: {actorKey} -> {payload.actionKey}");
+                Debug.Log($"[Arbiter] Executing: {actorKey} -> {payload.goalKey}");
 
                 await ActionHandler.ProcessAction(payload);
             }
