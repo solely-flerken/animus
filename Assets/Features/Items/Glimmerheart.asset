@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfce1825148408f96f9739ef72588df, type: 3}
+  m_Name: Glimmerheart
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Inventory.ItemDefinition
+  itemTypeId: Glimmerheart
+  itemName: Glimmerheart
+  description: Borin's Family Axe, Glimmerheart.
+  baseCost: 5
+  weight: 1
+  worldPrefab: {fileID: 1607733019209590, guid: 5a367ff7fe2957344b0564bf2655256e, type: 3}
