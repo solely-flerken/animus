@@ -4,7 +4,8 @@
     {
         public static readonly Ruleset CommonAgent = new(
             Rule.DoNotBreakCharacter,
-            Rule.NoAssumptions
+            Rule.NoAssumptions,
+            Rule.NoContextAmnesia
         );
     }
 }
