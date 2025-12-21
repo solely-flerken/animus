@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Linq;
-using Packages.Animus.Unity.Runtime.Core.Config.Script;
-using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Event
 {
+    [Obsolete("Not used currently.")]
     public class AnimusEventSystem : MonoBehaviour
     {
         public static AnimusEventSystem Instance { get; private set; }
@@ -23,44 +21,44 @@ namespace Packages.Animus.Unity.Runtime.Core.Event
             }
         }
 
-        public static event Action<AnimusEvent> OnDialogEvent;
-
-        public static void InvokeDialogEvent(AnimusEvent animusEvent)
-        {
-            if (animusEvent is not DialogEvent)
-            {
-                Debug.Log("Expected animusEvent to be DialogEvent");
-                return;
-            }
-            
-            const float maxDistance = 10f; // TODO: Specify this in some kind of setting
-
-            // TODO: Make refactor this. Make the event have a subtargets field for this specific case.
-            // This would move the logic to check for other agents in range to the caller.
-            // Does this lead to more code?
-            
-            // Make other agents in a certain range observe this event.
-            var allAnimusAgents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
-            foreach (var animusAgent in allAnimusAgents)
-            {
-                var distanceSqr = (animusAgent.transform.position - animusEvent.EventLocation).sqrMagnitude;
-                if (distanceSqr < maxDistance)
-                {
-                    animusAgent.EventHistory.Events.Add(animusEvent);
-                }
-            }
-
-            if (animusEvent.EventSource is AnimusAgent sourceAgent)
-            {
-                sourceAgent.EventHistory.Events.Add(animusEvent);
-            }
-
-            foreach (var agent in animusEvent.EventTarget.OfType<AnimusAgent>())
-            {
-                agent.EventHistory.Events.Add(animusEvent);
-            }
-
-            OnDialogEvent?.Invoke(animusEvent);
-        }
+        // public static event Action<AnimusEvent> OnDialogEvent;
+        //
+        // public static void InvokeDialogEvent(AnimusEvent animusEvent)
+        // {
+        //     if (animusEvent is not DialogEvent)
+        //     {
+        //         Debug.Log("Expected animusEvent to be DialogEvent");
+        //         return;
+        //     }
+        //     
+        //     const float maxDistance = 10f; // TODO: Specify this in some kind of setting
+        //
+        //     // TODO: Make refactor this. Make the event have a subtargets field for this specific case.
+        //     // This would move the logic to check for other agents in range to the caller.
+        //     // Does this lead to more code?
+        //     
+        //     // Make other agents in a certain range observe this event.
+        //     var allAnimusAgents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
+        //     foreach (var animusAgent in allAnimusAgents)
+        //     {
+        //         var distanceSqr = (animusAgent.transform.position - animusEvent.EventLocation).sqrMagnitude;
+        //         if (distanceSqr < maxDistance)
+        //         {
+        //             animusAgent.eventHistory.Events.Add(animusEvent);
+        //         }
+        //     }
+        //
+        //     if (animusEvent.EventSource is AnimusAgent sourceAgent)
+        //     {
+        //         sourceAgent.eventHistory.Events.Add(animusEvent);
+        //     }
+        //
+        //     foreach (var agent in animusEvent.EventTarget.OfType<AnimusAgent>())
+        //     {
+        //         agent.eventHistory.Events.Add(animusEvent);
+        //     }
+        //
+        //     OnDialogEvent?.Invoke(animusEvent);
+        // }
     }
 }

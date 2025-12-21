@@ -3,7 +3,6 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
-using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,12 +22,11 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public LayerMask obstacleLayer;
 
         public static ConversationHistory SharedHistory;
-        public EventHistory EventHistory;
         public List<string> memories;
 
         public AgentActionSystem agentActionSystem;
-        
         private NavMeshAgent _navMeshAgent;
+        
         private Vector3 _currentTargetPosition;
 
         private void Awake()
@@ -40,7 +38,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         private void Start()
         {
             SharedHistory = new ConversationHistory(50);
-            EventHistory = new EventHistory();
         }
 
         private void OnEnable()
