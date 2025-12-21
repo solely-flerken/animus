@@ -15263,6 +15263,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702548664}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1743865033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743865034}
+  m_Layer: 0
+  m_Name: WorkPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1743865034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743865033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1981488376}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1749321006
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15992,8 +16023,29 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7217938030599053639, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 1814412948}
   m_SourcePrefab: {fileID: 100100000, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+--- !u!1 &1814412934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7217938030599053639, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+  m_PrefabInstance: {fileID: 1799409453}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1814412948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814412934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ec0407681e4c0583a2a902f4a60a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.NPC.Actions.SmithActions
+  workLocation: {fileID: 1743865034}
 --- !u!1 &1823101005
 GameObject:
   m_ObjectHideFlags: 0
@@ -18526,7 +18578,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8612233719846202734, guid: c8874a6ee034a0b4f8748ac16d83b1cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1743865034}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8874a6ee034a0b4f8748ac16d83b1cf, type: 3}
 --- !u!4 &6300675150375194691 stripped
