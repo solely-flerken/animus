@@ -3,7 +3,8 @@
     public static class PredefinedRulesets
     {
         public static readonly Ruleset CommonAgent = new(
-            Rule.DoNotBreakCharacter
+            Rule.DoNotBreakCharacter,
+            Rule.NoAssumptions
         );
     }
 }
