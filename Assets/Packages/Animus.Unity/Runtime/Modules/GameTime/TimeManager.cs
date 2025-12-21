@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Features.GameTime.Scripts
+namespace Packages.Animus.Unity.Runtime.Modules.GameTime
 {
     public class TimeManager : MonoBehaviour
     {

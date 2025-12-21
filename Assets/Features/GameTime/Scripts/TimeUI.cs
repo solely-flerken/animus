@@ -1,4 +1,5 @@
 ﻿using Core.UI.Scripts;
+using Packages.Animus.Unity.Runtime.Modules.GameTime;
 using UnityEngine.UIElements;
 
 namespace Features.GameTime.Scripts

@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
+using Packages.Animus.Unity.Runtime.Modules.Schedule;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public static ConversationHistory SharedHistory;
         public List<string> memories;
 
+        public NpcSchedule npcSchedule;
         public AgentActionSystem agentActionSystem;
         private NavMeshAgent _navMeshAgent;
         
@@ -31,8 +33,13 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
 
         private void Awake()
         {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
+            if (TryGetComponent<NpcSchedule>(out var schedule))
+            {
+                npcSchedule = schedule;
+            }
+            
             agentActionSystem = GetComponent<AgentActionSystem>();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         private void Start()

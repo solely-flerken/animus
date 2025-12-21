@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5156055569714394881}
   - component: {fileID: 4410804593949565968}
+  - component: {fileID: -5275864184079099169}
   - component: {fileID: 8451844419532700460}
   - component: {fileID: 7863136777337225223}
   - component: {fileID: 885557233028478763}
@@ -69,7 +70,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   memories: []
+  npcSchedule: {fileID: 0}
   agentActionSystem: {fileID: 0}
+--- !u!114 &-5275864184079099169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7217938030599053639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7705795c4a14a92a83367b99fd8f33d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Schedule.NpcSchedule
+  dailyRoutine: []
+  defaultMotivation: My schedule is free.
 --- !u!114 &8451844419532700460
 MonoBehaviour:
   m_ObjectHideFlags: 0
