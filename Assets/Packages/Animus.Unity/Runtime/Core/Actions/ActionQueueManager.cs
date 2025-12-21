@@ -149,8 +149,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                             .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRelevantMemories(agent.memories)
-                            .WithRules(PredefinedRulesets.CommonAgent)
-                            .WithTaskInstruction("");
+                            .WithRules(PredefinedRulesets.CommonAgent);
 
                         Profiler.EndSample();
                         

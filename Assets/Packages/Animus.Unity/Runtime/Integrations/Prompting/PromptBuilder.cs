@@ -5,6 +5,7 @@ using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
+using Packages.Animus.Unity.Runtime.Modules.GameTime;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
 using JsonUtility = Packages.Animus.Unity.Runtime.Infrastructure.Serialization.JsonUtility;
@@ -24,24 +25,22 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 
         public PromptBuilder WithCurrentState()
         {
+            _context.CurrentState += $"It is day {TimeManager.Instance.CurrentDay} and the time is {TimeManager.Instance.GetFormattedTime()}\n";
+            
             // Is this agent is in an active anchor?
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_context.AgentKey, out var anchor))
             {
                 // Get everyone else in the conversation
                 var others = anchor.Participants.Where(p => p != _context.AgentKey).ToList();
                 var othersStr = others.Count > 0 ? string.Join(", ", others) : "No one";
-
-                _context.CurrentState =
-                    $"STATUS: IN CONVERSATION\n" +
-                    $"PARTICIPANTS: {othersStr}\n" +
-                    $"CONSTRAINT: {anchor.GetTurnContext()}\n" +
-                    $"INSTRUCTION: You are currently talking. Respond to the conversation history or leave the conversation to end it."; // TODO: Put this into the task.
+                
+                _context.CurrentState += $"You are currently in a conversation with {othersStr}. {anchor.GetTurnContext()}\n";
+                _context.TaskInstruction = "You are currently talking. Respond to the conversation history or leave the conversation to end it.";
             }
             else
             {
-                _context.CurrentState =
-                    "STATUS: IDLE\n" +
-                    "INSTRUCTION: You are free to choose any of the available actions.";
+                _context.CurrentState += "You are currently Idle and have nothing specific to do.\n";
+                _context.TaskInstruction = "You are free to choose any of the available actions.";
             }
             
             return this;
