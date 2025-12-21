@@ -35,7 +35,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 {
                     actionKey = action.Name,
                     description = action.Description,
-                    parameters = action.Parameters.Select(p => new ActionParameterDefinition { name = p.paramName, type = p.paramType }).ToList()
+                    parameters = action.Parameters.Select(p => p.paramName).ToList()
                 });
             }
             

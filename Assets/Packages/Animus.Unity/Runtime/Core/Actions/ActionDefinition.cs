@@ -8,10 +8,10 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
     {
         public string actionKey;
         public string description;
-        public List<ActionParameterDefinition> parameters = new();
+        public List<string> parameters = new();
     }
 
-    [Serializable]
+    [Serializable] [Obsolete("Omit the parameter type since they are all string ids.")]
     public class ActionParameterDefinition
     {
         public string name;
