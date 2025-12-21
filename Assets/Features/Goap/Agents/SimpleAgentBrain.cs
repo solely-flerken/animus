@@ -78,11 +78,11 @@ namespace Features.Goap.Agents
             _provider.RequestGoal<PickupItemGoal>();
         }
 
-        public void StartGoalMoveTo(AnimusEntity entity)
+        public void StartGoalMoveTo(Transform target)
         {
-            if (entity != null)
+            if (target != null)
             {
-                moveToPosition = entity.transform;
+                moveToPosition = target;
                 _provider.RequestGoal<MoveGoal>();
             }
             else

@@ -130,7 +130,7 @@ namespace Features.NPC.Actions
             }
 
             // TODO: Maybe callback to add to memory that the agent arrived at his target
-            _brain.StartGoalMoveTo(targetEntity);
+            _brain.StartGoalMoveTo(targetEntity.transform);
 
             return UniTask.FromResult($"I started moving towards {targetEntity.gameKey}.");
         }
