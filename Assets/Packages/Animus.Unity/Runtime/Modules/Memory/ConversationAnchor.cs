@@ -9,7 +9,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
     {
         public static Dictionary<string, ConversationAnchor> ConversationAnchors = new();
         
-        private const double StalemateTimeoutSeconds = 15.0f;
+        private const double StalemateTimeoutSeconds = 30.0f;
         
         public int CurrentTurn { get; private set; }
         public static int MaxTurns => 6;

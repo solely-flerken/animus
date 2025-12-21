@@ -84,7 +84,7 @@ namespace Features.NPC.Actions
 
         private void RegisterLeaveConversation()
         {
-            var leaveConversationAction = new AgentAction("leave_conversation", "End the conversation with a final message.",
+            var leaveConversationAction = new AgentAction("leave_conversation", "End the active conversation. Use this if you want to perform a physical action or if the conversation is finished.",
                 logic: async (args) =>
                 {
                     var message = args["finalMessage"].ToString();
