@@ -62,7 +62,7 @@ namespace Features.NPC.Actions
                 logic: async (args) =>
                 {
                     var message = args["message"].ToString();
-                    var targetActorKey = args["targetActorKey"].ToString();
+                    var targetActorKey = args["entityKey"].ToString();
                     return await Talk(message, targetActorKey);
                 },
                 condition: () =>
@@ -77,7 +77,7 @@ namespace Features.NPC.Actions
             );
             
             talkAction.AddParam<string>("message")
-                .AddParam<string>("targetActorKey");
+                .AddParam<string>("entityKey");
             
             _actionSystem.RegisterAction(talkAction);
         }
