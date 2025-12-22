@@ -20,6 +20,7 @@ namespace Features.NPC.Actions
         {
             _actionSystem = GetComponent<AgentActionSystem>();
             _agent = GetComponent<AnimusAgent>();
+            _brain = GetComponent<SimpleAgentBrain>();
         }
 
         private void Start()
