@@ -4,6 +4,7 @@ using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
 
@@ -254,11 +255,10 @@ namespace Features.NPC.Actions
         {
             return ConversationAnchor.ConversationAnchors.ContainsKey(_agent.gameKey);
         }
-        
+
         private bool AnyObjectVisible()
         {
-            // TODO:
-            return false;
+            return EnvironmentScanner.CreateSnapshot(_agent).VisibleObjects.Count > 0;
         }
     }
 }
