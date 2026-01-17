@@ -22,6 +22,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
     public class ActionPayload
     {
         public string agentKey;
+        public string reasoning;
+        public string reflection;
+        public string motivation;
         public string goalKey;
         public List<ActionPayloadParameter> parameters;
     }

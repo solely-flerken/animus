@@ -9,6 +9,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
     public static class ActionHandler
     {
+        // TODO: Rename this since it not only handles the action put the whole response payload.
         public static async UniTask ProcessAction(ActionPayload actionPayload)
         {
             var targetAgent = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>().FirstOrDefault(a => a.gameKey == actionPayload.agentKey);
@@ -24,6 +25,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 return;
             }
     
+            // Set new motivation
+            targetAgent.currentMotivation = actionPayload.motivation;
+            
             var paramsDict = new Dictionary<string, object>();
             
             if (actionPayload.parameters != null)
