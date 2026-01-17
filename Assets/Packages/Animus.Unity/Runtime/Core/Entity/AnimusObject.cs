@@ -1,4 +1,5 @@
-﻿using Packages.Animus.Unity.Runtime.Core.Config.Script;
+﻿using System.Linq;
+using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Modules.Inventory;
 using UnityEngine;
 
@@ -8,8 +9,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
     {
         public override AnimusEntityType Type => AnimusEntityType.Object;
 
-        [Header("Data Link")] 
-        public ItemDefinition itemData;
+        [Header("Data Link")] public ItemDefinition itemData;
         public int quantity = 1;
 
         private void Start()
@@ -26,7 +26,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
                 go.transform.localPosition = Vector3.zero;
             }
 
-            gameKey = $"{itemData.itemTypeId}_{AnimusGameManager.EntityRegistry.GetAll<AnimusObject>().Count + 1}";
+            var sameTypeCount = AnimusGameManager.EntityRegistry.GetAll<AnimusObject>().Count(item => item.itemData.itemTypeId == itemData.itemTypeId);
+
+            gameKey = sameTypeCount == 1 ? $"{itemData.itemTypeId}" : $"{itemData.itemTypeId}_{sameTypeCount + 1}";
             entityName = itemData.name;
             description = itemData.description;
         }

@@ -248,7 +248,7 @@ namespace Features.NPC.Actions
 
             _brain.StartGoalPickupItem(item);
 
-            return UniTask.FromResult($"I picked up the {item.gameKey}.");
+            return UniTask.FromResult($"I picked up the item: {item.name}.");
         }
         
         private bool IsTalking()
