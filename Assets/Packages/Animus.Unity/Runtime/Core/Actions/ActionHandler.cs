@@ -38,6 +38,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
 
+            var paramsStr = string.Join(", ", paramsDict.Values.Select(v => v?.ToString().Length > 20 ? v.ToString()[..20] + "..." : v?.ToString()));
+            Debug.Log($"[Action] {targetAgent.gameKey} executing: {actionPayload.goalKey} -> [{paramsStr}]");
+            
             var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
 
             if (string.IsNullOrWhiteSpace(outcome))

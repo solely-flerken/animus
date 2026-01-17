@@ -49,27 +49,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 // Attempt to pull the next action from the queue
                 if (queueManager.ActionQueue.TryDequeue(out var queuedAction))
                 {
-                    await HandleAction(queuedAction);
+                    var payload = queuedAction.responsePayload;
+                    
+                    await ActionHandler.ProcessAction(payload);
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(processInterval), cancellationToken: token);
-            }
-        }
-
-        private async UniTask HandleAction(QueuedAction action)
-        {
-            try
-            {
-                var actorKey = action.agentKey;
-                var payload = action.responsePayload;
-
-                Debug.Log($"[Arbiter] Executing: {actorKey} -> {payload.goalKey}");
-
-                await ActionHandler.ProcessAction(payload);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[Arbiter] Execution failed for {action.agentKey}: {ex.Message}");
             }
         }
     }
