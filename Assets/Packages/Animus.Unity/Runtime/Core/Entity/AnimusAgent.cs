@@ -22,10 +22,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public float fieldOfViewAngle = 120f;
         public LayerMask obstacleLayer;
 
-        public static ConversationHistory SharedHistory;
-        public List<string> memories;
-
         public NpcSchedule npcSchedule;
+        public string currentMotivation = "You have no special motivation.";
+        public string currentActionResult = "None.";
+        public List<string> memories;
+        public static ConversationHistory SharedHistory;
+
         public AgentActionSystem agentActionSystem;
         private NavMeshAgent _navMeshAgent;
         

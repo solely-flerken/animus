@@ -9,18 +9,24 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 {
     public class PromptContext
     {
-        [JsonProperty("AgentKey")]
+        [JsonProperty("AgentKey")] 
         public string AgentKey { get; set; }
-        
+
         [JsonProperty("Persona", NullValueHandling = NullValueHandling.Ignore)]
         public string Persona { get; set; }
-        
+
         [JsonProperty("CurrentState", NullValueHandling = NullValueHandling.Ignore)]
         public string CurrentState { get; set; }
-        
+
+        [JsonProperty("Schedule", NullValueHandling = NullValueHandling.Ignore)]
+        public string Schedule { get; set; }
+
         [JsonProperty("Motivation", NullValueHandling = NullValueHandling.Ignore)]
         public string Motivation { get; set; }
 
+        [JsonProperty("LastActionResult", NullValueHandling = NullValueHandling.Ignore)]
+        public string LastActionResult { get; set; }
+        
         [JsonProperty("AvailableActions", NullValueHandling = NullValueHandling.Ignore)]
         public List<ActionDefinition> AvailableActions { get; set; }
 
@@ -39,7 +45,6 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         [JsonProperty("Rules", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Rules { get; set; }
 
-        [JsonProperty("TaskInstruction")] 
-        public string TaskInstruction { get; set; } = TaskInstructions.NextAction;
+        [JsonProperty("TaskInstruction")] public string TaskInstruction { get; set; } = TaskInstructions.NextAction;
     }
 }

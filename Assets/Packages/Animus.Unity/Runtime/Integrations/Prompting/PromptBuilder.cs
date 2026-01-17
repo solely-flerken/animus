@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
@@ -17,8 +16,11 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
     {
         private readonly PromptContext _context = new();
         
+        private AnimusAgent _agent;
+        
         public PromptBuilder SetAgent(AnimusAgent agent)
         {
+            _agent = agent;
             _context.AgentKey = agent.gameKey;
             _context.Persona = agent.persona;
             return this;
@@ -27,6 +29,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         public PromptBuilder WithCurrentState()
         {
             _context.CurrentState += $"It is day {TimeManager.Instance.CurrentDay} and the time is {TimeManager.Instance.GetFormattedTime()}\n";
+            
+            // Position
+            _context.CurrentState += LocationContextHelper.GetLocationContext(AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(_context.AgentKey).transform); // TODO: Refactor
             
             // Is this agent is in an active anchor?
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_context.AgentKey, out var anchor))
@@ -40,7 +45,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             }
             else
             {
-                _context.CurrentState += "You are currently Idle and have nothing specific to do.\n";
+                _context.CurrentState += "You are currently Idle.\n";
                 _context.TaskInstruction = "You are free to choose any of the available actions.";
             }
 
@@ -49,18 +54,21 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             return this;
         }
 
+        public PromptBuilder WithSchedule()
+        {
+            _context.Schedule = _agent?.npcSchedule.GetScheduleContext() ?? "You have no specific schedule right now.";
+            return this;
+        }
+        
         public PromptBuilder WithMotivation()
         {
-            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(_context.AgentKey);
-            if (agent == null)
-            {
-                Debug.Log($"[PromptBuilder.Motivation] Couldn't find agent with key {_context.AgentKey}");
-                return this;
-            }
+            _context.Motivation = _agent?.currentMotivation ?? "You have no special motivation.";
+            return this;
+        }
 
-            var schedule = agent.npcSchedule;
-            _context.Motivation = schedule ? schedule.GetScheduleContext() : "You have no specific schedule right now.";
-
+        public PromptBuilder WithLastAction()
+        {
+            _context.LastActionResult = _agent?.currentActionResult ?? "None.";
             return this;
         }
         
@@ -121,6 +129,35 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         public string BuildString()
         {
             return "";
+        }
+    }
+    
+    // TODO: Refactor
+    public static class LocationContextHelper
+    {
+        public static string GetLocationContext(Transform currentPosition, float atDistance = 10f, float nearDistance = 50f)
+        {
+            if (currentPosition == null)
+                return string.Empty;
+
+            var allLocations = AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>();
+
+            foreach (var location in allLocations)
+            {
+                var distance = Vector3.Distance(currentPosition.position, location.transform.position);
+
+                if (distance <= atDistance)
+                {
+                    return $"You are at {location.entityName}.";
+                }
+
+                if (distance <= nearDistance)
+                {
+                    return $"You are near {location.entityName}.";
+                }
+            }
+
+            return "You are not near any significant location.";
         }
     }
 }

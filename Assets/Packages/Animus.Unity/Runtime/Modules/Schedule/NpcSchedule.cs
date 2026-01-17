@@ -8,7 +8,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Schedule
     {
         [Header("Configuration")]
         [SerializeField] private List<ScheduleEntry> dailyRoutine = new();
-        [SerializeField] private string defaultMotivation = "You have no specific obligations right now.";
+        [SerializeField] private string @default = "You have no specific obligations right now.";
 
         public ScheduleEntry GetCurrentEntry()
         {
@@ -22,7 +22,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Schedule
 
             var entry = dailyRoutine.Find(e => currentHour >= e.startHour && currentHour < e.endHour);
 
-            var motivation = entry != null ? entry.motivation : defaultMotivation;
+            var motivation = entry != null ? entry.motivation : @default;
 
             return motivation;
         }
