@@ -141,14 +141,14 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         }
                         
                         Profiler.BeginSample("Animus.PromptBuilder");
-                        var prompt = new PromptBuilder()
-                            .SetAgent(agent)
-                            .WithAvailableActions(agent.agentActionSystem)
+                        var prompt = new PromptBuilder(agent)
+                            .WithIdentity()
+                            .WithAvailableActions()
                             .WithCurrentState()
                             .WithSchedule()
                             .WithMotivation()
                             .WithLastAction()
-                            .WithRelevantMemories(agent.memories)
+                            .WithRelevantMemories()
                             .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                             .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                             .WithRules(PredefinedRulesets.CommonAgent);

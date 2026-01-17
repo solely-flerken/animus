@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
@@ -15,23 +14,26 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
     public class PromptBuilder
     {
         private readonly PromptContext _context = new();
+        private readonly AnimusAgent _agent;
         
-        private AnimusAgent _agent;
-        
-        public PromptBuilder SetAgent(AnimusAgent agent)
+        public PromptBuilder(AnimusAgent agent)
         {
             _agent = agent;
-            _context.AgentKey = agent.gameKey;
-            _context.Persona = agent.persona;
+        }
+        
+        public PromptBuilder WithIdentity()
+        {
+            _context.AgentKey = _agent.gameKey;
+            _context.Persona = _agent.persona;
             return this;
         }
 
         public PromptBuilder WithCurrentState()
         {
-            _context.CurrentState += $"It is day {TimeManager.Instance.CurrentDay} and the time is {TimeManager.Instance.GetFormattedTime()}\n";
+            _context.CurrentState += $"It is day {TimeManager.Instance.CurrentDay} and the time is {TimeManager.Instance.GetFormattedTime()}.\n";
             
             // Position
-            _context.CurrentState += LocationContextHelper.GetLocationContext(AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(_context.AgentKey).transform); // TODO: Refactor
+            _context.CurrentState += $"{LocationContextHelper.GetLocationContext(AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(_context.AgentKey).transform)} "; // TODO: Refactor
             
             // Is this agent is in an active anchor?
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_context.AgentKey, out var anchor))
@@ -72,15 +74,15 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             return this;
         }
         
-        public PromptBuilder WithAvailableActions(AgentActionSystem agentActionSystem)
+        public PromptBuilder WithAvailableActions()
         {
-            _context.AvailableActions = agentActionSystem.GenerateSchema();
+            _context.AvailableActions = _agent.agentActionSystem.GenerateSchema();
             return this;
         }
 
-        public PromptBuilder WithRelevantMemories(List<string> relevantMemories)
+        public PromptBuilder WithRelevantMemories()
         {
-            _context.RelevantMemories = relevantMemories;
+            _context.RelevantMemories = _agent.memories;
             return this;
         }
 
@@ -148,12 +150,12 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 
                 if (distance <= atDistance)
                 {
-                    return $"You are at {location.entityName}.";
+                    return $"You are at the {location.entityName}.";
                 }
 
                 if (distance <= nearDistance)
                 {
-                    return $"You are near {location.entityName}.";
+                    return $"You are near the {location.entityName}.";
                 }
             }
 
