@@ -7104,7 +7104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7217938030599053639, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17920,6 +17920,23 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: dailyRoutine.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: dailyRoutine.Array.data[0].label
+      value: guard duty
+      objectReference: {fileID: 0}
+    - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: dailyRoutine.Array.data[0].endHour
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: dailyRoutine.Array.data[0].motivation
+      value: I am currently on guard duty. This takes the highest priority. I shall
+        not move from my post.
+      objectReference: {fileID: 0}
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: gameKey
       value: npc_guard
