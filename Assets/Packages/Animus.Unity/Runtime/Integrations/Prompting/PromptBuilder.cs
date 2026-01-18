@@ -33,8 +33,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             _context.CurrentState += $"It is day {TimeManager.Instance.CurrentDay} and the time is {TimeManager.Instance.GetFormattedTime()}.\n";
             
             // Position
-            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(_context.AgentKey) as AnimusAgent;
-            _context.CurrentState += $"{LocationContextHelper.GetLocationContext(agent?.transform)} "; // TODO: Refactor
+            _context.CurrentState += $"{LocationContextHelper.GetLocationContext(_agent)} ";
             
             // Is this agent is in an active anchor?
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_context.AgentKey, out var anchor))
@@ -141,14 +140,17 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         private const string MsgNear = "You are near the {0}.";
         private const string MsgNone = "You are not near any significant location.";
         
-        public static string GetLocationContext(Transform currentPosition, float atDistance = 10f, float nearDistance = 50f)
+        public static string GetLocationContext(AnimusAgent agent, float atDistance = 10f, float nearDistance = 50f)
         {
-            if (currentPosition == null)
+            if (agent == null)
+            {
+                Debug.LogError("[LocationContextHelper] No agent provided.");
                 return string.Empty;
+            }
+            
+            var allLocations = AnimusGameManager.EntityRegistry.GetLocationsRelevantTo(agent);
 
-            var allLocations = AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>();
-
-            if (!TryGetNearestLocation(currentPosition.position, allLocations, out var nearestLocation, out var distanceSqr))
+            if (!TryGetNearestLocation(agent.transform.position, allLocations, out var nearestLocation, out var distanceSqr))
             {
                 return MsgNone;
             }

@@ -13,7 +13,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Environment
         public List<AnimusObject> VisibleObjects { get; set; }
 
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
-        public List<AnimusLocation> PointsOfInterest => AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>();
+        public List<AnimusLocation> PointsOfInterest { get; set; } = AnimusGameManager.EntityRegistry.GetLocationsRelevantTo();
 
         [JsonConverter(typeof(AnimusEntityListDetailsConverter))]
         public List<AnimusActor> KnownCharacters => AnimusGameManager.EntityRegistry.GetAll<AnimusActor>().ToList();

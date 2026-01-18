@@ -4241,6 +4241,56 @@ MonoBehaviour:
   startHour: 6
   currentTime: 0
   currentDay: 1
+--- !u!1 &429132123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 429132124}
+  - component: {fileID: 429132125}
+  m_Layer: 0
+  m_Name: GuardPost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &429132124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429132123}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1829095114}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &429132125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429132123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e30a58e7b3494194deec312a47ec7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Core.Entity.AnimusLocation
+  gameKey: location_guard_post
+  entityName: Guard Post
+  description: The guard's assigned station at the gate
+  contextScope: 1
+  relevantAgents:
+  - {fileID: 2065177810}
 --- !u!1001 &442090253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13075,6 +13125,7 @@ Transform:
   m_Children:
   - {fileID: 534362840}
   - {fileID: 370585553}
+  - {fileID: 1829095114}
   - {fileID: 307775981}
   - {fileID: 536227140}
   - {fileID: 258241221}
@@ -16341,6 +16392,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827304879}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1829095113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1829095114}
+  m_Layer: 0
+  m_Name: SpecialLocations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1829095114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829095113}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 429132124}
+  m_Father: {fileID: 1413890004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1927238817
 GameObject:
   m_ObjectHideFlags: 0
@@ -18033,6 +18116,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Features.NPC.Actions.GuardActions
   interactableGate: {fileID: 258241222}
+--- !u!114 &2065177810 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+  m_PrefabInstance: {fileID: 2065177795}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065177796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd0602716f44315bafb540b552d2ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Agent.Agent
 --- !u!1 &2107269647
 GameObject:
   m_ObjectHideFlags: 0

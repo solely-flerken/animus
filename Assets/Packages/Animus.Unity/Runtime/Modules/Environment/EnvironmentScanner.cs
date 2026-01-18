@@ -40,6 +40,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Environment
             }
             
             snapshot.VisibleObjects = visibleObjects;
+            
+            snapshot.PointsOfInterest = AnimusGameManager.EntityRegistry.GetLocationsRelevantTo(animusAgent);
 
             return snapshot;
         }
