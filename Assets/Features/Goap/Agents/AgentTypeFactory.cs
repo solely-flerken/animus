@@ -1,5 +1,6 @@
 ﻿using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
+using Features.Goap.Idle;
 using Features.Goap.MoveTo;
 using Features.Goap.Pickup;
 using Features.Goap.Talk;
@@ -17,6 +18,7 @@ namespace Features.Goap.Agents
             builder.AddCapability<MoveCapability>();
             builder.AddCapability<PickupItemCapability>();
             builder.AddCapability<TalkCapability>();
+            builder.AddCapability<IdleCapability>();
             
             return builder.Build();
         }

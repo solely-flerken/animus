@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
+using Features.Goap.Idle;
 using Features.Goap.MoveTo;
 using Features.Goap.Pickup;
 using Features.Goap.Talk;
-using Features.Goap.Wander;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -36,29 +36,32 @@ namespace Features.Goap.Agents
         private void OnEnable()
         {
             _provider.Events.OnGoalCompleted += OnGoalCompleted;
+            _provider.Events.OnNoActionFound += OnNoActionFound;
         }
-
+  
         private void OnDisable()
         {
             _provider.Events.OnGoalCompleted -= OnGoalCompleted;
+            _provider.Events.OnNoActionFound -= OnNoActionFound;
         }
 
         private void OnGoalCompleted(IGoal goal)
         {
-            if (goal is MoveGoal)
-            {
-                moveToPosition = null;
-                _provider.RequestGoal<WanderGoal>();
-            }
+            _provider.RequestGoal<IdleGoal>();
         }
 
+        private void OnNoActionFound(IGoalRequest goal)
+        {
+            _provider.RequestGoal<IdleGoal>();
+        }
+        
         private void Start()
         {
             // StartGoalTalk("Hello World!", AnimusGameManager.EntityRegistry.GetRandom<AnimusActor>());
 
             // StartGoalPickupItem();
 
-            // StartGoalMoveTo();
+            // StartGoalMoveTo(AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>()[0].transform);
         }
 
         public void StartGoalTalk(string text, AnimusActor targetActor)
@@ -84,10 +87,6 @@ namespace Features.Goap.Agents
             {
                 moveToPosition = target;
                 _provider.RequestGoal<MoveGoal>();
-            }
-            else
-            {
-                _provider.RequestGoal<WanderGoal>();
             }
         }
     }
