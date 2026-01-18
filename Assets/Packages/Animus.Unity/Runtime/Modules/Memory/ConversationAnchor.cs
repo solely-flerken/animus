@@ -154,7 +154,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             return CurrentTurn >= MaxTurns - 1;
         }
 
-        // TODO: Use this
+        [Obsolete("Replaced through a general motivation")]
         public string GetReasonContext(string agentKey)
         {
             var conversationReason = "participating in conversation";
@@ -166,7 +166,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             return $"Your reason for this conversation: {conversationReason}.";
         }
         
-        // TODO: Use this
         public string GetTurnContext()
         {
             var context = $"Turn {CurrentTurn}/{MaxTurns}.";
