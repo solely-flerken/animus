@@ -29,18 +29,14 @@ namespace Features.Goap.Shared
 
         private void Update()
         {
-            _animator.SetFloat(Forward, NormalizedSpeed);
-            
-            if (_currentTarget == null)
+            if (_currentTarget != null)
             {
-                return;
-            }
-
-            var distanceToTarget = Vector3.SqrMagnitude(_currentTarget.Position - _lastPosition);
-            if (distanceToTarget > MinMoveDistanceSqr)
-            {
-                _lastPosition = _currentTarget.Position;
-                _navMeshAgent.SetDestination(_currentTarget.Position);
+                var distanceToTarget = Vector3.SqrMagnitude(_currentTarget.Position - _lastPosition);
+                if (distanceToTarget > MinMoveDistanceSqr)
+                {
+                    _lastPosition = _currentTarget.Position;
+                    _navMeshAgent.SetDestination(_currentTarget.Position);
+                }
             }
             
             _animator.SetFloat(Forward, NormalizedSpeed);

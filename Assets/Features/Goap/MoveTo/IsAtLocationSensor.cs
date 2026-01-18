@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Features.Goap.MoveTo
 {
-    public class IsAtLocationSenor : LocalWorldSensorBase
+    public class IsAtLocationSensor : LocalWorldSensorBase
     {
         public override void Created()
         {

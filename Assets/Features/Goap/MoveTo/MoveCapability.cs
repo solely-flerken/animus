@@ -22,7 +22,7 @@ namespace Features.Goap.MoveTo
             builder.AddTargetSensor<MoveTargetSensor>()
                 .SetTarget<MoveTarget>();
 
-            builder.AddWorldSensor<IsAtLocationSenor>()
+            builder.AddWorldSensor<IsAtLocationSensor>()
                 .SetKey<IsAtLocation>();
 
             return builder.Build();

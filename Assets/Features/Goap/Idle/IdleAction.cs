@@ -27,7 +27,7 @@ namespace Features.Goap.Idle
                 data.Timer = Random.Range(7f, 23f);
             }
             
-            return ActionRunState.Continue;
+            return ActionRunState.ContinueOrResolve;
         }
     }
 }

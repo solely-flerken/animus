@@ -64,6 +64,11 @@ namespace Features.Goap.Agents
             // StartGoalMoveTo(AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>()[0].transform);
         }
 
+        public void StartGoalIdle()
+        {
+            _provider.RequestGoal<IdleGoal>();
+        }
+        
         public void StartGoalTalk(string text, AnimusActor targetActor)
         {
             _talkBehaviour.text = text;
