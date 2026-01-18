@@ -26,7 +26,7 @@ namespace Features.Goap.Agents
             _goapBehaviour = FindObjectsByType<GoapBehaviour>(FindObjectsSortMode.None).First();
 
             _provider = GetComponent<GoapActionProvider>();
-            _provider.AgentType = _goapBehaviour.GetAgentType(AgentConstants.General);
+            _provider.AgentType = _goapBehaviour.GetAgentType(AgentTypes.General);
 
             _pickupItemBehavior = GetComponent<AgentPickupItemBehavior>();
             _talkBehaviour = GetComponent<TalkBehavior>();

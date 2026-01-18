@@ -7,11 +7,11 @@ using Features.Goap.Wander;
 
 namespace Features.Goap.Agents
 {
-    public class AgentTypeConfigFactory : AgentTypeFactoryBase
+    public class AgentTypeFactory : AgentTypeFactoryBase
     {
         public override IAgentTypeConfig Create()
         {
-            var builder = CreateBuilder(AgentConstants.General);
+            var builder = CreateBuilder(AgentTypes.General);
             
             builder.AddCapability<WanderCapability>();
             builder.AddCapability<MoveCapability>();
