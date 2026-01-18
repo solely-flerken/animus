@@ -33,7 +33,8 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             _context.CurrentState += $"It is day {TimeManager.Instance.CurrentDay} and the time is {TimeManager.Instance.GetFormattedTime()}.\n";
             
             // Position
-            _context.CurrentState += $"{LocationContextHelper.GetLocationContext(AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(_context.AgentKey).transform)} "; // TODO: Refactor
+            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(_context.AgentKey) as AnimusAgent;
+            _context.CurrentState += $"{LocationContextHelper.GetLocationContext(agent?.transform)} "; // TODO: Refactor
             
             // Is this agent is in an active anchor?
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_context.AgentKey, out var anchor))
@@ -134,9 +135,12 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         }
     }
     
-    // TODO: Refactor
     public static class LocationContextHelper
     {
+        private const string MsgAt = "You are at the {0}.";
+        private const string MsgNear = "You are near the {0}.";
+        private const string MsgNone = "You are not near any significant location.";
+        
         public static string GetLocationContext(Transform currentPosition, float atDistance = 10f, float nearDistance = 50f)
         {
             if (currentPosition == null)
@@ -144,22 +148,43 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 
             var allLocations = AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>();
 
-            foreach (var location in allLocations)
+            if (!TryGetNearestLocation(currentPosition.position, allLocations, out var nearestLocation, out var distanceSqr))
             {
-                var distance = Vector3.Distance(currentPosition.position, location.transform.position);
+                return MsgNone;
+            }
+            
+            if (distanceSqr <= atDistance * atDistance)
+            {
+                return string.Format(MsgAt, nearestLocation.entityName);
+            }
 
-                if (distance <= atDistance)
-                {
-                    return $"You are at the {location.entityName}.";
-                }
+            if (distanceSqr <= nearDistance * nearDistance)
+            {
+                return string.Format(MsgNear, nearestLocation.entityName);
+            }
 
-                if (distance <= nearDistance)
+            return MsgNone;
+        }
+
+        private static bool TryGetNearestLocation(Vector3 origin, IEnumerable<AnimusLocation> locations, out AnimusLocation result, out float closestDistSqr)
+        {
+            result = null;
+            closestDistSqr = float.MaxValue;
+
+            foreach (var location in locations)
+            {
+                if (location == null) continue;
+
+                var distanceSqr = (location.transform.position - origin).sqrMagnitude;
+
+                if (distanceSqr < closestDistSqr)
                 {
-                    return $"You are near the {location.entityName}.";
+                    closestDistSqr = distanceSqr;
+                    result = location;
                 }
             }
 
-            return "You are not near any significant location.";
+            return result;
         }
     }
 }
