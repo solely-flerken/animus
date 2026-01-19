@@ -7,32 +7,30 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
 {
     public class ConversationAnchor
     {
-        public static Dictionary<string, ConversationAnchor> ConversationAnchors = new();
-        
         private const double StalemateTimeoutSeconds = 30.0f;
         
-        public int CurrentTurn { get; private set; }
-        public static int MaxTurns => 6;
-        public static int SoftEndTurn => 4;
+        public static readonly Dictionary<string, ConversationAnchor> ConversationAnchors = new();
 
-        public Dictionary<string, string> ParticipantReasons { get; } = new();
-        
-        public string Id { get; } = Guid.NewGuid().ToString();
+        private string Id { get; } = Guid.NewGuid().ToString();
         public List<string> Participants { get; } = new();
-        public string CurrentSpeakerKey { get; private set; }
-        public DateTime LastInteractionTime { get; private set; }
+        private string CurrentSpeakerKey { get; set; }
+        private DateTime LastInteractionTime { get; set; }
+        
+        private int CurrentTurn { get; set; }
+        private static int MaxTurns => 6;
+        private static int SoftEndTurn => 4;
 
-        public ConversationAnchor(string initiatorKey, string targetKey, string initiatorReason = "small talk")
+        public ConversationAnchor(string initiatorKey, string targetKey)
         {
-            AddParticipant(initiatorKey, initiatorReason);
-            AddParticipant(targetKey, "responding");
+            AddParticipant(initiatorKey);
+            AddParticipant(targetKey);
             
             // Initiator starts with the "Talking Stick"
             CurrentSpeakerKey = targetKey;
             LastInteractionTime = DateTime.UtcNow;
         }
 
-        public void AddParticipant(string agentKey, string reason = "join conversation")
+        public void AddParticipant(string agentKey)
         {
             if (!Participants.Contains(agentKey))
             {
@@ -43,7 +41,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
                 }
 
                 Participants.Add(agentKey);
-                ParticipantReasons[agentKey] = reason;
                 ConversationAnchors[agentKey] = this;
                 
                 Participants.Sort(); 
@@ -55,7 +52,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             if (!Participants.Contains(agentKey)) return;
             
             Participants.Remove(agentKey);
-            ParticipantReasons.Remove(agentKey); 
                 
             ConversationAnchors.Remove(agentKey);
 
@@ -152,18 +148,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
         public bool ShouldLeave()
         {
             return CurrentTurn >= MaxTurns - 1;
-        }
-
-        [Obsolete("Replaced through a general motivation")]
-        public string GetReasonContext(string agentKey)
-        {
-            var conversationReason = "participating in conversation";
-            if (ParticipantReasons.TryGetValue(agentKey, out var reason))
-            {
-                conversationReason = reason;
-            }
-
-            return $"Your reason for this conversation: {conversationReason}.";
         }
         
         public string GetTurnContext()
