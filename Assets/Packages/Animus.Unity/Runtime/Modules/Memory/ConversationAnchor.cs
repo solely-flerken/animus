@@ -9,6 +9,9 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
     {
         private const double StalemateTimeoutSeconds = 30.0f;
         
+        public static event Action<List<string>, string> OnTurnChanged;
+        public static event Action<List<string>> OnConversationEnded;
+        
         public static readonly Dictionary<string, ConversationAnchor> ConversationAnchors = new();
 
         private string Id { get; } = Guid.NewGuid().ToString();
@@ -29,6 +32,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             
             // Initiator starts with the "Talking Stick"
             CurrentSpeakerKey = initiatorKey;
+            
+            OnTurnChanged?.Invoke(Participants, CurrentSpeakerKey);
         }
 
         public void AddParticipant(string agentKey)
@@ -59,7 +64,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             {
                 PassTurn();
             }
-
+            
             if (Participants.Count < 2)
             {
                 Dissolve();
@@ -74,6 +79,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             {
                 ConversationAnchors.Remove(p);
             }
+            
+            OnConversationEnded?.Invoke(Participants);
             
             Participants.Clear();
             Debug.Log($"[ConversationAnchor] Conversation {Id} dissolved.");
@@ -113,23 +120,25 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             {
                 CurrentSpeakerKey = specificTargetKey;
                 // Debug.Log($"[ConversationAnchor] Turn explicitly passed to {CurrentSpeakerKey}.");
-                return;
             }
-            
-            Participants.Sort();
-            var currentIndex = Participants.IndexOf(CurrentSpeakerKey);
+            else
+            {
+                Participants.Sort();
+                var currentIndex = Participants.IndexOf(CurrentSpeakerKey);
 
-            if (currentIndex != -1 && Participants.Count > 0)
-            {
-                var nextIndex = (currentIndex + 1) % Participants.Count;
-                CurrentSpeakerKey = Participants[nextIndex];
-            }
-            else if (Participants.Count > 0)
-            {
-                // Fallback
-                CurrentSpeakerKey = Participants.First();
+                if (currentIndex != -1 && Participants.Count > 0)
+                {
+                    var nextIndex = (currentIndex + 1) % Participants.Count;
+                    CurrentSpeakerKey = Participants[nextIndex];
+                }
+                else if (Participants.Count > 0)
+                {
+                    // Fallback
+                    CurrentSpeakerKey = Participants.First();
+                }
             }
             
+            OnTurnChanged?.Invoke(Participants, CurrentSpeakerKey);
             // Debug.Log($"[ConversationAnchor] Turn passed to next participant {CurrentSpeakerKey}.");
         }
 

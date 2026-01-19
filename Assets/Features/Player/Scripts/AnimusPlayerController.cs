@@ -34,7 +34,7 @@ namespace Features.Player.Scripts
             
             if (!anchor.IsAgentTurn(_player.gameKey)) return;
             
-            Debug.Log($"[Chat] Player canceled his turn.");
+            Debug.Log("[Chat] Player canceled his turn. Passing to next participant.");
             anchor.PassTurn();
         }
 

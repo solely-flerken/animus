@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
@@ -13,7 +14,6 @@ using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
 {
@@ -30,12 +30,10 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         private readonly Dictionary<string, PendingRequest> _activeRequests = new();
 
         // Tracks agents whose requests are blocked (e.g., during player interaction)
-        private readonly Dictionary<string, DateTime> _blockedAgents = new();
+        // Key: Who is blocked, Value: Reason for the block (e.g., "Conversation")
+        private readonly Dictionary<string, HashSet<string>> _blockingTokens = new();
         
         public ConcurrentQueue<QueuedAction> ActionQueue { get; } = new();
-        
-        private float _debugUpdateTimer;
-        private const float DebugRefreshRate = 0.2f; 
         
         private void Awake()
         {
@@ -60,10 +58,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         private void Update()
         {
 #if UNITY_EDITOR
-            _debugUpdateTimer += Time.deltaTime;
-            if (_debugUpdateTimer >= DebugRefreshRate)
+            if (Time.frameCount % 30 == 0)
             {
-                _debugUpdateTimer = 0f;
                 SyncDebugViews();
             }
 #endif
@@ -91,14 +87,16 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             
             // Visualize Blocked Agents
             blockedAgentsDebug.Clear();
-            var now = DateTime.UtcNow;
-            foreach (var kvp in _blockedAgents)
+            foreach (var kvp in _blockingTokens)
             {
-                var timeRemaining = (kvp.Value - now).TotalSeconds;
-
-                if (timeRemaining > 0)
+                var blockingTokens = kvp.Value;
+                if (blockingTokens.Count != 0)
                 {
-                    blockedAgentsDebug.Add($"[{kvp.Key}] blocked for {timeRemaining:F1}s");
+                    blockedAgentsDebug.Add($"[{kvp.Key}] blocked through {kvp.Value.First()}");
+                }
+                else
+                {
+                    Debug.Log("[Blocked Agents] Agent blocked with no blocking token. IMPOSSIBLE]");
                 }
             }
         }
@@ -131,9 +129,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             {
                 try
                 {
-                    // Cleanup expired blocks
-                    CleanupExpiredBlocks();
-                    
                     var activeAnchors = new HashSet<ConversationAnchor>(ConversationAnchor.ConversationAnchors.Values);
                     foreach (var anchor in activeAnchors)
                     {
@@ -141,48 +136,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                     }
                     
                     var agents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
-
                     foreach (var agent in agents)
                     {
-                        // Can Agent perform actions?
-                        if (agent.agentActionSystem == null) continue;
-
-                        // Is Agent blocked from making requests?
-                        if (IsAgentBlocked(agent.gameKey)) continue;
-                        
-                        // Is Agent already thinking?
-                        if (_activeRequests.ContainsKey(agent.gameKey)) continue;
-
-                        // Does Agent already have a finished action waiting in the queue?
-                        if (HasPendingActionInQueue(agent.gameKey)) continue;
-
-                        var anchors = ConversationAnchor.ConversationAnchors;
-                        if (anchors.TryGetValue(agent.gameKey, out var anchor))
-                        {
-                            // If it's not my turn, I cannot request the LLM.
-                            if (!anchor.IsAgentTurn(agent.gameKey)) continue;
-                        }
-                        
-                        Profiler.BeginSample("Animus.PromptBuilder");
-                        var prompt = new PromptBuilder(agent)
-                            .WithIdentity()
-                            .WithAvailableActions()
-                            .WithCurrentState()
-                            .WithSchedule()
-                            .WithMotivation()
-                            .WithLastAction()
-                            .WithRelevantMemories()
-                            .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
-                            .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
-                            .WithRules(PredefinedRulesets.CommonAgent);
-
-                        Profiler.EndSample();
-                        
-                        SendRequestAsync(agent.gameKey, prompt.GetContext()).Forget();
+                        TryAgentThink(agent);
                     }
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(AnimusSettings.Instance.pollingInterval),
-                        cancellationToken: token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(AnimusSettings.Instance.pollingInterval), cancellationToken: token);
                 }
                 catch (OperationCanceledException)
                 {
@@ -197,6 +156,35 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             }
         }
 
+        private void TryAgentThink(AnimusAgent agent)
+        {
+            // Can Agent perform actions?
+            if (agent.agentActionSystem == null) return;
+
+            // Is Agent blocked from making requests?
+            if (IsAgentBlocked(agent.gameKey)) return;
+                        
+            // Is Agent already thinking?
+            if (_activeRequests.ContainsKey(agent.gameKey)) return;
+
+            // Does Agent already have a finished action waiting in the queue?
+            if (HasPendingActionInQueue(agent.gameKey)) return;
+                        
+            var prompt = new PromptBuilder(agent)
+                .WithIdentity()
+                .WithAvailableActions()
+                .WithCurrentState()
+                .WithSchedule()
+                .WithMotivation()
+                .WithLastAction()
+                .WithRelevantMemories()
+                .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
+                .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
+                .WithRules(PredefinedRulesets.CommonAgent);
+
+            SendRequestAsync(agent.gameKey, prompt.GetContext()).Forget();
+        }
+        
         private async UniTaskVoid SendRequestAsync(string agentKey, PromptContext context)
         {
             var cts = new CancellationTokenSource();
@@ -261,7 +249,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 cts.Dispose();
             }
         }
-
+        
         #region Public API for Interaction
 
         /// <summary>
@@ -279,72 +267,49 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         }
         
         /// <summary>
-        /// Blocks an agent from making new LLM requests for a specified duration.
+        /// Adds a specific reason to block the agent.
         /// </summary>
-        public void BlockAgentRequests(string agentKey, float durationSeconds = 0f)
+        public void AddBlockToken(string agentKey, string reasonToken)
         {
-            var expirationTime = durationSeconds <= 0 ? DateTime.MaxValue : DateTime.UtcNow.AddSeconds(durationSeconds);
-            _blockedAgents[agentKey] = expirationTime;
+            if(IsPlayer(agentKey)) return; // Never block a player (wouldn't do actually anything, only for clarity)
             
-            var blockType = durationSeconds < 0 ? "indefinitely" : $"for {durationSeconds}s";
-            Debug.Log($"[{agentKey}] Requests blocked {blockType}.");
+            if (!_blockingTokens.ContainsKey(agentKey))
+            {
+                _blockingTokens[agentKey] = new HashSet<string>();
+            }
+
+            _blockingTokens[agentKey].Add(reasonToken);
+            // Debug.Log($"[{agentKey}] Added Block: {reasonToken}. Total Blocks: {_blockingTokens[agentKey].Count}");
         }
 
         /// <summary>
-        /// Unblocks an agent, allowing them to make LLM requests again.
-        /// Use this when the player stops interacting with the agent.
+        /// Removes a specific block reason. 
+        /// The agent is only free if ALL tokens are removed.
         /// </summary>
-        public void UnblockAgentRequests(string agentKey)
+        public void RemoveBlockToken(string agentKey, string reasonToken)
         {
-            if (_blockedAgents.Remove(agentKey))
+            if (_blockingTokens.TryGetValue(agentKey, out var tokens))
             {
-                Debug.Log($"[{agentKey}] Requests unblocked.");
-            }
-        }
-
-        /// <summary>
-        /// Checks if an agent is currently blocked from making requests.
-        /// Also removes the block if it has expired.
-        /// </summary>
-        public bool IsAgentBlocked(string agentKey)
-        {
-            if (!_blockedAgents.TryGetValue(agentKey, out var expirationTime))
-            {
-                return false;
-            }
-
-            // Check if block has expired
-            if (DateTime.UtcNow >= expirationTime)
-            {
-                _blockedAgents.Remove(agentKey);
-                Debug.Log($"[{agentKey}] Block expired, agent unblocked.");
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Removes all expired blocks from the dictionary.
-        /// </summary>
-        private void CleanupExpiredBlocks()
-        {
-            var now = DateTime.UtcNow;
-            var expiredKeys = new List<string>();
-
-            foreach (var kvp in _blockedAgents)
-            {
-                if (now >= kvp.Value)
+                tokens.Remove(reasonToken);
+                
+                if (tokens.Count == 0)
                 {
-                    expiredKeys.Add(kvp.Key);
+                    _blockingTokens.Remove(agentKey);
+                    TryAgentThink(AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey));
+                    // Debug.Log($"[{agentKey}] All blocks removed. Agent is freed.");
                 }
             }
+        }
 
-            foreach (var key in expiredKeys)
-            {
-                _blockedAgents.Remove(key);
-                Debug.Log($"[{key}] Block expired, agent unblocked.");
-            }
+        public bool IsAgentBlocked(string agentKey)
+        {
+            return _blockingTokens.ContainsKey(agentKey);
+        }
+        
+        private bool IsPlayer(string agentKey)
+        {
+            var entity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(agentKey);
+            return entity is AnimusPlayer;
         }
         
         /// <summary>
