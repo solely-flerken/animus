@@ -23,7 +23,7 @@ namespace Features.Goap.Idle
             
             if (data.Timer <= 0)
             {
-                Debug.Log("Next idle phase (new Idle animation).");
+                // Debug.Log("Next idle phase (new Idle animation).");
                 data.Timer = Random.Range(7f, 23f);
             }
             

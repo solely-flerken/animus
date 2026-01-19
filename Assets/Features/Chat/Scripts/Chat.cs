@@ -19,6 +19,8 @@ namespace Features.Chat.Scripts
     {
         public static Chat Instance;
 
+        public static event Action OnChatClosed;
+        
         private static InputSystem_Actions.UIActions UIActions => InputManager.UIActions;
         private static InputSystem_Actions.PlayerActions PlayerActions => InputManager.PlayerActions;
 
@@ -145,6 +147,8 @@ namespace Features.Chat.Scripts
             PlayerActions.Enable();
 
             _historyIndex = -1;
+            
+            OnChatClosed?.Invoke();
         }
 
         private void OnMessageSubmit(string message)

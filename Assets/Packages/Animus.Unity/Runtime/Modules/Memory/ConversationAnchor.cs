@@ -22,12 +22,13 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
 
         public ConversationAnchor(string initiatorKey, string targetKey)
         {
+            LastInteractionTime = DateTime.UtcNow;
+            
             AddParticipant(initiatorKey);
             AddParticipant(targetKey);
             
             // Initiator starts with the "Talking Stick"
-            CurrentSpeakerKey = targetKey;
-            LastInteractionTime = DateTime.UtcNow;
+            CurrentSpeakerKey = initiatorKey;
         }
 
         public void AddParticipant(string agentKey)
@@ -52,7 +53,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
             if (!Participants.Contains(agentKey)) return;
             
             Participants.Remove(agentKey);
-                
             ConversationAnchors.Remove(agentKey);
 
             if (CurrentSpeakerKey == agentKey)
@@ -70,9 +70,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Memory
         {
             if (Participants.Count == 0) return;
             
-            var currentParticipants = Participants.ToList();
-            
-            foreach (var p in currentParticipants)
+            foreach (var p in Participants.ToList())
             {
                 ConversationAnchors.Remove(p);
             }
