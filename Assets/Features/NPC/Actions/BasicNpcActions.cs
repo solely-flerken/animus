@@ -156,10 +156,10 @@ namespace Features.NPC.Actions
             var anchors = ConversationAnchor.ConversationAnchors;
             var sourceAnchor = anchors.GetValueOrDefault(_agent.gameKey);
             var targetAnchor = anchors.GetValueOrDefault(targetActorKey);
-            var hasSourceAnchor = sourceAnchor != null;
-            var hasTargetAnchor = targetAnchor != null;
             
-            if (hasSourceAnchor && hasTargetAnchor)
+            ConversationAnchor finalAnchor;
+            
+            if (sourceAnchor != null && targetAnchor != null)
             {
                 if (sourceAnchor == targetAnchor)
                 {
@@ -167,36 +167,32 @@ namespace Features.NPC.Actions
                 }
                 else
                 {
-                    // Both in different conversations, "kidnap" the target from its conversation
-                    sourceAnchor.AddParticipant(targetActorKey);
+                    // Both in different conversations, join the target's conversation
+                    targetAnchor.AddParticipant(_agent.gameKey);
                 }
 
-                sourceAnchor.PassTurn(targetActorKey);
+                finalAnchor = targetAnchor;
             }
-            else if (hasSourceAnchor)
+            else if (sourceAnchor != null)
             {
+                // Target isn't in a conversation, join the initiator's
                 sourceAnchor.AddParticipant(targetActorKey);
-                sourceAnchor.PassTurn(targetActorKey);
+                finalAnchor = sourceAnchor;
             }
-            else if (hasTargetAnchor)
+            else if (targetAnchor != null)
             {
+                // Initiator isn't in a conversation, join the target's
                 targetAnchor.AddParticipant(_agent.gameKey);
-                targetAnchor.PassTurn(targetActorKey);
+                finalAnchor = targetAnchor;
             }
             else
             {
                 // Both have no anchor
-                _ = new ConversationAnchor(_agent.gameKey, targetActorKey);
+                finalAnchor = new ConversationAnchor(_agent.gameKey, targetActorKey);
             }
 
-            if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var finalAnchor))
-            {
-                AnimusAgent.SharedHistory.AddLine(new List<string>(finalAnchor.Participants), _agent.gameKey, message);
-            }
-            else
-            {
-                Debug.LogError($"[BasicNpcActions] Critical Error: Anchor not found for {_agent.gameKey} after creation. This shouldn't be possible.");
-            }
+            AnimusAgent.SharedHistory.AddLine(new List<string>(finalAnchor.Participants), _agent.gameKey, message);
+            finalAnchor.PassTurn(targetActorKey);
             
             _brain.StartGoalTalk(message, targetActor);
 

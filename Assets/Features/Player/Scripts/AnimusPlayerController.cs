@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Packages.Animus.Unity.Runtime.Core.Actions;
-using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
@@ -17,19 +16,30 @@ namespace Features.Player.Scripts
             _player = GetComponent<AnimusPlayer>();
         }
 
-        public void PlayerSpeak(string message, string targetActorKey)
+        private void OnEnable()
         {
-            if (string.IsNullOrEmpty(message)) return;
+            Chat.Scripts.Chat.OnChatClosed += HandleChatClosed;
+        }
 
-            var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
-            if (targetActor == null)
-            {
-                return;
-            }
+        private void OnDisable()
+        {
+            Chat.Scripts.Chat.OnChatClosed -= HandleChatClosed;
+        }
+
+        private void HandleChatClosed()
+        {
+            var anchor = ConversationAnchor.ConversationAnchors.GetValueOrDefault(_player.gameKey);
             
-            // Since we interact with a certain agent that agent's context is now outdated
-            ActionQueueManager.Instance?.CancelAgentRequest(targetActorKey);
+            if(anchor == null) return;
             
+            if (!anchor.IsAgentTurn(_player.gameKey)) return;
+            
+            Debug.Log($"[Chat] Player canceled his turn.");
+            anchor.PassTurn();
+        }
+
+        public void InitiateConversation(string targetActorKey)
+        {
             // Cancel every participant's actions
             if (ConversationAnchor.ConversationAnchors.TryGetValue(targetActorKey, out var currentTargetAnchor))
             {
@@ -50,19 +60,21 @@ namespace Features.Player.Scripts
                 }
                 else
                 {
-                    // Both in different conversations, "kidnap" the target from its conversation
-                    sourceAnchor.AddParticipant(targetActorKey);
+                    // Both in different conversations, join the target's conversation
+                    targetAnchor.AddParticipant(_player.gameKey);
                 }
 
-                finalAnchor = sourceAnchor;
+                finalAnchor = targetAnchor;
             }
             else if (sourceAnchor != null)
             {
+                // Target isn't in a conversation, join the initiator's
                 sourceAnchor.AddParticipant(targetActorKey);
                 finalAnchor = sourceAnchor;
             }
             else if (targetAnchor != null)
             {
+                // Initiator isn't in a conversation, join the target's
                 targetAnchor.AddParticipant(_player.gameKey);
                 finalAnchor = targetAnchor;
             }
@@ -71,9 +83,19 @@ namespace Features.Player.Scripts
                 // Both have no anchor
                 finalAnchor = new ConversationAnchor(_player.gameKey, targetActorKey);
             }
-
-            AnimusAgent.SharedHistory.AddLine(new List<string>(finalAnchor.Participants), _player.gameKey, message);
-            finalAnchor.PassTurn(targetActorKey);
+            
+            // Pass the turn to the player (stops other participants from talking)
+            finalAnchor.PassTurn(_player.gameKey);
+            
+            var commandToExecute = $"/talk {targetActorKey} ";
+            Chat.Scripts.Chat.Instance.OpenChat(commandToExecute);
+        }
+        
+        public void PlayerSpeak(string message, string targetActorKey)
+        {
+            var anchor = ConversationAnchor.ConversationAnchors.GetValueOrDefault(_player.gameKey);
+            AnimusAgent.SharedHistory.AddLine(new List<string>(anchor.Participants), _player.gameKey, message);
+            anchor.PassTurn(targetActorKey);
         }
     }
 }

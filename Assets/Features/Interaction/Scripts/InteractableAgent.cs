@@ -1,19 +1,24 @@
-﻿using Packages.Animus.Unity.Runtime.Core.Entity;
+﻿using Features.Goap.Agents;
+using Features.Player.Scripts;
+using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
 namespace Features.Interaction.Scripts
 {
-    [RequireComponent(typeof(AnimusAgent))]
+    [RequireComponent(typeof(AnimusAgent), typeof(SimpleAgentBrain))]
     public class InteractableAgent : MonoBehaviour, IInteractable
     {
         private AnimusAgent Agent => GetComponent<AnimusAgent>();
+        private SimpleAgentBrain Brain => GetComponent<SimpleAgentBrain>();
 
         public string InteractionPrompt => $"Talk to {Agent.gameKey}";
 
         public void Interact(GameObject interactor)
         {
-            var commandToExecute = $"/talk {Agent.gameKey} ";
-            Chat.Scripts.Chat.Instance.OpenChat(commandToExecute);
+            Brain.StartGoalIdle();
+            
+            var player = interactor.GetComponent<AnimusPlayerController>();
+            player?.InitiateConversation(Agent.gameKey);
         }
     }
 }
