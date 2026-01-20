@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Modules.Memory
+namespace Packages.Animus.Unity.Runtime.Modules.Conversation
 {
     public class ConversationalBlock : MonoBehaviour
     {

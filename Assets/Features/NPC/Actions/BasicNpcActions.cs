@@ -4,8 +4,8 @@ using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
-using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
 
 namespace Features.NPC.Actions

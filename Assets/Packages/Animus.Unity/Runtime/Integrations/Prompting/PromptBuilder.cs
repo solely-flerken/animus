@@ -3,9 +3,9 @@ using System.Linq;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using Packages.Animus.Unity.Runtime.Core.Event;
+using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.GameTime;
-using Packages.Animus.Unity.Runtime.Modules.Memory;
 using UnityEngine;
 using JsonUtility = Packages.Animus.Unity.Runtime.Infrastructure.Serialization.JsonUtility;
 

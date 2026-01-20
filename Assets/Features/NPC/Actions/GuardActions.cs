@@ -31,7 +31,7 @@ namespace Features.NPC.Actions
                     if (interactableGate == null)
                     {
                         Debug.LogError("Gate object is not assigned!");
-                        return UniTask.FromResult("");
+                        return UniTask.FromResult(string.Empty);
                     }
 
                     interactableGate?.OpenGate();
@@ -51,7 +51,7 @@ namespace Features.NPC.Actions
                     if (interactableGate == null)
                     {
                         Debug.LogError("Gate object is not assigned!");
-                        return UniTask.FromResult("");
+                        return UniTask.FromResult(string.Empty);
                     }
 
                     interactableGate?.CloseGate();

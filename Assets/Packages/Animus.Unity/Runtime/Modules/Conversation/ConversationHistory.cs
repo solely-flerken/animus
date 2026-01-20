@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Packages.Animus.Unity.Runtime.Modules.Memory
+namespace Packages.Animus.Unity.Runtime.Modules.Conversation
 {
     public class Conversation
     {

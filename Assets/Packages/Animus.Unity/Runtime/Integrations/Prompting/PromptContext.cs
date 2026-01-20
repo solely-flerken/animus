@@ -2,8 +2,8 @@
 using Newtonsoft.Json;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
+using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
-using Packages.Animus.Unity.Runtime.Modules.Memory;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 {

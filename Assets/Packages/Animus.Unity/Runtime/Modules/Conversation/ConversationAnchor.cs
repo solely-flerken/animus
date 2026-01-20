@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Packages.Animus.Unity.Runtime.Modules.Memory
+namespace Packages.Animus.Unity.Runtime.Modules.Conversation
 {
     public class ConversationAnchor
     {

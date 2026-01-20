@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Modules.Memory;
+using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using UnityEngine;
 
 namespace Features.Player.Scripts

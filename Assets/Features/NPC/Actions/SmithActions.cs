@@ -2,7 +2,7 @@
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
-using Packages.Animus.Unity.Runtime.Modules.Memory;
+using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using UnityEngine;
 
 namespace Features.NPC.Actions

@@ -10,8 +10,8 @@ using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting.Constants;
 using Packages.Animus.Unity.Runtime.Integrations.Service;
+using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
-using Packages.Animus.Unity.Runtime.Modules.Memory;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -251,20 +251,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         }
         
         #region Public API for Interaction
-
-        /// <summary>
-        /// Forces an agent to stop thinking.
-        /// TODO: Maybe instantly send another request to the LLM
-        /// </summary>
-        public void CancelAgentRequest(string agentKey)
-        {
-            if (_activeRequests.TryGetValue(agentKey, out var request))
-            {
-                Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
-                request.cts.Cancel();
-                _activeRequests.Remove(agentKey);
-            }
-        }
         
         /// <summary>
         /// Adds a specific reason to block the agent.
@@ -300,16 +286,24 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
         }
-
+        
         public bool IsAgentBlocked(string agentKey)
         {
             return _blockingTokens.ContainsKey(agentKey);
         }
         
-        private bool IsPlayer(string agentKey)
+        /// <summary>
+        /// Forces an agent to stop thinking.
+        /// TODO: Maybe instantly send another request to the LLM
+        /// </summary>
+        public void CancelAgentRequest(string agentKey)
         {
-            var entity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(agentKey);
-            return entity is AnimusPlayer;
+            if (_activeRequests.TryGetValue(agentKey, out var request))
+            {
+                Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
+                request.cts.Cancel();
+                _activeRequests.Remove(agentKey);
+            }
         }
         
         /// <summary>
@@ -329,5 +323,11 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         }
 
         #endregion
+        
+        private static bool IsPlayer(string agentKey)
+        {
+            var entity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(agentKey);
+            return entity is AnimusPlayer;
+        }
     }
 }
