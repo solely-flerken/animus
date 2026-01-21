@@ -36,7 +36,11 @@ namespace Features.NPC.Actions
         private void RegisterIdle()
         {
             var idleAction = new AgentAction("idle", "Remain idle and take no action.",
-                _ => UniTask.FromResult(string.Empty));
+                _ =>
+                {
+                    _agent.actionStatus.Set("None.");
+                    return UniTask.FromResult(string.Empty);
+                });
 
             _actionSystem.RegisterAction(idleAction);
         }
