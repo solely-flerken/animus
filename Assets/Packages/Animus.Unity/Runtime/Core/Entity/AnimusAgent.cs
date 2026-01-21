@@ -24,7 +24,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
 
         public NpcSchedule npcSchedule;
         public string currentMotivation = "You have no special motivation.";
-        public string currentActionResult = "None.";
+        public AgentActionStatus actionStatus;
         public List<string> memories;
         public static ConversationHistory SharedHistory;
 
@@ -35,6 +35,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
 
         private void Awake()
         {
+            actionStatus = new AgentActionStatus(this);
+            
             if (TryGetComponent<NpcSchedule>(out var schedule))
             {
                 npcSchedule = schedule;
