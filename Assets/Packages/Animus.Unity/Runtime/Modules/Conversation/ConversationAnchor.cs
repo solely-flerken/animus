@@ -24,7 +24,54 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
         private static int MaxTurns => 6;
         private static int SoftEndTurn => 4;
 
-        public ConversationAnchor(string initiatorKey, string targetKey)
+        /// <summary>
+        /// Joins or creates a conversation between two participants.
+        /// Returns the final anchor they are then both in.
+        /// </summary>
+        public static ConversationAnchor JoinOrCreate(string initiatorKey, string targetKey)
+        {
+            var anchors = ConversationAnchors;
+            var sourceAnchor = anchors.GetValueOrDefault(initiatorKey);
+            var targetAnchor = anchors.GetValueOrDefault(targetKey);
+    
+            ConversationAnchor finalAnchor;
+    
+            if (sourceAnchor != null && targetAnchor != null)
+            {
+                if (sourceAnchor == targetAnchor)
+                {
+                    // Both already in the same conversation
+                    finalAnchor = sourceAnchor;
+                }
+                else
+                {
+                    // Both in different conversations, join the target's conversation
+                    targetAnchor.AddParticipant(initiatorKey);
+                    finalAnchor = targetAnchor;
+                }
+            }
+            else if (sourceAnchor != null)
+            {
+                // Target isn't in a conversation, join the initiator's
+                sourceAnchor.AddParticipant(targetKey);
+                finalAnchor = sourceAnchor;
+            }
+            else if (targetAnchor != null)
+            {
+                // Initiator isn't in a conversation, join the target's
+                targetAnchor.AddParticipant(initiatorKey);
+                finalAnchor = targetAnchor;
+            }
+            else
+            {
+                // Both have no anchor
+                finalAnchor = new ConversationAnchor(initiatorKey, targetKey);
+            }
+    
+            return finalAnchor;
+        }
+        
+        private ConversationAnchor(string initiatorKey, string targetKey)
         {
             LastInteractionTime = DateTime.UtcNow;
             
@@ -36,7 +83,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             
             OnTurnChanged?.Invoke(Participants, CurrentSpeakerKey);
         }
-
+        
         public void AddParticipant(string agentKey)
         {
             if (!Participants.Contains(agentKey))

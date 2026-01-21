@@ -46,46 +46,10 @@ namespace Features.Player.Scripts
                 currentTargetAnchor.Participants.ForEach(p => ActionQueueManager.Instance?.CancelAgentRequest(p));
             }
             
-            var anchors = ConversationAnchor.ConversationAnchors;
-            var sourceAnchor = anchors.GetValueOrDefault(_player.gameKey);
-            var targetAnchor = anchors.GetValueOrDefault(targetActorKey);
-            
-            ConversationAnchor finalAnchor;
-            
-            if (sourceAnchor != null && targetAnchor != null)
-            {
-                if (sourceAnchor == targetAnchor)
-                {
-                    // Both already in the same conversation
-                }
-                else
-                {
-                    // Both in different conversations, join the target's conversation
-                    targetAnchor.AddParticipant(_player.gameKey);
-                }
-
-                finalAnchor = targetAnchor;
-            }
-            else if (sourceAnchor != null)
-            {
-                // Target isn't in a conversation, join the initiator's
-                sourceAnchor.AddParticipant(targetActorKey);
-                finalAnchor = sourceAnchor;
-            }
-            else if (targetAnchor != null)
-            {
-                // Initiator isn't in a conversation, join the target's
-                targetAnchor.AddParticipant(_player.gameKey);
-                finalAnchor = targetAnchor;
-            }
-            else
-            {
-                // Both have no anchor
-                finalAnchor = new ConversationAnchor(_player.gameKey, targetActorKey);
-            }
+            var anchor = ConversationAnchor.JoinOrCreate(_player.gameKey, targetActorKey);
             
             // Pass the turn to the player (stops other participants from talking)
-            finalAnchor.PassTurn(_player.gameKey);
+            anchor.PassTurn(_player.gameKey);
             
             var commandToExecute = $"/talk {targetActorKey} ";
             Chat.Scripts.Chat.Instance.OpenChat(commandToExecute);
