@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Config.Script;
@@ -40,16 +41,27 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             var paramsStr = string.Join(", ", paramsDict.Values.Select(v => v?.ToString().Length > 20 ? v.ToString()[..20] + "..." : v?.ToString()));
             Debug.Log($"[Action] {targetAgent.gameKey} executing: {actionPayload.goalKey} -> [{paramsStr}]");
-            
-            // TODO: Use this and/or new field in AnimusAgent 'lastActionResult'
-            var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
 
-            if (string.IsNullOrWhiteSpace(outcome))
+            try
             {
-                return;
+                var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
+
+                if (string.IsNullOrWhiteSpace(outcome))
+                {
+                    return;
+                }
+
+                targetAgent.actionStatus.Set(outcome);
+                targetAgent.memories.Add(outcome);
             }
-            
-            targetAgent.memories.Add(outcome);
+            catch (OperationCanceledException)
+            {
+                // This is fine. The Agent simply performs a new action while the old one wasn't finished.
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ActionHandler] Error: {e}");
+            }
         }
     }
 }

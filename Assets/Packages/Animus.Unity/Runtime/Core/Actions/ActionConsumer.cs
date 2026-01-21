@@ -1,6 +1,5 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using UnityEngine;
 
 namespace Packages.Animus.Unity.Runtime.Core.Actions
@@ -51,7 +50,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 {
                     var payload = queuedAction.responsePayload;
                     
-                    await ActionHandler.ProcessAction(payload);
+                    ActionHandler.ProcessAction(payload).Forget();
                 }
 
                 await UniTask.Delay(TimeSpan.FromSeconds(processInterval), cancellationToken: token);

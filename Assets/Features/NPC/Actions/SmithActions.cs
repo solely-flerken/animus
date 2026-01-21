@@ -46,17 +46,19 @@ namespace Features.NPC.Actions
             _actionSystem.RegisterAction(workAction);
         }
 
-        private UniTask<string> MoveTo(Transform targetTransform)
+        // TODO: Refactor: Implement Work as a "infinite" GOAP Goal.
+        private async UniTask<string> MoveTo(Transform targetTransform)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
                 anchor.RemoveParticipant(_agent.gameKey);
             }
 
-            // TODO: Maybe callback to add to memory that the agent arrived at his target
-            _brain.StartGoalMoveTo(targetTransform);
+            _agent.actionStatus.Set("On the way to work at the forgery...");
+            
+            await _brain.StartGoalMoveTo(targetTransform);
 
-            return UniTask.FromResult("");
+            return "Currently working at the forgery.";
         }
     }
 }

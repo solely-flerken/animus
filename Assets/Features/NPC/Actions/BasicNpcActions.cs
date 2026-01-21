@@ -117,7 +117,7 @@ namespace Features.NPC.Actions
             _actionSystem.RegisterAction(pickupAction);
         }
         
-        private UniTask<string> MoveTo(string entityKey)
+        private async UniTask<string> MoveTo(string entityKey)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -127,21 +127,22 @@ namespace Features.NPC.Actions
             var targetEntity = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusEntity>(entityKey);
             if (targetEntity == null)
             {
-                return UniTask.FromResult($"I tried to move to '{entityKey}', but I couldn't find it.");
+                return $"I tried to move to '{entityKey}', but I couldn't find it.";
             }
 
-            // TODO: Maybe callback to add to memory that the agent arrived at his target
-            _brain.StartGoalMoveTo(targetEntity.transform);
+            _agent.actionStatus.Set($"Moving towards {targetEntity.gameKey}...");
+            
+            await _brain.StartGoalMoveTo(targetEntity.transform);
 
-            return UniTask.FromResult($"I started moving towards {targetEntity.gameKey}.");
+            return $"I arrived at {targetEntity.gameKey}.";
         }
-        
-        public UniTask<string> Talk(string message, string targetActorKey)
+
+        private async UniTask<string> Talk(string message, string targetActorKey)
         {
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
             {
-                return UniTask.FromResult("");
+                return string.Empty;
             }
             
             // Since we interact with a certain agent that agent's context is now outdated
@@ -194,18 +195,18 @@ namespace Features.NPC.Actions
             AnimusAgent.SharedHistory.AddLine(new List<string>(finalAnchor.Participants), _agent.gameKey, message);
             finalAnchor.PassTurn(targetActorKey);
             
-            _brain.StartGoalTalk(message, targetActor);
+            await _brain.StartGoalTalk(message, targetActor);
 
             // Return nothing here since conversations are already saved in a conversation history.
-            return UniTask.FromResult(string.Empty);
+            return string.Empty;
         }
-        
-        public UniTask<string> LeaveConversation(string finalMessage, string targetActorKey)
+
+        private async UniTask<string> LeaveConversation(string finalMessage, string targetActorKey)
         {
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
             {
-                return UniTask.FromResult("");
+                return string.Empty;
             }
 
             // Since we interact with a certain agent that agent's context is now outdated
@@ -223,13 +224,13 @@ namespace Features.NPC.Actions
                 Debug.Log("[LeaveConversation] Critical Error: Trying to leave non-existing conversation anchor. Shouldn't be possible.");
             }
 
-            _brain.StartGoalTalk(finalMessage, targetActor);
+            await _brain.StartGoalTalk(finalMessage, targetActor);
 
             // Return nothing here since conversations are already saved in a conversation history.
-            return UniTask.FromResult(string.Empty);
+            return string.Empty;
         }
-        
-        public UniTask<string> Pickup(string itemKey)
+
+        private async UniTask<string> Pickup(string itemKey)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -239,12 +240,14 @@ namespace Features.NPC.Actions
             var item = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusObject>(itemKey);
             if (item == null)
             {
-                return UniTask.FromResult("");
+                return "Item not found.";
             }
 
-            _brain.StartGoalPickupItem(item);
+            _agent.actionStatus.Set($"Trying to pick up {item.name}...");
+            
+            await _brain.StartGoalPickupItem(item);
 
-            return UniTask.FromResult($"I picked up the item: {item.name}.");
+            return $"I picked up the {item.name}.";
         }
         
         private bool IsTalking()
