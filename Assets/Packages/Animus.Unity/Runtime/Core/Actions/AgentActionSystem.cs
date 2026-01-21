@@ -53,12 +53,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             if (!action.IsAvailable())
                 return "Error: Action is currently unavailable.";
 
-            if (IsDuplicateRequest(actionName, args))
-            {
-                // Debug.Log($"[AgentActionSystem] Duplicate action: {actionName}");
-                return null;
-            }
-
             _currentActionName = actionName;
             _currentActionParams = args;
 
@@ -76,7 +70,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             }
         }
         
-        private bool IsDuplicateRequest(string actionName, Dictionary<string, object> actionArgs)
+        public bool IsDuplicateRequest(string actionName, Dictionary<string, object> actionArgs)
         {
             // If nothing is running, obviously not a duplicate
             if (string.IsNullOrEmpty(_currentActionName)) return false;

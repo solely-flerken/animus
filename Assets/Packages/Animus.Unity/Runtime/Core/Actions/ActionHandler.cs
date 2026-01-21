@@ -25,9 +25,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 Debug.LogError($"Command failed: Agent '{targetAgent.gameKey}' has no AgentActionSystem component.");
                 return;
             }
-    
-            // Set new motivation
-            targetAgent.currentMotivation = actionPayload.motivation;
             
             var paramsDict = new Dictionary<string, object>();
             
@@ -39,6 +36,15 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
 
+            if (targetAgent.agentActionSystem.IsDuplicateRequest(actionPayload.goalKey, paramsDict))
+            {
+                Debug.Log($"[Action] {targetAgent.gameKey} skipping duplicate: {actionPayload.goalKey}");
+                return;
+            }
+            
+            // Set new motivation
+            targetAgent.currentMotivation = actionPayload.motivation; // TODO: Should we consider the new motivation even if it's a duplicate action? (Yes?: Move before duplicate check)
+            
             var paramsStr = $"[{string.Join(", ", paramsDict.Values.Select(v => v?.ToString().Length > 20 ? v.ToString()[..20] + "..." : v?.ToString()))}]";
             Debug.Log($"[Action] {targetAgent.gameKey} executing: {actionPayload.goalKey} -> {paramsStr}");
 
@@ -46,20 +52,21 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             {
                 targetAgent.actionStatus.StartAction($"{actionPayload.goalKey}", paramsStr);
              
-                // TODO: Need to be checked earlier for duplicate action
                 var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
 
+                targetAgent.actionStatus.Success();
+                
                 if (string.IsNullOrWhiteSpace(outcome))
                 {
                     return;
                 }
 
                 targetAgent.memories.Add(outcome);
-                targetAgent.actionStatus.Success();
             }
             catch (OperationCanceledException)
             {
                 // This is fine. The Agent simply performs a new action while the old one wasn't finished.
+                // TODO: Capture cancellation in context?
             }
             catch (Exception e)
             {
