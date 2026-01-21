@@ -10,6 +10,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
         private const double StalemateTimeoutSeconds = 30.0f;
         
         public static event Action<List<string>, string> OnTurnChanged;
+        public static event Action<string> OnParticipantLeft;
         public static event Action<List<string>> OnConversationEnded;
         
         public static readonly Dictionary<string, ConversationAnchor> ConversationAnchors = new();
@@ -69,6 +70,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             {
                 Dissolve();
             }
+            
+            OnParticipantLeft?.Invoke(agentKey);
         }
         
         private void Dissolve()

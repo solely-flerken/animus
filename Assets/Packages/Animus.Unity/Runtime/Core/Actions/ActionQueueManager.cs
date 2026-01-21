@@ -252,6 +252,14 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         
         #region Public API for Interaction
         
+        public void ForceAgentThink(string agentKey)
+        {
+            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
+            
+            CancelAgentRequest(agent.gameKey);
+            TryAgentThink(agent);
+        }
+        
         /// <summary>
         /// Adds a specific reason to block the agent.
         /// </summary>

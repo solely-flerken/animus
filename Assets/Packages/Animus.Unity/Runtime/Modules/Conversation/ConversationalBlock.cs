@@ -12,12 +12,14 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
         {
             ConversationAnchor.OnTurnChanged += HandleTurnChanged;
             ConversationAnchor.OnConversationEnded += HandleConversationEnded;
+            ConversationAnchor.OnParticipantLeft += HandleParticipantLeft;
         }
 
         private void OnDisable()
         {
             ConversationAnchor.OnTurnChanged -= HandleTurnChanged;
             ConversationAnchor.OnConversationEnded -= HandleConversationEnded;
+            ConversationAnchor.OnParticipantLeft -= HandleParticipantLeft;
         }
 
         private static void HandleTurnChanged(List<string> participants, string currentSpeaker)
@@ -45,6 +47,13 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             {
                 ActionQueueManager.Instance.RemoveBlockToken(agentKey, TokenNotMyTurn);
             }
+        }
+        
+        private static void HandleParticipantLeft(string agentKey)
+        {
+            if (ActionQueueManager.Instance == null) return;
+            
+            ActionQueueManager.Instance.ForceAgentThink(agentKey);
         }
     }
 }
