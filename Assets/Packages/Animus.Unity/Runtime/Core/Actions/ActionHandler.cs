@@ -39,11 +39,14 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
 
-            var paramsStr = string.Join(", ", paramsDict.Values.Select(v => v?.ToString().Length > 20 ? v.ToString()[..20] + "..." : v?.ToString()));
-            Debug.Log($"[Action] {targetAgent.gameKey} executing: {actionPayload.goalKey} -> [{paramsStr}]");
+            var paramsStr = $"[{string.Join(", ", paramsDict.Values.Select(v => v?.ToString().Length > 20 ? v.ToString()[..20] + "..." : v?.ToString()))}]";
+            Debug.Log($"[Action] {targetAgent.gameKey} executing: {actionPayload.goalKey} -> {paramsStr}");
 
             try
             {
+                targetAgent.actionStatus.StartAction($"{actionPayload.goalKey}", paramsStr);
+             
+                // TODO: Need to be checked earlier for duplicate action
                 var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
 
                 if (string.IsNullOrWhiteSpace(outcome))
@@ -51,8 +54,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                     return;
                 }
 
-                targetAgent.actionStatus.Set(outcome);
                 targetAgent.memories.Add(outcome);
+                targetAgent.actionStatus.Success();
             }
             catch (OperationCanceledException)
             {

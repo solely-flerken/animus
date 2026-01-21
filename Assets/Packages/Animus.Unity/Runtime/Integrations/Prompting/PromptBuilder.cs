@@ -70,7 +70,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 
         public PromptBuilder WithLastAction()
         {
-            _context.LastActionResult = _agent?.actionStatus.CurrentActionStatus ?? "None.";
+            _context.LastActionResult = _agent?.actionStatus.ActionStatusContext;
             return this;
         }
         

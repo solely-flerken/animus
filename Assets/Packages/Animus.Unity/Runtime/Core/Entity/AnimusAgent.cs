@@ -25,6 +25,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public NpcSchedule npcSchedule;
         public string currentMotivation = "You have no special motivation.";
         public AgentActionStatus actionStatus;
+        public string actionStatusString; // TODO: Remove, only for debugging
         public List<string> memories;
         public static ConversationHistory SharedHistory;
 

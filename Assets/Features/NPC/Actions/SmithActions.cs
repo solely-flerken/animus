@@ -54,7 +54,7 @@ namespace Features.NPC.Actions
                 anchor.RemoveParticipant(_agent.gameKey);
             }
 
-            _agent.actionStatus.Set("On the way to work at the forgery...");
+            _agent.memories.Add("On the way to work at the forgery...");
             
             await _brain.StartGoalMoveTo(targetTransform);
 

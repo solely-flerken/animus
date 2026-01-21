@@ -38,7 +38,7 @@ namespace Features.NPC.Actions
             var idleAction = new AgentAction("idle", "Remain idle and take no action.",
                 _ =>
                 {
-                    _agent.actionStatus.Set("None.");
+                    _agent.memories.Add("Standing idle");
                     return UniTask.FromResult(string.Empty);
                 });
 
@@ -134,7 +134,7 @@ namespace Features.NPC.Actions
                 return $"I tried to move to '{entityKey}', but I couldn't find it.";
             }
 
-            _agent.actionStatus.Set($"Moving towards {targetEntity.gameKey}...");
+            _agent.memories.Add($"Moving towards {targetEntity.gameKey}...");
             
             await _brain.StartGoalMoveTo(targetEntity.transform);
 
@@ -212,11 +212,13 @@ namespace Features.NPC.Actions
                 return "Item not found.";
             }
 
-            _agent.actionStatus.Set($"Trying to pick up {item.name}...");
+            var itemName = item.name;
+            
+            _agent.memories.Add($"In the process of picking up the item: {itemName}...");
             
             await _brain.StartGoalPickupItem(item);
 
-            return $"I picked up the {item.name}.";
+            return $"I picked up the item: {itemName}.";
         }
         
         private bool IsTalking()

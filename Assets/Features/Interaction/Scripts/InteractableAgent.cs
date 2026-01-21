@@ -16,7 +16,6 @@ namespace Features.Interaction.Scripts
         public void Interact(GameObject interactor)
         {
             // TODO: Maybe set status to smth like: "You got interrupted by X."
-            Agent.actionStatus.Set("None.");
             Brain.StartGoalIdle();
             
             var player = interactor.GetComponent<AnimusPlayerController>();
