@@ -149,6 +149,7 @@ namespace Features.NPC.Actions
                 return string.Empty;
             }
             
+            // TODO: Use block for this. No need to cancel again
             // Since we interact with a certain agent that agent's context is now outdated
             ActionQueueManager.Instance?.CancelAgentRequest(targetActorKey);
             
@@ -195,12 +196,12 @@ namespace Features.NPC.Actions
                 // Both have no anchor
                 finalAnchor = new ConversationAnchor(_agent.gameKey, targetActorKey);
             }
+            
+            await _brain.StartGoalTalk(message, targetActor);
 
             AnimusAgent.SharedHistory.AddLine(new List<string>(finalAnchor.Participants), _agent.gameKey, message);
             finalAnchor.PassTurn(targetActorKey);
             
-            await _brain.StartGoalTalk(message, targetActor);
-
             // Return nothing here since conversations are already saved in a conversation history.
             return string.Empty;
         }
