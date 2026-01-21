@@ -38,7 +38,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             if (targetAgent.agentActionSystem.IsDuplicateRequest(actionPayload.goalKey, paramsDict))
             {
-                Debug.Log($"[Action] {targetAgent.gameKey} skipping duplicate: {actionPayload.goalKey}");
+                Debug.Log($"[Action] {targetAgent.gameKey} skipping duplicate action: {actionPayload.goalKey}");
                 return;
             }
             

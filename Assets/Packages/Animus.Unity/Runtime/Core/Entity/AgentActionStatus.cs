@@ -68,7 +68,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
             
             // TODO: Maybe invalidate current request and send a new one
             
-            Debug.Log($"[AgentActionStatus] {_animusAgent.gameKey}: {ActionStatusContext}");
+            // Debug.Log($"[AgentActionStatus] {_animusAgent.gameKey}: {ActionStatusContext}");
             OnStatusChanged?.Invoke(_animusAgent.gameKey, ActionStatusContext);
         }
     }
