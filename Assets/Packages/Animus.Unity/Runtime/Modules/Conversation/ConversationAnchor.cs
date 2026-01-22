@@ -107,7 +107,9 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             
             Participants.Remove(agentKey);
             ConversationAnchors.Remove(agentKey);
-
+            
+            OnParticipantLeft?.Invoke(agentKey);
+            
             if (Participants.Count < 2)
             {
                 Dissolve();
@@ -118,8 +120,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             {
                 PassTurn();
             }
-            
-            OnParticipantLeft?.Invoke(agentKey);
         }
         
         private void Dissolve()
