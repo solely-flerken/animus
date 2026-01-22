@@ -38,7 +38,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             if (targetAgent.agentActionSystem.IsDuplicateRequest(actionPayload.goalKey, paramsDict))
             {
-                Debug.Log($"[Action] {targetAgent.gameKey} skipping duplicate action: {actionPayload.goalKey}");
+                // Debug.Log($"[Action] {targetAgent.gameKey} skipping duplicate action: {actionPayload.goalKey}");
                 return;
             }
             
@@ -66,7 +66,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             catch (OperationCanceledException)
             {
                 // This is fine. The Agent simply performs a new action while the old one wasn't finished.
-                // TODO: Capture cancellation in context?
+                // TODO: Capture cancellation in context with reason?
+                targetAgent.actionStatus.Cancel();
+                Debug.Log($"[Action] {targetAgent.gameKey} cancelled: {actionPayload.goalKey} -> {paramsStr}");
             }
             catch (Exception e)
             {

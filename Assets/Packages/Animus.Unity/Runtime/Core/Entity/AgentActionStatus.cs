@@ -10,6 +10,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
             None,
             Ongoing,
             Success,
+            Cancelled,
             Failure
         }
 
@@ -46,6 +47,11 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public void Success()
         {
             SetState(ActionState.Success);
+        }
+        
+        public void Cancel()
+        {
+            SetState(ActionState.Cancelled);
         }
         
         public void Failure()
