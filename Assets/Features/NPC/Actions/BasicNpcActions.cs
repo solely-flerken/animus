@@ -36,10 +36,10 @@ namespace Features.NPC.Actions
         private void RegisterIdle()
         {
             var idleAction = new AgentAction("idle", "Remain idle and take no action.",
-                _ =>
+                async _ =>
                 {
-                    _agent.memories.Add("Standing idle");
-                    return UniTask.FromResult(string.Empty);
+                    await UniTask.WaitUntilCanceled(this.GetCancellationTokenOnDestroy());
+                    return null;
                 });
 
             _actionSystem.RegisterAction(idleAction);

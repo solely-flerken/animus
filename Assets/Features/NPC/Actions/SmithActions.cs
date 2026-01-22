@@ -46,7 +46,6 @@ namespace Features.NPC.Actions
             _actionSystem.RegisterAction(workAction);
         }
 
-        // TODO: Refactor: Implement Work as a "infinite" GOAP Goal.
         private async UniTask<string> MoveTo(Transform targetTransform)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
@@ -58,7 +57,12 @@ namespace Features.NPC.Actions
             
             await _brain.StartGoalMoveTo(targetTransform);
 
-            return "Currently working at the forgery.";
+            _agent.memories.Add("Currently working at the forgery.");
+            
+            // Runs indefinitely. Working should be stopped only when performing another action.
+            await UniTask.WaitUntilCanceled(this.GetCancellationTokenOnDestroy());
+            
+            return "Finished working at the forgery.";
         }
     }
 }
