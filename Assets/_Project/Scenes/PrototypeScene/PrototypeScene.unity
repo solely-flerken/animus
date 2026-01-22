@@ -4178,7 +4178,6 @@ GameObject:
   - component: {fileID: 423201887}
   - component: {fileID: 423201888}
   - component: {fileID: 423201889}
-  - component: {fileID: 423201890}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4225,22 +4224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2b8370b98e40408edd5124c152e04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Input.InputManager
---- !u!114 &423201890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423201885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d01c9d07801d4d5caeeb35a479ab58a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.GameTime.TimeManager
-  dayDurationInMinutes: 20
-  startHour: 6
-  currentTime: 0
-  currentDay: 1
 --- !u!1 &429132123
 GameObject:
   m_ObjectHideFlags: 0
@@ -8547,7 +8530,8 @@ GameObject:
   - component: {fileID: 930261050}
   - component: {fileID: 930261051}
   - component: {fileID: 930261052}
-  - component: {fileID: 930261053}
+  - component: {fileID: 930261055}
+  - component: {fileID: 930261054}
   m_Layer: 0
   m_Name: AnimusManager
   m_TagString: Untagged
@@ -8612,7 +8596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Core.Actions.ActionConsumer
   queueManager: {fileID: 930261051}
   processInterval: 0.05
---- !u!114 &930261053
+--- !u!114 &930261054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8621,9 +8605,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 930261042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c585e6001c764b239811ae8cd695ea2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5da62a270a3345f0b6fbe97dc3df386f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Memory.ConversationIntegration
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.Conversation.ConversationManager
+--- !u!114 &930261055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930261042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01c9d07801d4d5caeeb35a479ab58a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Animus.Unity::Packages.Animus.Unity.Runtime.Modules.GameTime.TimeManager
+  dayDurationInMinutes: 10
+  startHour: 6
+  currentTime: 0
+  currentDay: 1
 --- !u!1 &935561397
 GameObject:
   m_ObjectHideFlags: 0

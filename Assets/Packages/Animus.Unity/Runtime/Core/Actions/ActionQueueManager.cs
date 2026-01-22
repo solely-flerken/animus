@@ -129,12 +129,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             {
                 try
                 {
-                    var activeAnchors = new HashSet<ConversationAnchor>(ConversationAnchor.ConversationAnchors.Values);
-                    foreach (var anchor in activeAnchors)
-                    {
-                        anchor.CheckStalemate();
-                    }
-                    
                     var agents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
                     foreach (var agent in agents)
                     {
