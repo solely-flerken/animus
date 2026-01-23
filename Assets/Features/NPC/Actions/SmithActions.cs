@@ -36,6 +36,7 @@ namespace Features.NPC.Actions
                     if (workLocation == null)
                     {
                         Debug.LogError($"{nameof(workLocation)} is null");
+                        return string.Empty;
                     }
 
                     return await MoveTo(workLocation);
