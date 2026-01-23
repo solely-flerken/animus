@@ -20,11 +20,11 @@ namespace Core.Events
             }
         }
 
-        public static event Action<string> OnDisplayMessageInChat;
+        public static event Action<string> OnMessage;
 
-        public static void InvokeDisplayMessageInChat(string message)
+        public static void InvokeMessage(string message)
         {
-            OnDisplayMessageInChat?.Invoke(message);
+            OnMessage?.Invoke(message);
         }
     }
 }

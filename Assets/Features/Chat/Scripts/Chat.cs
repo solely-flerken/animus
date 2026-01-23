@@ -61,7 +61,7 @@ namespace Features.Chat.Scripts
             UIActions.Submit.performed += OnToggleChat;
             UIActions.ScrollWheel.performed += OnScroll;
 
-            EventSystem.OnDisplayMessageInChat += LogMessage;
+            EventSystem.OnMessage += LogMessage;
         }
 
         private void OnDestroy()
@@ -71,7 +71,7 @@ namespace Features.Chat.Scripts
             UIActions.ScrollWheel.performed -= OnScroll;
             UIActions.Disable();
 
-            EventSystem.OnDisplayMessageInChat -= LogMessage;
+            EventSystem.OnMessage -= LogMessage;
         }
 
         public override void Show()

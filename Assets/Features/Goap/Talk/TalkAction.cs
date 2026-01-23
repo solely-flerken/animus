@@ -26,7 +26,7 @@ namespace Features.Goap.Talk
                 return ActionRunState.Stop;
             }
 
-            EventSystem.InvokeDisplayMessageInChat($"{animusAgent.name}: {text}");
+            EventSystem.InvokeMessage($"{animusAgent.name}: {text}");
             
             data.Behavior.hasFinishedTalking = true;
 
