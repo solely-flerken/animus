@@ -20,13 +20,6 @@ namespace Core.Events
             }
         }
 
-        public static event Action<string> OnChatMessage;
-
-        public static void InvokeChatMessage(string message)
-        {
-            OnChatMessage?.Invoke(message);
-        }
-
         public static event Action<string> OnDisplayMessageInChat;
 
         public static void InvokeDisplayMessageInChat(string message)

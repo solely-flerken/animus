@@ -167,7 +167,6 @@ namespace Features.Chat.Scripts
             else
             {
                 LogMessage($"Player: {message}");
-                EventSystem.InvokeChatMessage(message);
             }
         }
 
