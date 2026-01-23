@@ -1,7 +1,7 @@
-﻿using Core.Events;
-using CrashKonijn.Agent.Core;
+﻿using CrashKonijn.Agent.Core;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
+using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 
 namespace Features.Goap.Talk
@@ -14,7 +14,13 @@ namespace Features.Goap.Talk
             [GetComponent] public AnimusAgent AnimusAgent { get; set; }
             [GetComponent] public TalkBehavior Behavior { get; set; }
         }
-
+        
+        public override void Start(IMonoAgent agent, Data data)
+        {
+            base.Start(agent, data);
+            data.Behavior.hasStartedTalking = false;
+        }
+        
         public override IActionRunState Perform(IMonoAgent agent, Data data, IActionContext context)
         {
             var text = data.Behavior?.text;
@@ -25,12 +31,25 @@ namespace Features.Goap.Talk
             {
                 return ActionRunState.Stop;
             }
-
-            EventSystem.InvokeMessage($"{animusAgent.name}: {text}");
             
-            data.Behavior.hasFinishedTalking = true;
+            if (!data.Behavior.hasStartedTalking)
+            {
+                data.Behavior.hasStartedTalking = true;
+                data.Behavior.TalkAsync(data.AnimusAgent.entityName).Forget();
+            }
+
+            if (!data.Behavior.hasFinishedTalking)
+            {
+                return ActionRunState.Continue;
+            }
 
             return ActionRunState.Completed;
+        }
+        
+        public override void End(IMonoAgent agent, Data data)
+        {
+            base.End(agent, data);
+            data.Behavior.hasStartedTalking = false;
         }
     }
 }

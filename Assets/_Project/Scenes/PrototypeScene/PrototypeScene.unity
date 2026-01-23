@@ -1333,6 +1333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91265ed2a54b46d1bcbb92192ae34a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Chat
+  enableTypewriter: 1
+  typewriterWpm: 300
 --- !u!114 &140756997
 MonoBehaviour:
   m_ObjectHideFlags: 0

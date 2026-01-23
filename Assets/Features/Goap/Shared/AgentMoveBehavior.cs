@@ -19,7 +19,8 @@ namespace Features.Goap.Shared
         
         private ITarget _currentTarget;
         private Vector3 _lastPosition;
-
+        private bool _isInRange;
+        
         private void Awake()
         {
             _agentBehaviour = GetComponent<AgentBehaviour>();
@@ -29,7 +30,7 @@ namespace Features.Goap.Shared
 
         private void Update()
         {
-            if (_currentTarget != null)
+            if (_currentTarget != null && !_isInRange)
             {
                 var distanceToTarget = Vector3.SqrMagnitude(_currentTarget.Position - _lastPosition);
                 if (distanceToTarget > MinMoveDistanceSqr)
@@ -37,6 +38,10 @@ namespace Features.Goap.Shared
                     _lastPosition = _currentTarget.Position;
                     _navMeshAgent.SetDestination(_currentTarget.Position);
                 }
+            }
+            else if (_isInRange && _navMeshAgent.hasPath)
+            {
+                _navMeshAgent.ResetPath();
             }
             
             _animator.SetFloat(Forward, NormalizedSpeed);
@@ -46,17 +51,22 @@ namespace Features.Goap.Shared
         {
             _agentBehaviour.Events.OnTargetLost += TargetLost;
             _agentBehaviour.Events.OnTargetChanged += OnTargetChanged;
+            _agentBehaviour.Events.OnTargetInRange += OnTargetInRange;
+            _agentBehaviour.Events.OnTargetNotInRange += OnTargetNotInRange; 
         }
 
         private void OnDisable()
         {
             _agentBehaviour.Events.OnTargetLost -= TargetLost;
             _agentBehaviour.Events.OnTargetChanged -= OnTargetChanged;
+            _agentBehaviour.Events.OnTargetInRange -= OnTargetInRange;
+            _agentBehaviour.Events.OnTargetNotInRange -= OnTargetNotInRange; 
         }
 
         private void TargetLost()
         {
             _currentTarget = null;
+            _isInRange = false;
 
             if (_navMeshAgent && _navMeshAgent.isOnNavMesh)
             {
@@ -67,8 +77,31 @@ namespace Features.Goap.Shared
         private void OnTargetChanged(ITarget target, bool inRange)
         {
             _currentTarget = target;
+            _isInRange = inRange;
             _lastPosition = _currentTarget.Position;
-            _navMeshAgent.SetDestination(_currentTarget.Position);
+            
+            if (!inRange)
+            {
+                _navMeshAgent.SetDestination(_currentTarget.Position);
+            }
+            else
+            {
+                _navMeshAgent.ResetPath();
+            }
+        }
+        
+        private void OnTargetInRange(ITarget target)
+        {
+            _isInRange = true;
+            if (_navMeshAgent && _navMeshAgent.isOnNavMesh)
+            {
+                _navMeshAgent.ResetPath();
+            }
+        }
+        
+        private void OnTargetNotInRange(ITarget target)
+        {
+            _isInRange = false;
         }
     }
 }

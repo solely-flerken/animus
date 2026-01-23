@@ -20,11 +20,11 @@ namespace Core.Events
             }
         }
 
-        public static event Action<string> OnMessage;
+        public static event Action<string, string, bool> OnMessage;
 
-        public static void InvokeMessage(string message)
+        public static void InvokeMessage(string sender, string message, bool instant)
         {
-            OnMessage?.Invoke(message);
+            OnMessage?.Invoke(sender, message, instant);
         }
     }
 }
