@@ -82,7 +82,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 
         public PromptBuilder WithRelevantMemories()
         {
-            _context.RelevantMemories = _agent.memories;
+            _context.RelevantMemories = _agent.memorySystem.GetFormattedMemories();
             return this;
         }
 

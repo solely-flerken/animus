@@ -54,11 +54,11 @@ namespace Features.NPC.Actions
                 anchor.RemoveParticipant(_agent.gameKey);
             }
 
-            _agent.memories.Add("On the way to work at the forgery...");
+            _agent.memorySystem.AddMemory("On the way to work at the forgery...");
             
             await _brain.StartGoalMoveTo(targetTransform);
 
-            _agent.memories.Add("Currently working at the forgery.");
+            _agent.memorySystem.AddMemory("Currently working at the forgery.");
             
             // Runs indefinitely. Working should be stopped only when performing another action.
             await UniTask.WaitUntilCanceled(this.GetCancellationTokenOnDestroy());

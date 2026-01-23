@@ -61,7 +61,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                     return;
                 }
 
-                targetAgent.memories.Add(outcome);
+                targetAgent.memorySystem.AddMemory(outcome);
             }
             catch (OperationCanceledException)
             {

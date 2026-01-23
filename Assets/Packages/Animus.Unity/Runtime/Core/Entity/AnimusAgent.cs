@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Packages.Animus.Unity.Runtime.Core.Actions;
@@ -27,6 +28,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public string currentMotivation = "You have no special motivation.";
         public AgentActionStatus actionStatus;
         public string actionStatusString; // TODO: Remove, only for debugging
+        public MemorySystem memorySystem = new();
+        [Obsolete("Use memorySystem instead")]
         public List<string> memories;
         public static ConversationHistory SharedHistory;
 

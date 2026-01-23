@@ -98,11 +98,11 @@ namespace Features.NPC.Actions
                 anchor.RemoveParticipant(_agent.gameKey);
             }
 
-            _agent.memories.Add("On the way to the guard post...");
+            _agent.memorySystem.AddMemory("On the way to the guard post...");
             
             await _brain.StartGoalMoveTo(location.transform);
 
-            _agent.memories.Add("Currently standing guard.");
+            _agent.memorySystem.AddMemory("Currently standing guard.");
             
             // Runs indefinitely. Working should be stopped only when performing another action.
             await UniTask.WaitUntilCanceled(this.GetCancellationTokenOnDestroy());

@@ -134,7 +134,7 @@ namespace Features.NPC.Actions
                 return $"I tried to move to '{entityKey}', but I couldn't find it.";
             }
 
-            _agent.memories.Add($"Moving towards {targetEntity.gameKey}...");
+            _agent.memorySystem.AddMemory($"Moving towards {targetEntity.gameKey}...");
             
             await _brain.StartGoalMoveTo(targetEntity.transform);
 
@@ -201,7 +201,7 @@ namespace Features.NPC.Actions
 
             var itemName = item.name;
             
-            _agent.memories.Add($"In the process of picking up the item: {itemName}...");
+            _agent.memorySystem.AddMemory($"In the process of picking up the item: {itemName}...");
             
             await _brain.StartGoalPickupItem(item);
 
