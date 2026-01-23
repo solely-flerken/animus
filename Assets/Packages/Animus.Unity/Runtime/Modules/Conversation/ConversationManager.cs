@@ -46,17 +46,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             if (_timer >= CheckInterval)
             {
                 _timer = 0;
-                CheckAllConversations();
-            }
-        }
-
-        private static void CheckAllConversations()
-        {
-            var activeAnchors = new List<ConversationAnchor>(ConversationAnchor.ConversationAnchors.Values);
-
-            foreach (var anchor in activeAnchors)
-            {
-                anchor.CheckStalemate();
+                ConversationAnchor.CheckAllConversations();
             }
         }
         

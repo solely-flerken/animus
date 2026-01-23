@@ -71,6 +71,17 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             return finalAnchor;
         }
         
+        public static void CheckAllConversations()
+        {
+            // Use HashSet to automatically remove duplicates
+            var uniqueAnchors = new HashSet<ConversationAnchor>(ConversationAnchors.Values);
+
+            foreach (var anchor in uniqueAnchors)
+            {
+                anchor.CheckStalemate();
+            }
+        }
+        
         private ConversationAnchor(string initiatorKey, string targetKey)
         {
             LastInteractionTime = DateTime.UtcNow;
@@ -137,7 +148,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             Debug.Log($"[ConversationAnchor] Conversation {Id} dissolved.");
         }
         
-        public bool CheckStalemate()
+        private bool CheckStalemate()
         {
             var diff = DateTime.UtcNow - LastInteractionTime;
             
