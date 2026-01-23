@@ -248,6 +248,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         
         public void ForceAgentThink(string agentKey)
         {
+            if(IsPlayer(agentKey)) return;
+            
             var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
             
             CancelAgentRequest(agent.gameKey);
