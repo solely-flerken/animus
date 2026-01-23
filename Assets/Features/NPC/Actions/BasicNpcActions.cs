@@ -149,16 +149,6 @@ namespace Features.NPC.Actions
                 return string.Empty;
             }
             
-            // TODO: Use block for this. No need to cancel again
-            // Since we interact with a certain agent that agent's context is now outdated
-            ActionQueueManager.Instance?.CancelAgentRequest(targetActorKey);
-            
-            // Cancel every participant's actions
-            if (ConversationAnchor.ConversationAnchors.TryGetValue(targetActorKey, out var currentTargetAnchor))
-            {
-                currentTargetAnchor.Participants.ForEach(p => ActionQueueManager.Instance?.CancelAgentRequest(p));
-            }
-            
             var anchor = ConversationAnchor.JoinOrCreate(_agent.gameKey, targetActorKey);
             
             await _brain.StartGoalTalk(message, targetActor);
@@ -177,9 +167,6 @@ namespace Features.NPC.Actions
             {
                 return string.Empty;
             }
-
-            // Since we interact with a certain agent that agent's context is now outdated
-            ActionQueueManager.Instance?.CancelAgentRequest(targetActorKey);
 
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {

@@ -40,12 +40,6 @@ namespace Features.Player.Scripts
 
         public void InitiateConversation(string targetActorKey)
         {
-            // Cancel every participant's actions
-            if (ConversationAnchor.ConversationAnchors.TryGetValue(targetActorKey, out var currentTargetAnchor))
-            {
-                currentTargetAnchor.Participants.ForEach(p => ActionQueueManager.Instance?.CancelAgentRequest(p));
-            }
-            
             var anchor = ConversationAnchor.JoinOrCreate(_player.gameKey, targetActorKey);
             
             // Pass the turn to the player (stops other participants from talking)

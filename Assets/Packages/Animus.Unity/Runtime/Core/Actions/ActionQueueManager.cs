@@ -267,6 +267,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             }
 
             _blockingTokens[agentKey].Add(reasonToken);
+            
+            CancelAgentRequest(agentKey);
+            
             // Debug.Log($"[{agentKey}] Added Block: {reasonToken}. Total Blocks: {_blockingTokens[agentKey].Count}");
         }
 
