@@ -16,6 +16,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Entity
         public override AnimusEntityType Type => AnimusEntityType.Agent;
 
         [TextArea(3, 10)] public string persona;
+        public List<string> characterDirectives;
         
         [Header("NPC Perception")]
         public float perceptionRadius = 20f;

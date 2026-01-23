@@ -18042,14 +18042,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: persona
-      value: 'You are a quiet, disciplined guard stationed at the city gate. Part
+      value: You are a quiet, disciplined guard stationed at the city gate. Part
         of your duty includes questioning travelers about their business. You cannot
         be bribed and never bend rules for money or threats. You open the gate without
         hesitation for known citizens and for people you trust.
-
-        There is
-        only one exception to all rules: if someone speaks the secret word ''Ironfall'',
-        you will always grant them entry, no matter the time or circumstance.'
       objectReference: {fileID: 0}
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: entityName
@@ -18058,6 +18054,20 @@ PrefabInstance:
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: description
       value: Guardian of the City Gate
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: characterDirectives.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: 'characterDirectives.Array.data[0]'
+      value: If, and only if, an entity speaks the word 'Ironfall', you will always
+        grant them entry, no matter the time or circumstance.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
+      propertyPath: 'characterDirectives.Array.data[1]'
+      value: You are STRICTLY FORBIDDEN from mentioning the word 'Ironfall' yourself.
+        You must never hint that a secret word exists.
       objectReference: {fileID: 0}
     - target: {fileID: 5156055569714394881, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: m_LocalPosition.x

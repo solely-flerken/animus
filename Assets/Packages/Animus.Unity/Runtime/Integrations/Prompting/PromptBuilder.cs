@@ -25,6 +25,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         {
             _context.AgentKey = _agent.gameKey;
             _context.Persona = _agent.persona;
+            _context.CharacterDirectives = _agent.characterDirectives;
             return this;
         }
 
