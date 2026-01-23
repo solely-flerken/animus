@@ -171,7 +171,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 .WithMotivation()
                 .WithLastAction()
                 .WithRelevantMemories()
-                .WithConversationHistory(AnimusAgent.SharedHistory.GetHistoryFor(new HashSet<string> { agent.gameKey }, 10))
+                .WithConversationHistory(AnimusAgent.SharedHistory.GetFormattedHistoryFor(new HashSet<string> { agent.gameKey }, 10))
                 .WithEnvironment(EnvironmentScanner.CreateSnapshot(agent))
                 .WithRules(PredefinedRulesets.CommonAgent);
 

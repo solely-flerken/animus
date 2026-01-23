@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Event;
-using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
@@ -43,7 +42,7 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         public EnvironmentSnapshot Environment { get; set; }
 
         [JsonProperty("ConversationHistory", NullValueHandling = NullValueHandling.Ignore)]
-        public List<DialogLine> ConversationHistory { get; set; }
+        public List<string> ConversationHistory { get; set; }
 
         [JsonProperty("Rules", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Rules { get; set; }

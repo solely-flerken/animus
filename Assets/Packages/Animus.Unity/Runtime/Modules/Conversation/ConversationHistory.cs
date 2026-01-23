@@ -143,7 +143,14 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
 
             return allMatchingLines.TakeLast(lineCount).ToList();
         }
-
+        
+        public List<string> GetFormattedHistoryFor(HashSet<string> participantIds, int lineCount)
+        {
+            return GetHistoryFor(participantIds, lineCount)
+                .Select(line => line.ToString())
+                .ToList();
+        }
+        
         public void ClearAllHistories()
         {
             _conversations.Clear();

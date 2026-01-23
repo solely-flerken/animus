@@ -98,9 +98,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             return this;
         }
         
-        public PromptBuilder WithConversationHistory(List<DialogLine> conversationHistory)
+        public PromptBuilder WithConversationHistory(List<string> formattedConversationHistory)
         {
-            _context.ConversationHistory = conversationHistory;
+            _context.ConversationHistory = formattedConversationHistory;
             return this;
         }
 
