@@ -10,7 +10,6 @@ using Packages.Animus.Unity.Runtime.Infrastructure.Serialization;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting.Constants;
 using Packages.Animus.Unity.Runtime.Integrations.Service;
-using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
@@ -301,13 +300,12 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         
         /// <summary>
         /// Forces an agent to stop thinking.
-        /// TODO: Maybe instantly send another request to the LLM
         /// </summary>
         public void CancelAgentRequest(string agentKey)
         {
             if (_activeRequests.TryGetValue(agentKey, out var request))
             {
-                Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
+                // Debug.Log($"[Outdated context] Canceling requests for: {agentKey}");
                 request.cts.Cancel();
                 _activeRequests.Remove(agentKey);
             }

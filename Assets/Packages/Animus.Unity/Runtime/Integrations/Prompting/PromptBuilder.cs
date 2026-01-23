@@ -7,7 +7,6 @@ using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
 using Packages.Animus.Unity.Runtime.Modules.GameTime;
 using UnityEngine;
-using JsonUtility = Packages.Animus.Unity.Runtime.Infrastructure.Serialization.JsonUtility;
 
 namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
 {
@@ -122,16 +121,6 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         public PromptContext GetContext()
         {
             return _context;
-        }
-
-        public string Build(bool prettyPrint = false)
-        {
-            return JsonUtility.Serialize(_context, prettyPrint);
-        }
-
-        public string BuildString()
-        {
-            return "";
         }
     }
     
