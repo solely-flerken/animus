@@ -99,12 +99,31 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 }
             }
         }
+
+        public void DebugInterruptRandomAgent()
+        {
+            var busyAgents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>()
+                .Where(agent => agent.agentActionSystem.IsPerformingAction)
+                .ToList();
+
+            if (busyAgents.Count == 0)
+            {
+                Debug.Log("[Debug] No agents are currently performing any actions. Cannot interrupt.");
+                return;
+            }
+            
+            var randomAgent = busyAgents[UnityEngine.Random.Range(0, busyAgents.Count)];
+            
+            Debug.Log($"[Debug] Interrupting current action for: {randomAgent.gameKey}");
+            
+            InterruptAgent(randomAgent.gameKey);
+        }
         
         public void DebugCancelRandomAgent()
         {
             if (_activeRequests.Count == 0)
             {
-                Debug.LogWarning("No agents are currently thinking. Cannot cancel.");
+                Debug.LogWarning("[Debug] No agents are currently thinking. Cannot cancel.");
                 return;
             }
 
@@ -112,7 +131,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             var keys = new List<string>(_activeRequests.Keys);
             var randomKey = keys[UnityEngine.Random.Range(0, keys.Count)];
 
-            Debug.Log($"Kill request for: {randomKey}");
+            Debug.Log($"[Debug] Kill request for: {randomKey}");
         
             CancelAgentRequest(randomKey);
         }
@@ -326,7 +345,24 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             return false;
         }
+        
+        public static void InterruptAgent(string agentKey)
+        {
+            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
 
+            if (!agent && !agent.agentActionSystem) return;
+            
+            if (!agent.agentActionSystem.IsPerformingAction)
+            {
+                Debug.LogWarning($"[ActionQueueManager] Agent isn't performing any action. Can't interrupt.");
+                return;
+            }
+            
+            agent.actionStatus.Cancel();
+            agent.agentActionSystem.CancelCurrentAction();
+            Debug.Log($"[ActionQueueManager] Interrupted agent: {agentKey}");
+        }
+        
         #endregion
         
         private static bool IsPlayer(string agentKey)

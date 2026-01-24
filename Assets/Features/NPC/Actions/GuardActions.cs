@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Features.Gate.Scripts;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
@@ -35,7 +36,7 @@ namespace Features.NPC.Actions
         private void RegisterWork()
         {
             var workAction = new AgentAction("work", "Stand guard at your post",
-                logic: async _ =>
+                logic: async (_, token) =>
                 {
                     if (guardPost == null)
                     {
@@ -43,7 +44,7 @@ namespace Features.NPC.Actions
                         return string.Empty;
                     }
 
-                    return await StandGuard(guardPost);
+                    return await StandGuard(guardPost, token);
                 },
                 condition: null
             );
@@ -54,7 +55,7 @@ namespace Features.NPC.Actions
         private void RegisterOpenGate()
         {
             var openGateAction = new AgentAction("open_gate", "Open the gate.",
-                logic: _ =>
+                logic: (_, _) =>
                 {
                     if (interactableGate == null)
                     {
@@ -74,7 +75,7 @@ namespace Features.NPC.Actions
         private void RegisterCloseGate()
         {
             var openGateAction = new AgentAction("close_gate", "Close the Gate.",
-                logic: _ =>
+                logic: (_, _) =>
                 {
                     if (interactableGate == null)
                     {
@@ -91,7 +92,7 @@ namespace Features.NPC.Actions
             _actionSystem.RegisterAction(openGateAction);
         }
         
-        private async UniTask<string> StandGuard(AnimusLocation location)
+        private async UniTask<string> StandGuard(AnimusLocation location, CancellationToken token)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -100,12 +101,12 @@ namespace Features.NPC.Actions
 
             _agent.memorySystem.AddMemory("On the way to the guard post...");
             
-            await _brain.StartGoalMoveTo(location.transform);
+            await _brain.StartGoalMoveTo(location.transform, token);
 
             _agent.memorySystem.AddMemory("Currently standing guard.");
             
             // Runs indefinitely. Working should be stopped only when performing another action.
-            await UniTask.WaitUntilCanceled(this.GetCancellationTokenOnDestroy());
+            await UniTask.WaitUntilCanceled(token);
             
             return "Finished standing guard.";
         }

@@ -1,5 +1,6 @@
 ﻿using Features.Goap.Agents;
 using Features.Player.Scripts;
+using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Features.Interaction.Scripts
         public void Interact(GameObject interactor)
         {
             // TODO: Maybe set status to smth like: "You got interrupted by X."
-            Brain.StartGoalIdle();
+            ActionQueueManager.InterruptAgent(Agent.gameKey);
             
             var player = interactor.GetComponent<AnimusPlayerController>();
             player?.InitiateConversation(Agent.gameKey);

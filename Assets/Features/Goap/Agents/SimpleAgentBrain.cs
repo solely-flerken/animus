@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
 using Cysharp.Threading.Tasks;
@@ -73,16 +75,16 @@ namespace Features.Goap.Agents
             // StartGoalMoveTo(AnimusGameManager.EntityRegistry.GetAll<AnimusLocation>()[0].transform);
         }
 
-        public UniTask StartGoalIdle()
+        public UniTask StartGoalIdle(CancellationToken token)
         {
             CancelActiveGoalSource();
             
             _provider.RequestGoal<IdleGoal>();
 
-            return UniTask.CompletedTask;
+            return WaitWithCancellation(token);
         }
         
-        public UniTask StartGoalTalk(string text, AnimusActor targetActor)
+        public UniTask StartGoalTalk(string text, AnimusActor targetActor, CancellationToken token)
         {
             CancelActiveGoalSource();
             _activeGoalSource = new UniTaskCompletionSource<bool>();
@@ -94,10 +96,10 @@ namespace Features.Goap.Agents
             
             _provider.RequestGoal<TalkGoal>();
             
-            return _activeGoalSource.Task;
+            return WaitWithCancellation(token);
         }
 
-        public UniTask StartGoalPickupItem(AnimusObject item)
+        public UniTask StartGoalPickupItem(AnimusObject item, CancellationToken token)
         {
             CancelActiveGoalSource();
             _activeGoalSource = new UniTaskCompletionSource<bool>();
@@ -108,10 +110,10 @@ namespace Features.Goap.Agents
             
             _provider.RequestGoal<PickupItemGoal>();
             
-            return _activeGoalSource.Task;
+            return WaitWithCancellation(token);
         }
 
-        public UniTask StartGoalMoveTo(Transform target)
+        public UniTask StartGoalMoveTo(Transform target, CancellationToken token)
         {
             CancelActiveGoalSource();
             _activeGoalSource = new UniTaskCompletionSource<bool>();
@@ -120,13 +122,26 @@ namespace Features.Goap.Agents
             
             _provider.RequestGoal<MoveGoal>();
             
-            return _activeGoalSource.Task;
+            return WaitWithCancellation(token);
         }
         
         private void CancelActiveGoalSource()
         {
             _activeGoalSource?.TrySetCanceled();
             _activeGoalSource = null;
+        }
+
+        private async UniTask WaitWithCancellation(CancellationToken token)
+        {
+            try
+            {
+                await _activeGoalSource.Task.AttachExternalCancellation(token);
+            }
+            catch (OperationCanceledException)
+            {
+                _provider.RequestGoal<IdleGoal>();
+                throw;
+            }
         }
     }
 }

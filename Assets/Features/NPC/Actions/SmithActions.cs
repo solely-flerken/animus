@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
@@ -31,7 +32,7 @@ namespace Features.NPC.Actions
         private void RegisterWork()
         {
             var workAction = new AgentAction("work", "Work at your forgery.",
-                logic: async _ =>
+                logic: async (_, token) =>
                 {
                     if (workLocation == null)
                     {
@@ -39,7 +40,7 @@ namespace Features.NPC.Actions
                         return string.Empty;
                     }
 
-                    return await MoveTo(workLocation);
+                    return await MoveTo(workLocation, token);
                 },
                 condition: null
             );
@@ -47,7 +48,7 @@ namespace Features.NPC.Actions
             _actionSystem.RegisterAction(workAction);
         }
 
-        private async UniTask<string> MoveTo(Transform targetTransform)
+        private async UniTask<string> MoveTo(Transform targetTransform, CancellationToken token)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -56,7 +57,7 @@ namespace Features.NPC.Actions
 
             _agent.memorySystem.AddMemory("On the way to work at the forgery...");
             
-            await _brain.StartGoalMoveTo(targetTransform);
+            await _brain.StartGoalMoveTo(targetTransform, token);
 
             _agent.memorySystem.AddMemory("Currently working at the forgery.");
             

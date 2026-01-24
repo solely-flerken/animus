@@ -28,7 +28,19 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                     Debug.LogWarning("Enter Play Mode to test cancellation.");
                 }
             }
-
+            
+            if (GUILayout.Button("Interrupt Random Agent", GUILayout.Height(30)))
+            {
+                if (Application.isPlaying)
+                {
+                    manager.DebugInterruptRandomAgent();
+                }
+                else
+                {
+                    Debug.LogWarning("Enter Play Mode to test interruption.");
+                }
+            }
+            
             GUI.backgroundColor = Color.white;
         }
     }

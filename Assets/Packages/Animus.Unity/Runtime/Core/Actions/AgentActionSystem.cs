@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
         private string _currentActionName;
         private Dictionary<string, object> _currentActionParams;
+        
+        public bool IsPerformingAction => !string.IsNullOrEmpty(_currentActionName);
+        private CancellationTokenSource _actionCts;
         
         public void RegisterAction(AgentAction action)
         {
@@ -56,9 +60,13 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             _currentActionName = actionName;
             _currentActionParams = args;
 
+            CancelCurrentAction();
+            
+            _actionCts = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+            
             try
             {
-                return await action.ExecuteAsync(args);
+                return await action.ExecuteAsync(args, _actionCts.Token);
             }
             finally
             {
@@ -68,6 +76,15 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                     _currentActionParams = null;
                 }
             }
+        }
+        
+        public void CancelCurrentAction()
+        {
+            if (_actionCts == null) return;
+            
+            _actionCts.Cancel();
+            _actionCts.Dispose();
+            _actionCts = null;
         }
         
         public bool IsDuplicateRequest(string actionName, Dictionary<string, object> actionArgs)

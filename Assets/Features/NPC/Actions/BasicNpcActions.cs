@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
@@ -36,9 +37,9 @@ namespace Features.NPC.Actions
         private void RegisterIdle()
         {
             var idleAction = new AgentAction("idle", "Remain idle and take no action.",
-                async _ =>
+                async (_, token) =>
                 {
-                    await UniTask.WaitUntilCanceled(this.GetCancellationTokenOnDestroy());
+                    await UniTask.WaitUntilCanceled(token);
                     return null;
                 });
 
@@ -48,10 +49,10 @@ namespace Features.NPC.Actions
         private void RegisterMoveTo()
         {
             var moveAction = new AgentAction("move_to", "Moves to a target.",
-                logic: async (args) =>
+                logic: async (args, token) =>
                 {
                     var entityKey = args["entityKey"].ToString();
-                    return await MoveTo(entityKey);
+                    return await MoveTo(entityKey, token);
                 },
                 condition: () => !IsTalking()
             );
@@ -64,11 +65,11 @@ namespace Features.NPC.Actions
         private void RegisterTalk()
         {
             var talkAction = new AgentAction("talk", "Say something.",
-                logic: async (args) =>
+                logic: async (args, token) =>
                 {
                     var message = args["message"].ToString();
                     var targetActorKey = args["entityKey"].ToString();
-                    return await Talk(message, targetActorKey);
+                    return await Talk(message, targetActorKey, token);
                 },
                 condition: () =>
                 {
@@ -90,11 +91,11 @@ namespace Features.NPC.Actions
         private void RegisterLeaveConversation()
         {
             var leaveConversationAction = new AgentAction("leave_conversation", "End the active conversation. Use this if you want to perform a physical action or if the conversation is finished.",
-                logic: async (args) =>
+                logic: async (args, token) =>
                 {
                     var message = args["finalMessage"].ToString();
                     var targetActorKey = args["targetActorKey"].ToString();
-                    return await LeaveConversation(message, targetActorKey);
+                    return await LeaveConversation(message, targetActorKey, token);
                 },
                 condition: IsTalking
             );
@@ -108,10 +109,10 @@ namespace Features.NPC.Actions
         private void RegisterPickup()
         {
             var pickupAction = new AgentAction("pickup_item", "Pickup the specified item.",
-                logic: async (args) =>
+                logic: async (args, token) =>
                 {
                     var itemKey = args["itemKey"].ToString();
-                    return await Pickup(itemKey);
+                    return await Pickup(itemKey, token);
                 },
                 condition: AnyObjectVisible
             );
@@ -121,7 +122,7 @@ namespace Features.NPC.Actions
             _actionSystem.RegisterAction(pickupAction);
         }
         
-        private async UniTask<string> MoveTo(string entityKey)
+        private async UniTask<string> MoveTo(string entityKey, CancellationToken token)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -136,12 +137,12 @@ namespace Features.NPC.Actions
 
             _agent.memorySystem.AddMemory($"Moving towards {targetEntity.gameKey}...");
             
-            await _brain.StartGoalMoveTo(targetEntity.transform);
+            await _brain.StartGoalMoveTo(targetEntity.transform, token);
 
             return $"I arrived at {targetEntity.gameKey}.";
         }
 
-        private async UniTask<string> Talk(string message, string targetActorKey)
+        private async UniTask<string> Talk(string message, string targetActorKey, CancellationToken token)
         {
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
@@ -151,7 +152,7 @@ namespace Features.NPC.Actions
             
             var anchor = ConversationAnchor.JoinOrCreate(_agent.gameKey, targetActorKey);
             
-            await _brain.StartGoalTalk(message, targetActor);
+            await _brain.StartGoalTalk(message, targetActor, token);
 
             AnimusAgent.SharedHistory.AddLine(new List<string>(anchor.Participants), _agent.gameKey, message);
             anchor.PassTurn(targetActorKey);
@@ -160,7 +161,7 @@ namespace Features.NPC.Actions
             return string.Empty;
         }
 
-        private async UniTask<string> LeaveConversation(string finalMessage, string targetActorKey)
+        private async UniTask<string> LeaveConversation(string finalMessage, string targetActorKey, CancellationToken token)
         {
             var targetActor = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusActor>(targetActorKey);
             if (targetActor == null)
@@ -180,13 +181,13 @@ namespace Features.NPC.Actions
                 Debug.Log("[LeaveConversation] Critical Error: Trying to leave non-existing conversation anchor. Shouldn't be possible.");
             }
 
-            await _brain.StartGoalTalk(finalMessage, targetActor);
+            await _brain.StartGoalTalk(finalMessage, targetActor, token);
 
             // Return nothing here since conversations are already saved in a conversation history.
             return string.Empty;
         }
 
-        private async UniTask<string> Pickup(string itemKey)
+        private async UniTask<string> Pickup(string itemKey, CancellationToken token)
         {
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
@@ -203,7 +204,7 @@ namespace Features.NPC.Actions
             
             _agent.memorySystem.AddMemory($"In the process of picking up the item: {itemName}...");
             
-            await _brain.StartGoalPickupItem(item);
+            await _brain.StartGoalPickupItem(item, token);
 
             return $"I picked up the item: {itemName}.";
         }
