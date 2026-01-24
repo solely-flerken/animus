@@ -11,6 +11,7 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
         
         public static event Action<List<string>, string> OnTurnChanged;
         public static event Action<string> OnParticipantLeft;
+        public static event Action<List<string>, string> OnParticipantJoin;
         public static event Action<List<string>> OnConversationEnded;
         
         public static readonly Dictionary<string, ConversationAnchor> ConversationAnchors = new();
@@ -107,6 +108,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
 
                 Participants.Add(agentKey);
                 ConversationAnchors[agentKey] = this;
+
+                OnParticipantJoin?.Invoke(Participants, agentKey);
                 
                 Participants.Sort(); 
             }
