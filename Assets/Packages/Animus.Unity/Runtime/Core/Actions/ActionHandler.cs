@@ -65,9 +65,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             }
             catch (OperationCanceledException)
             {
-                // This is fine. The Agent simply performs a new action while the old one wasn't finished.
+                // This is fine. The Agent simply performs a new action while the old one wasn't finished or was interrupted.
                 // TODO: Capture cancellation in context with reason?
-                targetAgent.actionStatus.Cancel();
                 Debug.Log($"[Action] {targetAgent.gameKey} cancelled: {actionPayload.goalKey} -> {paramsStr}");
             }
             catch (Exception e)

@@ -288,6 +288,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             _blockingTokens[agentKey].Add(reasonToken);
             
+            // TODO: Maybe remove this from here and make it be called manually.
             CancelAgentRequest(agentKey);
             
             // Debug.Log($"[{agentKey}] Added Block: {reasonToken}. Total Blocks: {_blockingTokens[agentKey].Count}");
@@ -354,13 +355,15 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             
             if (!agent.agentActionSystem.IsPerformingAction)
             {
-                Debug.LogWarning($"[ActionQueueManager] Agent isn't performing any action. Can't interrupt.");
+                // Debug.LogWarning("[ActionQueueManager] Agent isn't performing any action. Can't interrupt.");
                 return;
             }
             
+            // TODO: Merge actionStatus.Cancel into agentActionSystem?
             agent.actionStatus.Cancel();
             agent.agentActionSystem.CancelCurrentAction();
-            Debug.Log($"[ActionQueueManager] Interrupted agent: {agentKey}");
+            
+            // Debug.Log($"[ActionQueueManager] Interrupted agent: {agentKey}");
         }
         
         #endregion
