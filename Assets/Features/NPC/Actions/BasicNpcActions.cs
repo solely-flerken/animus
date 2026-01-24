@@ -169,6 +169,8 @@ namespace Features.NPC.Actions
                 return string.Empty;
             }
 
+            await _brain.StartGoalTalk(finalMessage, targetActor, token);
+            
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
                 AnimusAgent.SharedHistory.AddLine(new List<string>(anchor.Participants), _agent.gameKey, finalMessage);
@@ -180,9 +182,7 @@ namespace Features.NPC.Actions
             {
                 Debug.Log("[LeaveConversation] Critical Error: Trying to leave non-existing conversation anchor. Shouldn't be possible.");
             }
-
-            await _brain.StartGoalTalk(finalMessage, targetActor, token);
-
+            
             // Return nothing here since conversations are already saved in a conversation history.
             return string.Empty;
         }
