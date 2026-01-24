@@ -271,6 +271,8 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
             
             CancelAgentRequest(agent.gameKey);
+            InterruptAgent(agent.gameKey);
+            
             TryAgentThink(agent);
         }
         
