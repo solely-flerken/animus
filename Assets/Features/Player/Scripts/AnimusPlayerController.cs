@@ -40,10 +40,20 @@ namespace Features.Player.Scripts
 
         public void InitiateConversation(string targetActorKey)
         {
-            var anchor = ConversationAnchor.JoinOrCreate(_player.gameKey, targetActorKey);
+            var playerKey = _player.gameKey;
+            
+            var alreadyTalking = ConversationAnchor.ConversationAnchors.TryGetValue(targetActorKey, out var anchor) && anchor.Participants.Contains(playerKey);
+
+            if (!alreadyTalking)
+            {
+                // TODO: Maybe set status to smth like: "You got interrupted by X."
+                ActionQueueManager.InterruptAgent(targetActorKey);
+            }
+            
+            var finalAnchor = ConversationAnchor.JoinOrCreate(_player.gameKey, targetActorKey);
             
             // Pass the turn to the player (stops other participants from talking)
-            anchor.PassTurn(_player.gameKey);
+            finalAnchor.PassTurn(_player.gameKey);
             
             var commandToExecute = $"/talk {targetActorKey} ";
             Chat.Scripts.Chat.Instance.OpenChat(commandToExecute);
