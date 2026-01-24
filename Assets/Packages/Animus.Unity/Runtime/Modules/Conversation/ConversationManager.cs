@@ -92,10 +92,6 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
         
         private static void HandleParticipantJoin(List<string> participants, string agentKey)
         {
-            var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
-            
-            if (agent == null) return;
-            
             if (participants.Count == 2)
             {
                 foreach (var participantKey in participants)
@@ -108,11 +104,15 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
                     participant.memorySystem.AddMemory($"Started a conversation with {others}...");
                 }
             }
+            // Someone joined an ongoing conversation
             else if (participants.Count > 2)
             {
-                // Someone joined an ongoing conversation
+                var joiningAgent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
+
+                if (joiningAgent == null) return;
+
                 var others = string.Join(", ", participants.Where(p => p != agentKey));
-                agent.memorySystem.AddMemory($"Joined conversation with {others}...");
+                joiningAgent.memorySystem.AddMemory($"Joined conversation with {others}...");
             }
         }
         
