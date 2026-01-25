@@ -112,5 +112,11 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
 
             return true;
         }
+
+        public string DebugString()
+        {
+            var paramsStr = $"[{string.Join(", ", _currentActionParams.Values.Select(v => v?.ToString().Length > 20 ? v.ToString()[..20] + "..." : v?.ToString()))}]";
+            return $"{_currentActionName} -> {paramsStr}";
+        }
     }
 }

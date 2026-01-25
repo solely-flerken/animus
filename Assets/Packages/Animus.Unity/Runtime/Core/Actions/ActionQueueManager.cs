@@ -23,6 +23,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         [Header("Debug Info (Read Only)")] 
         [SerializeField] private List<string> thinkingAgentsDebug = new();
         [SerializeField] private List<ActionPayload> queuedActionsDebug = new();
+        [SerializeField] private List<string> executingActionsDebug = new();
         [SerializeField] private List<string> blockedAgentsDebug = new();
         
         // Tracks agents currently "Thinking" (waiting for LLM's Response)
@@ -96,6 +97,17 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 else
                 {
                     Debug.Log("[Blocked Agents] Agent blocked with no blocking token. IMPOSSIBLE]");
+                }
+            }
+
+            executingActionsDebug.Clear();
+            var allAgents = AnimusGameManager.EntityRegistry.GetAll<AnimusAgent>();
+            foreach (var agent in allAgents)
+            {
+                if (agent.agentActionSystem && agent.agentActionSystem.IsPerformingAction)
+                {
+                    var summary = agent.agentActionSystem.DebugString();
+                    executingActionsDebug.Add($"[{agent.gameKey}] performing: {summary}");
                 }
             }
         }
