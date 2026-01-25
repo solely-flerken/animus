@@ -46,9 +46,8 @@ namespace Features.Player.Scripts
 
             if (!alreadyTalking)
             {
-                // TODO: Maybe set status to smth like: "You got interrupted by X."
-                ActionQueueManager.InterruptAgent(targetActorKey);
-                Debug.Log($"[Debug] {targetActorKey}: Action interrupted through 'InitiateConversation'.");
+                ActionQueueManager.InterruptAgent(targetActorKey, $"{_player.entityName} started a conversation.");
+                // Debug.Log($"[Debug] {targetActorKey}: Action interrupted through 'InitiateConversation'.");
             }
             
             var finalAnchor = ConversationAnchor.JoinOrCreate(_player.gameKey, targetActorKey);

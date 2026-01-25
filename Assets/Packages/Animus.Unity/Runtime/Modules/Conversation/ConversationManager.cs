@@ -124,6 +124,8 @@ namespace Packages.Animus.Unity.Runtime.Modules.Conversation
             agent?.memorySystem.AddMemory("Left the conversation.");
             
             ActionQueueManager.Instance.RemoveBlockToken(agentKey, TokenNotMyTurn);
+            
+            // We provide no reason here, because in theory the agent shouldn't perform any action at this time.
             ActionQueueManager.Instance.ForceAgentThink(agentKey);
         }
     }

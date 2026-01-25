@@ -11,6 +11,7 @@ using Packages.Animus.Unity.Runtime.Integrations.Prompting;
 using Packages.Animus.Unity.Runtime.Integrations.Prompting.Constants;
 using Packages.Animus.Unity.Runtime.Integrations.Service;
 using Packages.Animus.Unity.Runtime.Modules.Environment;
+using Packages.Animus.Unity.Runtime.Modules.GameTime;
 using Packages.Animus.Unity.Runtime.Settings;
 using UnityEngine;
 
@@ -276,14 +277,14 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         
         #region Public API for Interaction
         
-        public void ForceAgentThink(string agentKey)
+        public void ForceAgentThink(string agentKey, string interruptReason = "")
         {
             if(IsPlayer(agentKey)) return;
             
             var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
             
             CancelAgentRequest(agent.gameKey);
-            InterruptAgent(agent.gameKey);
+            InterruptAgent(agent.gameKey, interruptReason);
             
             TryAgentThink(agent);
         }
@@ -361,7 +362,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             return false;
         }
         
-        public static void InterruptAgent(string agentKey)
+        public static void InterruptAgent(string agentKey, string interruptReason = "")
         {
             var agent = AnimusGameManager.EntityRegistry.FindByGameKey<AnimusAgent>(agentKey);
 
@@ -372,6 +373,17 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 // Debug.LogWarning("[ActionQueueManager] Agent isn't performing any action. Can't interrupt.");
                 return;
             }
+
+            // Memorize interruption
+            // TODO: Compare this approach to one where we save a completely new entry like '[08:00] Interrupted 'moving to location_forge' because the Player started a conversation'.
+            var lastMemoryIndex = agent.memorySystem.GetMemories().Count - 1;
+            var lastMemory = agent.memorySystem.GetMemories()[lastMemoryIndex];
+
+            var interruptionSuffix = string.IsNullOrEmpty(interruptReason) 
+                ? $" (interrupted at [{TimeManager.Instance.GetFormattedTime()}])"
+                : $" (interrupted at [{TimeManager.Instance.GetFormattedTime()}]: {interruptReason})";
+            
+            lastMemory.content += interruptionSuffix;
             
             // TODO: Merge actionStatus.Cancel into agentActionSystem?
             agent.actionStatus.Cancel();
