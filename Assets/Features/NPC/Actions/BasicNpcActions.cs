@@ -97,7 +97,19 @@ namespace Features.NPC.Actions
                     var targetActorKey = args["targetActorKey"].ToString();
                     return await LeaveConversation(message, targetActorKey, token);
                 },
-                condition: IsTalking
+                condition: IsTalking,
+                onSuccess: _ =>
+                {
+                    if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
+                    {
+                        // Remove the agent from the anchor
+                        anchor.RemoveParticipant(_agent.gameKey);
+                    }
+                    else
+                    {
+                        Debug.Log("[LeaveConversation] Critical Error: Trying to leave non-existing conversation anchor. Shouldn't be possible.");
+                    }
+                }
             );
             
             leaveConversationAction.AddParam<string>("finalMessage")
@@ -174,13 +186,10 @@ namespace Features.NPC.Actions
             if (ConversationAnchor.ConversationAnchors.TryGetValue(_agent.gameKey, out var anchor))
             {
                 AnimusAgent.SharedHistory.AddLine(new List<string>(anchor.Participants), _agent.gameKey, finalMessage);
-
-                // Remove the agent from the anchor
-                anchor.RemoveParticipant(_agent.gameKey);
             }
             else
             {
-                Debug.Log("[LeaveConversation] Critical Error: Trying to leave non-existing conversation anchor. Shouldn't be possible.");
+                Debug.LogError("[LeaveConversation] Critical Error: Trying to add to non-existing conversation anchor. Shouldn't be possible.");
             }
             
             // Return nothing here since conversations are already saved in a conversation history.

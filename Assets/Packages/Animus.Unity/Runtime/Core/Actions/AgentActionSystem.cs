@@ -78,6 +78,14 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             }
         }
         
+        public void CompleteAction(string actionName, Dictionary<string, object> args)
+        {
+            if (_actions.TryGetValue(actionName, out var action))
+            {
+                action.InvokeSuccess(args);
+            }
+        }
+        
         public void CancelCurrentAction()
         {
             if (_actionCts == null) return;

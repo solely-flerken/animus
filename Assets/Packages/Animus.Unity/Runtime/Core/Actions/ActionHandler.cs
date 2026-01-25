@@ -54,6 +54,9 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
              
                 var outcome = await targetAgent.agentActionSystem.ExecuteAction(actionPayload.goalKey, paramsDict);
 
+                // TODO: Refactor
+                targetAgent.agentActionSystem.CompleteAction(actionPayload.goalKey, paramsDict);
+                
                 targetAgent.actionStatus.Success();
                 
                 if (string.IsNullOrWhiteSpace(outcome))
@@ -66,7 +69,6 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
             catch (OperationCanceledException)
             {
                 // This is fine. The Agent simply performs a new action while the old one wasn't finished or was interrupted.
-                // TODO: Capture cancellation in context with reason?
                 Debug.Log($"[Action] {targetAgent.gameKey} cancelled: {actionPayload.goalKey} -> {paramsStr}");
             }
             catch (Exception e)
