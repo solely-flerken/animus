@@ -27,6 +27,18 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
         [SerializeField] private List<string> executingActionsDebug = new();
         [SerializeField] private List<string> blockedAgentsDebug = new();
         
+        [Header("Response Time Stats (Read Only)")]
+        [SerializeField] private float currentResponseTimeSeconds;
+        [SerializeField] private float averageResponseTimeSeconds;
+        [SerializeField] private float standardDeviationSeconds;
+        [SerializeField] private float standardDeviationPercent;
+        [SerializeField] private float lowestResponseTimeSeconds = float.MaxValue;
+        [SerializeField] private float highestResponseTimeSeconds;
+        [SerializeField] private int totalCompletedRequests;
+        
+        private readonly List<float> _recentResponseTimes = new();
+        private const int MaxResponseTimeSamples = 100;
+        
         // Tracks agents currently "Thinking" (waiting for LLM's Response)
         private readonly Dictionary<string, PendingRequest> _activeRequests = new();
 
@@ -247,7 +259,39 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                         originalContext = context,
                         responsePayload = response.Payload
                     };
+                    
+                    // Track response time
+                    var responseTime = (float)(DateTime.UtcNow - request.timestamp).TotalSeconds;
+                    currentResponseTimeSeconds = responseTime;
+                    totalCompletedRequests++;
 
+                    // Update min/max
+                    if (responseTime < lowestResponseTimeSeconds)
+                        lowestResponseTimeSeconds = responseTime;
+                    if (responseTime > highestResponseTimeSeconds)
+                        highestResponseTimeSeconds = responseTime;
+
+                    // Update rolling average
+                    _recentResponseTimes.Add(responseTime);
+                    if (_recentResponseTimes.Count > MaxResponseTimeSamples)
+                        _recentResponseTimes.RemoveAt(0);
+                    averageResponseTimeSeconds = _recentResponseTimes.Average();
+                    
+                    // Calculate standard deviation
+                    if (_recentResponseTimes.Count > 1)
+                    {
+                        var sumOfSquares = _recentResponseTimes.Sum(time => Mathf.Pow(time - averageResponseTimeSeconds, 2));
+                        standardDeviationSeconds = Mathf.Sqrt(sumOfSquares / _recentResponseTimes.Count);
+    
+                        // Calculate standard deviation as percentage of average
+                        standardDeviationPercent = averageResponseTimeSeconds > 0 ? (standardDeviationSeconds / averageResponseTimeSeconds) * 100f : 0f;
+                    }
+                    else
+                    {
+                        standardDeviationSeconds = 0f;
+                        standardDeviationPercent = 0f;
+                    }
+                    
                     ActionQueue.Enqueue(queuedAction);
                 }
                 else
