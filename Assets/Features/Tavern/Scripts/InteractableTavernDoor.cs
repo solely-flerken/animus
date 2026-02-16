@@ -1,11 +1,12 @@
-﻿using Features.Interaction.Scripts;
+﻿using System.Collections.Generic;
+using Features.Interaction.Scripts.Core;
 using UnityEngine;
 
 namespace Features.Tavern.Scripts
 {
-    public class InteractableTavernDoor : MonoBehaviour, IInteractable
+    public class InteractableTavernDoor : MonoBehaviour, Interactable
     {
-        public string InteractionPrompt => $"{(_isOpen ? "Close" : "Open")} Door";
+        public List<InteractionAction> Actions { get; } = new();
         
         [SerializeField] private Transform door;
         [SerializeField] private float openAngle = 90f;
@@ -15,16 +16,18 @@ namespace Features.Tavern.Scripts
         private float _targetAngle;
         private float _currentAngle;
         private Quaternion _closedRotation;
-        
+
         private int _entitiesInRange;
-        
+
         private void Start()
         {
             _closedRotation = door.localRotation;
             _currentAngle = 0f;
             _targetAngle = 0f;
+
+            Actions.Add(new DelegateAction(() => $"{(_isOpen ? "Close" : "Open")} Door", ToggleDoor));
         }
-        
+
         private void Update()
         {
             _currentAngle = Mathf.Lerp(_currentAngle, _targetAngle, Time.deltaTime * rotationSpeed);
@@ -68,8 +71,8 @@ namespace Features.Tavern.Scripts
             _isOpen = false;
             _targetAngle = 0f;
         }
-        
-        public void Interact(GameObject interactor)
+
+        private void ToggleDoor(GameObject interactor)
         {
             if (_isOpen)
             {

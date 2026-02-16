@@ -1,5 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="container" style="position: absolute; top: 50%; left: 50%; bottom: auto;">
-        <ui:Label text="Interact" name="interactionPromptLabel" style="position: absolute; top: 50%; left: 50%; translate: -50% -50%; background-color: rgba(0, 0, 0, 0.7); color: white; border-radius: 6px; font-size: 22px; padding: 8px 12px; pointer-events: none;"/>
+    <Style src="project://database/Assets/Features/Interaction/UI/InteractionStyle.uss?fileID=7433441132597879392&amp;guid=f4da915a421974d46b1330971eed2b74&amp;type=3#InteractionStyle"/>
+    <ui:VisualElement name="container">
+        <ui:VisualElement name="actionList"/>
     </ui:VisualElement>
 </ui:UXML>

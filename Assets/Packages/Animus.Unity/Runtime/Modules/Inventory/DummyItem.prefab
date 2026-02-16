@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4687965506169243958}
   - component: {fileID: -1381003096235373901}
-  - component: {fileID: -1841605453745003520}
+  - component: {fileID: 6317023290238513973}
   m_Layer: 0
   m_Name: DummyItem
   m_TagString: Untagged
@@ -51,7 +51,7 @@ MonoBehaviour:
   description: Automatically set for items via Item Data
   itemData: {fileID: 11400000, guid: 40f49038cef3e1b46b65c4774507ca5b, type: 2}
   quantity: 1
---- !u!114 &-1841605453745003520
+--- !u!114 &6317023290238513973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,9 +60,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 920645456535424373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e433cae28d44dec9c8e73bf977e3993, type: 3}
+  m_Script: {fileID: 11500000, guid: fbb25c95762e4c8e91fa6d20a2f5e148, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Features.Interaction.Scripts.InteractableObject
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Interaction.Scripts.Features.Components.InteractableObject
 --- !u!1 &2826213727754688134
 GameObject:
   m_ObjectHideFlags: 0

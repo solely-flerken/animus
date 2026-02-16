@@ -1,12 +1,13 @@
-﻿using Features.Interaction.Scripts;
+﻿using System.Collections.Generic;
+using Features.Interaction.Scripts.Core;
 using UnityEngine;
 
 namespace Features.Gate.Scripts
 {
-    public class InteractableGate : MonoBehaviour, IInteractable
+    public class InteractableGate : MonoBehaviour, Interactable
     {
-        public string InteractionPrompt => $"{(IsOpen ? "Close" : "Open")} Door";
-
+        public List<InteractionAction> Actions { get; } = new();
+        
         [SerializeField] private Transform leftDoor;
         [SerializeField] private Transform rightDoor;
         [SerializeField] private float openAngle = 90f;
@@ -25,6 +26,8 @@ namespace Features.Gate.Scripts
             _rightClosedRotation = rightDoor.localRotation;
             _currentAngle = 0f;
             _targetAngle = 0f;
+            
+            Actions.Add(new DelegateAction(() => $"{(IsOpen ? "Close" : "Open")} Door", _ => ToggleDoors()));
         }
 
         private void Update()
@@ -51,11 +54,6 @@ namespace Features.Gate.Scripts
         {
             IsOpen = false;
             _targetAngle = 0f;
-        }
-
-        public void Interact(GameObject interactor)
-        {
-            ToggleDoors();
         }
     }
 }

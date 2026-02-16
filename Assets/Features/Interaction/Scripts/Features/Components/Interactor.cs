@@ -1,8 +1,10 @@
 ﻿using Core.Input.Scripts;
+using Features.Interaction.Scripts.Core;
+using Features.Interaction.Scripts.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Features.Interaction.Scripts
+namespace Features.Interaction.Scripts.Features.Components
 {
     public class Interactor : MonoBehaviour
     {
@@ -11,23 +13,26 @@ namespace Features.Interaction.Scripts
         public float interactionDistance = 5f;
         
         private static InputSystem_Actions.PlayerActions PlayerActions => InputManager.PlayerActions;
-
         private static InteractionUIManager InteractionUI => InteractionUIManager.Instance;
 
-        private IInteractable _currentInteractable;
+        private Interactable _currentInteractable;
 
         private void Start()
         {
             PlayerActions.Enable();
             PlayerActions.Interact.performed += OnInteract;
+            PlayerActions.Next.performed += OnNext;
+            PlayerActions.Previous.performed += OnPrevious;
         }
 
         private void OnDestroy()
         {
             PlayerActions.Interact.performed -= OnInteract;
+            PlayerActions.Next.performed -= OnNext;
+            PlayerActions.Previous.performed -= OnPrevious;
             PlayerActions.Disable();
         }
-
+        
         private void Update()
         {
             DetectInteractable();
@@ -35,21 +40,32 @@ namespace Features.Interaction.Scripts
 
         private void OnInteract(InputAction.CallbackContext context)
         {
-            _currentInteractable?.Interact(gameObject);
+            var selectedAction = InteractionUI.GetSelectedAction();
+            selectedAction?.Execute(gameObject);
         }
 
+        private void OnNext(InputAction.CallbackContext obj)
+        {
+            InteractionUI.SelectNext();
+        }
+
+        private void OnPrevious(InputAction.CallbackContext obj)
+        {
+            InteractionUI.SelectPrevious();
+        }
+        
         private void DetectInteractable()
         {
             var ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
             if (Physics.Raycast(ray, out var hit, interactionDistance, interactionLayerMask))
             {
-                var interactable = hit.collider.GetComponentInParent<IInteractable>();
+                var interactableActions = hit.collider.GetComponentInParent<Interactable>();
 
-                if (interactable != null)
+                if (interactableActions != null)
                 {
-                    if (interactable == _currentInteractable) return;
-                    _currentInteractable = interactable;
+                    if (interactableActions == _currentInteractable) return;
+                    _currentInteractable = interactableActions;
                     InteractionUI.Show(_currentInteractable);
                 }
                 else
