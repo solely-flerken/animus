@@ -116,6 +116,72 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 920c4c1e47d72a14ab93af97d3c64d1a, type: 3}
+--- !u!1 &4584199357985347001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5442582400692313359}
+  - component: {fileID: 3717129580554258942}
+  - component: {fileID: 4433052984396155433}
+  m_Layer: 0
+  m_Name: SecurityZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5442582400692313359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4584199357985347001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5355521251446051750}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3717129580554258942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4584199357985347001}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 5, z: 10}
+  m_Center: {x: -0.5, y: 2, z: 0}
+--- !u!114 &4433052984396155433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4584199357985347001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22337489f71d4434ab6bb1b10ea37e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Gate.Scripts.PerimeterSensor
 --- !u!1 &4871030446003159990
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +552,7 @@ Transform:
   m_Children:
   - {fileID: 1802505232350468624}
   - {fileID: 5205845184304549530}
+  - {fileID: 5442582400692313359}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &9076307645524394126
@@ -532,6 +599,10 @@ PrefabInstance:
     - target: {fileID: 1837623890190889367, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
       propertyPath: m_Name
       value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463279004530375835, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
+      propertyPath: m_text
+      value: City Gate Entrance
       objectReference: {fileID: 0}
     - target: {fileID: 4671039868082567249, guid: 6a501e3f916b46742b400a08c8e2c0bf, type: 3}
       propertyPath: m_LocalPosition.x

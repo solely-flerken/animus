@@ -1,16 +1,18 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Features.Gate.Scripts;
 using Features.Goap.Agents;
 using Packages.Animus.Unity.Runtime.Core.Actions;
 using Packages.Animus.Unity.Runtime.Core.Entity;
+using Packages.Animus.Unity.Runtime.Integrations.Prompting;
 using Packages.Animus.Unity.Runtime.Modules.Conversation;
 using UnityEngine;
 
 namespace Features.NPC.Actions
 {
     [RequireComponent(typeof(AnimusAgent), typeof(AgentActionSystem), typeof(SimpleAgentBrain))]
-    public class GuardActions : MonoBehaviour
+    public class GuardActions : MonoBehaviour, ISituationalContextProvider
     {
         private AgentActionSystem _actionSystem;
         private AnimusAgent _agent;
@@ -18,6 +20,7 @@ namespace Features.NPC.Actions
 
         [SerializeField] private AnimusLocation guardPost;
         [SerializeField] private InteractableGate interactableGate;
+        [SerializeField] private PerimeterSensor perimeterSensor;
 
         private void Awake()
         {
@@ -33,9 +36,59 @@ namespace Features.NPC.Actions
             RegisterCloseGate();
         }
 
+        private void OnEnable()
+        {
+            if (perimeterSensor != null)
+            {
+                perimeterSensor.OnActorEntered += HandlePerimeterBreach;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (perimeterSensor != null)
+            {
+                perimeterSensor.OnActorEntered -= HandlePerimeterBreach;
+            }
+        }
+        
+        private void HandlePerimeterBreach(AnimusActor intruder)
+        {
+            if (intruder.gameKey == _agent.gameKey) return;
+            
+            ActionQueueManager.Instance.ForceAgentThink(_agent.gameKey, $"{intruder.gameKey} just entered the gate perimeter");
+        }
+
+        public List<string> GetSituationalContext()
+        {
+            var context = new List<string>();
+
+            if (interactableGate)
+            {
+                var gateState = interactableGate.IsOpen ? "open" : "closed";
+                context.Add($"The city gate is {gateState}.");
+            }
+
+            if (perimeterSensor)
+            {
+                var intruders = perimeterSensor.GetDetectedActorsNames;
+                if (intruders.Count > 0)
+                {
+                    var names = string.Join(", ", intruders);
+                    context.Add($"ATTENTION: The following individuals are currently inside the gate perimeter: {names}.");
+                }
+                else
+                {
+                    context.Add("The gate perimeter is currently clear.");
+                }
+            }
+
+            return context;
+        }
+        
         private void RegisterWork()
         {
-            var workAction = new AgentAction("work", "Stand guard at your post",
+            var workAction = new AgentAction("guard", "Stand guard at your post",
                 logic: async (_, token) =>
                 {
                     if (guardPost == null)

@@ -18238,8 +18238,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5275864184079099169, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: dailyRoutine.Array.data[0].motivation
-      value: I am currently on guard duty. This takes the highest priority. I shall
-        not move from my post.
+      value: I am currently on guard duty. My primary task is to watch the area.
+        If clear, I stand still. If anyone is in the perimeter, I must stop guarding
+        to question them.
       objectReference: {fileID: 0}
     - target: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
       propertyPath: gameKey
@@ -18349,6 +18350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Features.NPC.Actions.GuardActions
   guardPost: {fileID: 429132125}
   interactableGate: {fileID: 258241222}
+  perimeterSensor: {fileID: 2124792199}
 --- !u!114 &2065177810 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4410804593949565968, guid: f30c650591b1fb245a15bf11da618e22, type: 3}
@@ -18584,6 +18586,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114214591}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2124792199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4433052984396155433, guid: ffda2f69e1ed8ca46abc83d95872cdfc, type: 3}
+  m_PrefabInstance: {fileID: 1258588885392440516}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22337489f71d4434ab6bb1b10ea37e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Features.Gate.Scripts.PerimeterSensor
 --- !u!1 &2131375234
 GameObject:
   m_ObjectHideFlags: 0
@@ -18848,6 +18861,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1413890004}
     m_Modifications:
+    - target: {fileID: 4584199357985347001, guid: ffda2f69e1ed8ca46abc83d95872cdfc, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4871030446003159990, guid: ffda2f69e1ed8ca46abc83d95872cdfc, type: 3}
       propertyPath: m_IsActive
       value: 1
