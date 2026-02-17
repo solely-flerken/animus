@@ -211,6 +211,7 @@ namespace Packages.Animus.Unity.Runtime.Core.Actions
                 .WithIdentity()
                 .WithAvailableActions()
                 .WithCurrentState()
+                .WithSituationalAwareness()
                 .WithSchedule()
                 .WithMotivation()
                 .WithLastAction()

@@ -20,6 +20,9 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
         [JsonProperty("CurrentState", NullValueHandling = NullValueHandling.Ignore)]
         public string CurrentState { get; set; }
 
+        [JsonProperty("SituationalAwareness", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> SituationalAwareness { get; set; }
+        
         [JsonProperty("Schedule", NullValueHandling = NullValueHandling.Ignore)]
         public string Schedule { get; set; }
 

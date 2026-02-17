@@ -56,6 +56,27 @@ namespace Packages.Animus.Unity.Runtime.Integrations.Prompting
             return this;
         }
 
+        public PromptBuilder WithSituationalAwareness()
+        {
+            var providers = _agent.GetComponents<ISituationalContextProvider>();
+            
+            if (providers == null || providers.Length == 0) 
+                return this;
+
+            _context.SituationalAwareness ??= new List<string>();
+
+            foreach (var provider in providers)
+            {
+                var insights = provider.GetSituationalContext();
+                if (insights is { Count: > 0 })
+                {
+                    _context.SituationalAwareness.AddRange(insights);
+                }
+            }
+
+            return this;
+        }
+        
         public PromptBuilder WithSchedule()
         {
             _context.Schedule = _agent?.npcSchedule.GetScheduleContext() ?? "You have no specific schedule right now.";
